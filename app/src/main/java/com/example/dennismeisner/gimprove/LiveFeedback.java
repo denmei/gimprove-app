@@ -40,16 +40,7 @@ public class LiveFeedback extends Activity implements SocketListener {
         } catch (Exception e) {
             System.out.println("Exception");
         }
-
-        mCircleView = (CircleProgressView) findViewById(R.id.circleView);
-        mCircleView.setUnit("");
-        mCircleView.setMaxValue(10);
-        mCircleView.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(float value) {
-                System.out.println(value);
-            }
-        });
+        mCircleView = this.initCircle();
     }
 
     @Override
@@ -61,9 +52,27 @@ public class LiveFeedback extends Activity implements SocketListener {
     @Override
     public void onSocketMessage(JSONObject message) {
         try {
-            mCircleView.setValue(message.getInt("repetitions"));
+            int value = message.getInt("repetitions");
+            mCircleView.setValue(value * 10);
+            mCircleView.setText(Integer.toString(value));
         } catch (JSONException e) {
             e.printStackTrace();
         }
+    }
+
+    private CircleProgressView initCircle() {
+        CircleProgressView mCircleView = (CircleProgressView) findViewById(R.id.circleView);
+        mCircleView.setUnit(null);
+        mCircleView.setMaxValue(100);
+        mCircleView.setValue(0);
+        mCircleView.setUnitVisible(true);
+        mCircleView.setTextMode(TextMode.TEXT);
+        mCircleView.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
+            @Override
+            public void onProgressChanged(float value) {
+                System.out.println(value);
+            }
+        });
+        return mCircleView;
     }
 }

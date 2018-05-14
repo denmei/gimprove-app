@@ -40,7 +40,7 @@ public class WebsocketClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-
+        System.out.println("Connection closed. Reason: " + reason);
     }
 
     @Override
