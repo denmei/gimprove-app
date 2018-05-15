@@ -24,6 +24,9 @@ public class WebsocketClient extends WebSocketClient {
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("connected");
+        for (int i = 0; i < this.socketListeners.size(); i++) {
+            socketListeners.get(i).onSocketOpen();
+        }
     }
 
     @Override
@@ -40,7 +43,9 @@ public class WebsocketClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
-        System.out.println("Connection closed. Reason: " + reason);
+        for (int i = 0; i < this.socketListeners.size(); i++) {
+            socketListeners.get(i).onSocketClosed(code, reason, remote);
+        }
     }
 
     @Override

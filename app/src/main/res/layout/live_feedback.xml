@@ -36,5 +36,27 @@
         CircleProgressView:cpv_unitScale="1"
         CircleProgressView:cpv_value="10" />
 
+    <TextView
+        android:id="@+id/exerciseName"
+        android:layout_width="221dp"
+        android:layout_height="56dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="47dp"
+        android:gravity="center"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+        android:textColor="@color/gimproveWhite"
+        android:textSize="39sp"
+        android:visibility="visible" />
+
+    <Button
+        android:id="@+id/connectButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:background="@color/grimproveOrange"
+        android:layout_alignParentTop="true"
+        android:text="Connect" />
+
 
 </RelativeLayout>
