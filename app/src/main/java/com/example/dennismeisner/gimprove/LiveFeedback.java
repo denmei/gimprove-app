@@ -24,6 +24,7 @@ public class LiveFeedback extends Activity implements SocketListener {
     private WebsocketClient client;
     CircleProgressView progressCircle;
     private TextView exerciseName;
+    private TextView weightText;
     private boolean active;
     private Button connectButton;
     private String serverLink;
@@ -40,6 +41,7 @@ public class LiveFeedback extends Activity implements SocketListener {
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
+        weightText = (TextView) findViewById(R.id.weightText);
 
         // Initialize Connect-Button
         connectButton = (Button) findViewById(R.id.connectButton);
@@ -89,7 +91,7 @@ public class LiveFeedback extends Activity implements SocketListener {
      * @param initValue initial value for circle.
      *
      */
-    private void initExercise(int maxValue, int initValue, String exerciseName) {
+    private void initExercise(int maxValue, int initValue, Double weight, String exerciseName) {
         this.progressCircle.setMaxValue(maxValue);
         this.progressCircle.setValue(initValue);
         this.progressCircle.setUnit(null);
@@ -97,7 +99,7 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.progressCircle.setTextMode(TextMode.TEXT);
 
         this.active = true;
-
+        this.weightText.setText(Double.toString(weight) + "kg");
         this.exerciseName.setText(exerciseName);
     }
 
@@ -122,9 +124,11 @@ public class LiveFeedback extends Activity implements SocketListener {
 
             if(!active) {
                 String name = message.getString("exercise_name");
-                this.initExercise(100, 0, name);
+                Double weight = message.getDouble("weight");
+                this.initExercise(100, 0, weight, name);
+            } else if(message.getInt("repetitions") == 1) {
+                this.weightText.setText(Double.toString(message.getDouble("weight")) + "kg");
             }
-
             int value = message.getInt("repetitions");
             progressCircle.setValueAnimated(value * 10);
             progressCircle.setText(Integer.toString(value));

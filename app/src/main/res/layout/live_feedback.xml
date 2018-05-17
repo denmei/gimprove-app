@@ -55,8 +55,17 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
-        android:background="@color/grimproveOrange"
-        android:text="Connect" />
+        android:background="@color/grimproveOrange" />
+
+    <TextView
+        android:id="@+id/weightText"
+        android:layout_width="125dp"
+        android:layout_height="70dp"
+        android:layout_below="@+id/circleView"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="@color/gimproveWhite" />
 
 
 </RelativeLayout>
