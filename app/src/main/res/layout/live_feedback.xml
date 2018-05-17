@@ -55,7 +55,8 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="15dp"
-        android:background="@color/grimproveOrange" />
+        android:background="@color/grimproveOrange"
+        android:text="Connect" />
 
     <TextView
         android:id="@+id/weightText"

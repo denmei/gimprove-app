@@ -71,9 +71,10 @@ public class LiveFeedback extends Activity implements SocketListener {
         });
         progressCircle.setValue(0);
         this.progressCircle.setUnit(null);
-        this.progressCircle.setUnitVisible(true);
-        this.progressCircle.setTextMode(TextMode.TEXT);
+        this.progressCircle.setUnitVisible(false);
+        this.progressCircle.setTextMode(TextMode.VALUE);
         this.progressCircle.setSeekModeEnabled(false);
+        this.progressCircle.setAutoTextSize(true);
 
         // Open websocket
         try {
@@ -95,7 +96,6 @@ public class LiveFeedback extends Activity implements SocketListener {
     private void initExercise(int maxValue, int initValue, Double weight, String exerciseName) {
         this.progressCircle.setMaxValue(maxValue);
         this.progressCircle.setValue(initValue);
-        this.progressCircle.setUnit(null);
         this.progressCircle.setUnitVisible(true);
         this.progressCircle.setTextMode(TextMode.TEXT);
 
@@ -121,21 +121,30 @@ public class LiveFeedback extends Activity implements SocketListener {
 
     @Override
     public void onSocketMessage(JSONObject message) {
-        try {
 
-            if(!active) {
-                String name = message.getString("exercise_name");
-                Double weight = message.getDouble("weight");
-                this.initExercise(100, 0, weight, name);
-            } else if(message.getInt("repetitions") == 1) {
-                this.weightText.setText(Double.toString(message.getDouble("weight")) + "kg");
+        final JSONObject jsonMessage = message;
+
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                try {
+                    if(!active) {
+                        String name = jsonMessage.getString("exercise_name");
+                        Double weight = jsonMessage.getDouble("weight");
+                        initExercise(100, 0, weight, name);
+                    } else if(jsonMessage.getInt("repetitions") == 1) {
+                        weightText.setText(Double.toString(jsonMessage.getDouble("weight")) + "kg");
+                    }
+                    int value = jsonMessage.getInt("repetitions");
+                    progressCircle.setValueAnimated(value * 10);
+                    progressCircle.setText(Integer.toString(value));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
-            int value = message.getInt("repetitions");
-            progressCircle.setValueAnimated(value * 10);
-            progressCircle.setText(Integer.toString(value));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        });
     }
 
     @Override
