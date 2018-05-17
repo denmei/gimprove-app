@@ -73,6 +73,7 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.progressCircle.setUnit(null);
         this.progressCircle.setUnitVisible(true);
         this.progressCircle.setTextMode(TextMode.TEXT);
+        this.progressCircle.setSeekModeEnabled(false);
 
         // Open websocket
         try {
