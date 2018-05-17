@@ -149,11 +149,23 @@ public class LiveFeedback extends Activity implements SocketListener {
 
     @Override
     public void onSocketClosed(int code, String reason, boolean remote) {
-        this.connectButton.setBackgroundColor(getResources().getColor(R.color.grimproveOrange));
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                connectButton.setBackgroundColor(getResources().getColor(R.color.grimproveOrange));
+            }
+        });
     }
 
     @Override
     public void onSocketOpen() {
-        this.connectButton.setBackgroundColor(getResources().getColor(R.color.gimproveGray));
+        runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+                connectButton.setBackgroundColor(getResources().getColor(R.color.gimproveGray));
+            }
+        });
     }
 }
