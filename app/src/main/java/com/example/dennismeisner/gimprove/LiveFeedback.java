@@ -26,6 +26,7 @@ public class LiveFeedback extends Activity implements SocketListener {
     private TextView exerciseName;
     private boolean active;
     private Button connectButton;
+    private String serverLink;
 
     @Override
     /**
@@ -34,6 +35,8 @@ public class LiveFeedback extends Activity implements SocketListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_feedback);
+        // ws://10.0.2.2:8000/ws/tracker/
+        serverLink = "ws://gimprove-test.herokuapp.com/ws/tracker/";
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
@@ -46,7 +49,7 @@ public class LiveFeedback extends Activity implements SocketListener {
                     public void onClick(View v) {
                         if(client.isClosed()) {
                             try {
-                                client = getWebsocket("ws://10.0.2.2:8000/ws/tracker/");
+                                client = getWebsocket(serverLink);
                             } catch (URISyntaxException e) {
                                 e.printStackTrace();
                             }
@@ -69,11 +72,9 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.progressCircle.setUnitVisible(true);
         this.progressCircle.setTextMode(TextMode.TEXT);
 
-        // ws://10.0.2.2:8000/ws/tracker/
-        // ws://gimprove-test.herokuapp.com/ws/tracker/
         // Open websocket
         try {
-            client = this.getWebsocket("ws://10.0.2.2:8000/ws/tracker/");
+            client = this.getWebsocket(serverLink);
         } catch (Exception e) {
             System.out.println("Exception");
         }
