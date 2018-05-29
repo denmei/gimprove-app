@@ -11,12 +11,11 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
-import at.grabner.circleprogress.AnimationState;
-import at.grabner.circleprogress.AnimationStateChangedListener;
 import at.grabner.circleprogress.CircleProgressView;
 import at.grabner.circleprogress.TextMode;
-import at.grabner.circleprogress.UnitPosition;
 
 
 public class LiveFeedback extends Activity implements SocketListener {
@@ -36,8 +35,9 @@ public class LiveFeedback extends Activity implements SocketListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.live_feedback);
-        // ws://10.0.2.2:8000/ws/tracker/
-        serverLink = "ws://gimprove-test.herokuapp.com/ws/tracker/";
+        // "ws://10.0.2.2:8000/ws/tracker/"
+        // "ws://gimprove-test.herokuapp.com/ws/tracker/"
+        serverLink = "ws://10.0.2.2:8000/ws/tracker/";
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
@@ -107,7 +107,9 @@ public class LiveFeedback extends Activity implements SocketListener {
     /* *** Websocket *** */
 
     private WebsocketClient getWebsocket(String url) throws URISyntaxException {
-        WebsocketClient client = new WebsocketClient(new URI(url));
+        Map<String, String> x = new HashMap<String, String>();
+        x.put("authorization", "Token 4cf5cc46e7224a0a87d4d33e955396df3560d7dd");
+        WebsocketClient client = new WebsocketClient(new URI(url), x);
         client.connect();
         client.addListener(this);
         return client;

@@ -9,6 +9,7 @@ import org.java_websocket.handshake.ServerHandshake;
 import java.net.Socket;
 import java.net.URI;
 import java.util.LinkedList;
+import java.util.Map;
 
 import org.json.*;
 
@@ -18,6 +19,11 @@ public class WebsocketClient extends WebSocketClient {
 
     public WebsocketClient(URI serverUri) {
         super(serverUri);
+        socketListeners = new LinkedList<SocketListener>();
+    }
+
+    public WebsocketClient(URI serverUri, Map<String,String> headers) {
+        super(serverUri, headers);
         socketListeners = new LinkedList<SocketListener>();
     }
 
