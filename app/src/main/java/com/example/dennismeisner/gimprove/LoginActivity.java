@@ -34,26 +34,16 @@ import android.widget.TextView;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.toolbox.HttpResponse;
-import com.android.volley.toolbox.Volley;
-
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
-import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
+
 
 /**
  * A login screen that offers login via email/password.
@@ -93,10 +83,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mUserNameView = (AutoCompleteTextView) findViewById(R.id.username);
+        mUserNameView = findViewById(R.id.username);
         populateAutoComplete();
 
-        mPasswordView = (EditText) findViewById(R.id.password);
+        mPasswordView = findViewById(R.id.password);
         mPasswordView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int id, KeyEvent keyEvent) {
@@ -337,7 +327,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         @Override
         protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
             Boolean success = false;
 
             try {
@@ -367,15 +356,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     rd.close();
                     success = true;
                     this.token = response;
-                    System.out.println("Token: " + this.token);
+                    System.out.println("New Token: " + this.token);
                     preferences.edit().putString("Token", this.token).apply();
-                    System.out.println("Updated.");
-                    System.out.println("Shared Token: " + preferences.getString("Token", ""));
+                // TODO: Replace print-statement by logger
                 } else {
                     System.out.println("Invalid: " + connection.getResponseMessage());
                 }
-
-
             } catch (Exception e) {
                 System.out.println("ERROR:");
                 System.out.println(e.toString());
@@ -386,6 +372,10 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
+        /*
+         * Gets result from doInBackground-task.
+         * If task was successful, thread ends. Otherwise go back to login.
+         */
         protected void onPostExecute(final Boolean success) {
             mAuthTask = null;
             showProgress(false);
@@ -393,7 +383,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             if (success) {
                 finish();
             } else {
-                mPasswordView.setError(getString(R.string.error_incorrect_password));
+                mPasswordView.setError(getString(R.string.error_incorrect_credentials));
                 mPasswordView.requestFocus();
             }
         }
