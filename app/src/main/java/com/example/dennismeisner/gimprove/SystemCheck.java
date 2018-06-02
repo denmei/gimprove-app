@@ -23,8 +23,17 @@ public class SystemCheck extends AppCompatActivity {
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
 
+        sharedPreferences.edit().putString("Token", "").apply();
+
+    }
+
+    protected void onStart() {
+        super.onStart();
+
         // check token
         Boolean hasToken = this.hasValidToken();
+
+        System.out.println("START: has token = " + hasToken.toString());
 
         // forward to loginActivity
         if(!hasToken) {
@@ -34,7 +43,6 @@ public class SystemCheck extends AppCompatActivity {
             Intent feedbackIntent = new Intent(this, LiveFeedback.class);
             startActivity(feedbackIntent);
         }
-
     }
 
     /**
@@ -47,6 +55,7 @@ public class SystemCheck extends AppCompatActivity {
         if(token.equals("")) {
             return false;
         } else if(true) {
+            // TODO: Check whether token is still valid.
             return true;
         } else {
             return true;

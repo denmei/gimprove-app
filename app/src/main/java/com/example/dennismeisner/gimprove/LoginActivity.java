@@ -4,6 +4,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -76,12 +77,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_login);
 
+        System.out.println("START LOGIN");
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
 
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
         // Set up the login form.
         mUserNameView = findViewById(R.id.username);
         populateAutoComplete();
@@ -328,7 +330,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             Boolean success = false;
-
+            System.out.println("DO BACKGROUND");
             try {
                 // http://gimprove-test.herokuapp.com/get_auth_token/
                 // http://127.0.0.1:8000/get_auth_token/
@@ -380,11 +382,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
-                finish();
-            } else {
+            if (!success) {
                 mPasswordView.setError(getString(R.string.error_incorrect_credentials));
                 mPasswordView.requestFocus();
+            } else {
+                finish();
             }
         }
 
