@@ -29,11 +29,16 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.HttpResponse;
 import com.android.volley.toolbox.Volley;
 
 import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.HttpURLConnection;
@@ -41,6 +46,7 @@ import java.net.URL;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,7 +76,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private UserLoginTask mAuthTask = null;
 
     // UI references.
-    private AutoCompleteTextView mEmailView;
+    private AutoCompleteTextView mUserNameView;
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
@@ -80,7 +86,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
-        mEmailView = (AutoCompleteTextView) findViewById(R.id.email);
+        mUserNameView = (AutoCompleteTextView) findViewById(R.id.username);
         populateAutoComplete();
 
         mPasswordView = (EditText) findViewById(R.id.password);
@@ -123,7 +129,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             return true;
         }
         if (shouldShowRequestPermissionRationale(READ_CONTACTS)) {
-            Snackbar.make(mEmailView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
+            Snackbar.make(mUserNameView, R.string.permission_rationale, Snackbar.LENGTH_INDEFINITE)
                     .setAction(android.R.string.ok, new View.OnClickListener() {
                         @Override
                         @TargetApi(Build.VERSION_CODES.M)
@@ -162,11 +168,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Reset errors.
-        mEmailView.setError(null);
+        mUserNameView.setError(null);
         mPasswordView.setError(null);
 
         // Store values at the time of the login attempt.
-        String email = mEmailView.getText().toString();
+        String username = mUserNameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
         boolean cancel = false;
@@ -180,13 +186,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         // Check for a valid email address.
-        if (TextUtils.isEmpty(email)) {
-            mEmailView.setError(getString(R.string.error_field_required));
-            focusView = mEmailView;
+        if (TextUtils.isEmpty(username)) {
+            mUserNameView.setError(getString(R.string.error_field_required));
+            focusView = mUserNameView;
             cancel = true;
-        } else if (!isEmailValid(email)) {
-            mEmailView.setError(getString(R.string.error_invalid_email));
-            focusView = mEmailView;
+        } else if (!isEmailValid(username)) {
+            mUserNameView.setError(getString(R.string.error_invalid_email));
+            focusView = mUserNameView;
             cancel = true;
         }
 
@@ -198,14 +204,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(email, password);
+            mAuthTask = new UserLoginTask(username, password);
             mAuthTask.execute((Void) null);
         }
     }
 
     private boolean isEmailValid(String email) {
         //TODO: Replace this with your own logic
-        return email.contains("@");
+        return true;
     }
 
     private boolean isPasswordValid(String password) {
@@ -289,7 +295,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 new ArrayAdapter<>(LoginActivity.this,
                         android.R.layout.simple_dropdown_item_1line, emailAddressCollection);
 
-        mEmailView.setAdapter(adapter);
+        mUserNameView.setAdapter(adapter);
     }
 
 
@@ -309,12 +315,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      */
     public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
 
-        private final String mEmail;
+        private final String mUserName;
         private final String mPassword;
 
 
-        UserLoginTask(String email, String password) {
-            mEmail = email;
+        UserLoginTask(String username, String password) {
+            mUserName = username;
             mPassword = password;
         }
 
@@ -325,10 +331,28 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             try {
                 // http://gimprove-test.herokuapp.com/get_auth_token/
                 // http://127.0.0.1:8000/get_auth_token/
-                HttpURLConnection connection = (HttpURLConnection) new URL("http://10.0.2.2:8000/get_auth_token/").openConnection();
-                System.out.println("code:"+ connection.getResponseCode());
-                InputStream response = connection.getInputStream();
-                System.out.println("Answer: " + response.toString());
+                HttpURLConnection connection = (HttpURLConnection) new URL("http://gimprove-test.herokuapp.com/get_auth_token/").openConnection();
+                connection.setDoOutput(true);
+                OutputStreamWriter output = new OutputStreamWriter(connection.getOutputStream());
+                String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(this.mUserName, "UTF-8");
+                data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(this.mPassword, "UTF-8");
+                output.write(data);
+                output.flush();
+
+                BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                String line;
+                String response = "";
+                StringBuilder sb = new StringBuilder();
+                while ((line = rd.readLine()) != null) {
+                    System.out.println(line);
+                    response = sb.append(response).append(line).toString();
+                }
+                output.close();
+                rd.close();
+
+                System.out.println("code: "+ connection.getResponseCode());
+                System.out.println("message: "+ connection.getResponseMessage());
+                System.out.println("Answer: " + response);
             } catch (Exception e) {
                 System.out.println("ERROR:");
                 System.out.println(e.toString());
@@ -337,7 +361,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
-                if (pieces[0].equals(mEmail)) {
+                if (pieces[0].equals(mUserName)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
