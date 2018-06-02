@@ -3,6 +3,8 @@ package com.example.dennismeisner.gimprove;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
@@ -80,9 +82,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private EditText mPasswordView;
     private View mProgressView;
     private View mLoginFormView;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        sharedPreferences = this.getSharedPreferences(
+                "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         // Set up the login form.
@@ -190,7 +197,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             mUserNameView.setError(getString(R.string.error_field_required));
             focusView = mUserNameView;
             cancel = true;
-        } else if (!isEmailValid(username)) {
+        } else if (!isUserNameValid(username)) {
             mUserNameView.setError(getString(R.string.error_invalid_email));
             focusView = mUserNameView;
             cancel = true;
@@ -204,12 +211,12 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(username, password);
+            mAuthTask = new UserLoginTask(username, password, this.sharedPreferences);
             mAuthTask.execute((Void) null);
         }
     }
 
-    private boolean isEmailValid(String email) {
+    private boolean isUserNameValid(String username) {
         //TODO: Replace this with your own logic
         return true;
     }
@@ -317,58 +324,65 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mUserName;
         private final String mPassword;
+        private String token;
+        private SharedPreferences preferences;
 
 
-        UserLoginTask(String username, String password) {
+        UserLoginTask(String username, String password, SharedPreferences prefs) {
             mUserName = username;
             mPassword = password;
+            preferences = prefs;
+            token = "";
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-            System.out.println("Send request");
+            Boolean success = false;
+
             try {
                 // http://gimprove-test.herokuapp.com/get_auth_token/
                 // http://127.0.0.1:8000/get_auth_token/
-                HttpURLConnection connection = (HttpURLConnection) new URL("http://gimprove-test.herokuapp.com/get_auth_token/").openConnection();
+                HttpURLConnection connection = (HttpURLConnection) new
+                        URL("http://gimprove-test.herokuapp.com/get_auth_token/").openConnection();
                 connection.setDoOutput(true);
                 OutputStreamWriter output = new OutputStreamWriter(connection.getOutputStream());
-                String data = URLEncoder.encode("username", "UTF-8") + "=" + URLEncoder.encode(this.mUserName, "UTF-8");
-                data += "&" + URLEncoder.encode("password", "UTF-8") + "=" + URLEncoder.encode(this.mPassword, "UTF-8");
+                String data = URLEncoder.encode("username", "UTF-8") + "="
+                        + URLEncoder.encode(this.mUserName, "UTF-8");
+                data += "&" + URLEncoder.encode("password", "UTF-8") + "="
+                        + URLEncoder.encode(this.mPassword, "UTF-8");
                 output.write(data);
                 output.flush();
-
-                BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                String line;
-                String response = "";
-                StringBuilder sb = new StringBuilder();
-                while ((line = rd.readLine()) != null) {
-                    System.out.println(line);
-                    response = sb.append(response).append(line).toString();
-                }
                 output.close();
-                rd.close();
 
-                System.out.println("code: "+ connection.getResponseCode());
-                System.out.println("message: "+ connection.getResponseMessage());
-                System.out.println("Answer: " + response);
+                // if request successful, get and save token.
+                if(connection.getResponseCode() == 200 || connection.getResponseCode() == 201) {
+                    BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                    String line;
+                    String response = "";
+                    StringBuilder sb = new StringBuilder();
+                    while ((line = rd.readLine()) != null) {
+                        response = sb.append(response).append(line).toString();
+                    }
+                    rd.close();
+                    success = true;
+                    this.token = response;
+                    System.out.println("Token: " + this.token);
+                    preferences.edit().putString("Token", this.token).apply();
+                    System.out.println("Updated.");
+                    System.out.println("Shared Token: " + preferences.getString("Token", ""));
+                } else {
+                    System.out.println("Invalid: " + connection.getResponseMessage());
+                }
+
+
             } catch (Exception e) {
                 System.out.println("ERROR:");
                 System.out.println(e.toString());
                 return false;
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
-                String[] pieces = credential.split(":");
-                if (pieces[0].equals(mUserName)) {
-                    // Account exists, return true if the password matches.
-                    return pieces[1].equals(mPassword);
-                }
-            }
-
-            // TODO: register the new account here.
-            return true;
+            return success;
         }
 
         @Override
