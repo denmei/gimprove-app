@@ -29,10 +29,23 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.HttpResponse;
+import com.android.volley.toolbox.Volley;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static android.Manifest.permission.READ_CONTACTS;
+import static android.provider.ContactsContract.CommonDataKinds.Website.URL;
 
 /**
  * A login screen that offers login via email/password.
@@ -299,6 +312,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private final String mEmail;
         private final String mPassword;
 
+
         UserLoginTask(String email, String password) {
             mEmail = email;
             mPassword = password;
@@ -307,11 +321,17 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
-
+            System.out.println("Send request");
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
+                // http://gimprove-test.herokuapp.com/get_auth_token/
+                // http://127.0.0.1:8000/get_auth_token/
+                HttpURLConnection connection = (HttpURLConnection) new URL("http://10.0.2.2:8000/get_auth_token/").openConnection();
+                System.out.println("code:"+ connection.getResponseCode());
+                InputStream response = connection.getInputStream();
+                System.out.println("Answer: " + response.toString());
+            } catch (Exception e) {
+                System.out.println("ERROR:");
+                System.out.println(e.toString());
                 return false;
             }
 

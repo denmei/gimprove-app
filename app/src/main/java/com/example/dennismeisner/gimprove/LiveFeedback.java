@@ -37,7 +37,7 @@ public class LiveFeedback extends Activity implements SocketListener {
         setContentView(R.layout.live_feedback);
         // "ws://10.0.2.2:8000/ws/tracker/"
         // "ws://gimprove-test.herokuapp.com/ws/tracker/"
-        serverLink = "ws://10.0.2.2:8000/ws/tracker/";
+        serverLink = "ws://gimprove-test.herokuapp.com/ws/tracker/";
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
@@ -108,7 +108,7 @@ public class LiveFeedback extends Activity implements SocketListener {
 
     private WebsocketClient getWebsocket(String url) throws URISyntaxException {
         Map<String, String> x = new HashMap<String, String>();
-        x.put("authorization", "Token 4cf5cc46e7224a0a87d4d33e955396df3560d7dd");
+        x.put("authorization", "Token d6732690ca3cf7c2b04716f344e983166491d762");
         WebsocketClient client = new WebsocketClient(new URI(url), x);
         client.connect();
         client.addListener(this);
