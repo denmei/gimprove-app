@@ -55,7 +55,7 @@ public class SystemCheck extends AppCompatActivity {
         if(token.equals("")) {
             return false;
         } else if(true) {
-            // TODO: Check whether token is still valid.
+            // TODO: Check whether token is still valid by making a http-Request.
             return true;
         } else {
             return true;

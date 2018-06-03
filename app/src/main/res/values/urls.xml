@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="AuthToken" type="string">http://gimprove-test.herokuapp.com/get_auth_token/</item>
+</resources>

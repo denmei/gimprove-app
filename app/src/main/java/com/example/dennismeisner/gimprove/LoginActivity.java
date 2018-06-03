@@ -25,12 +25,16 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -78,9 +82,13 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Fullscreen:
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_login);
 
-        System.out.println("START LOGIN");
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
 
@@ -335,7 +343,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 // http://gimprove-test.herokuapp.com/get_auth_token/
                 // http://127.0.0.1:8000/get_auth_token/
                 HttpURLConnection connection = (HttpURLConnection) new
-                        URL("http://gimprove-test.herokuapp.com/get_auth_token/").openConnection();
+                        URL(getResources().getString(R.string.AuthToken)).openConnection();
                 connection.setDoOutput(true);
                 OutputStreamWriter output = new OutputStreamWriter(connection.getOutputStream());
                 String data = URLEncoder.encode("username", "UTF-8") + "="
@@ -357,7 +365,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                     rd.close();
                     success = true;
-                    this.token = response;
+                    System.out.println("Response: " + response);
+                    this.token = new JSONObject(response).getString("token");
                     System.out.println("New Token: " + this.token);
                     preferences.edit().putString("Token", this.token).apply();
                 // TODO: Replace print-statement by logger

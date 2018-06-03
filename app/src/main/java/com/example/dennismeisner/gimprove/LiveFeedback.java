@@ -1,8 +1,12 @@
 package com.example.dennismeisner.gimprove;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +31,8 @@ public class LiveFeedback extends Activity implements SocketListener {
     private boolean active;
     private Button connectButton;
     private String serverLink;
+    private SharedPreferences sharedPreferences;
+    private String token;
 
     @Override
     /**
@@ -34,10 +40,15 @@ public class LiveFeedback extends Activity implements SocketListener {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Fullscreen:
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.live_feedback);
-        // "ws://10.0.2.2:8000/ws/tracker/"
-        // "ws://gimprove-test.herokuapp.com/ws/tracker/"
-        serverLink = "ws://gimprove-test.herokuapp.com/ws/tracker/";
+
+        sharedPreferences = this.getSharedPreferences(
+                "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
@@ -85,6 +96,12 @@ public class LiveFeedback extends Activity implements SocketListener {
 
     }
 
+    protected void onStart() {
+        super.onStart();
+        this.token = sharedPreferences.getString("Token", "");
+        System.out.println("Feedbacktocken: " + this.token);
+    }
+
     /* *** Initializers *** */
 
     /**
@@ -108,7 +125,7 @@ public class LiveFeedback extends Activity implements SocketListener {
 
     private WebsocketClient getWebsocket(String url) throws URISyntaxException {
         Map<String, String> x = new HashMap<String, String>();
-        x.put("authorization", "Token d6732690ca3cf7c2b04716f344e983166491d762");
+        x.put("authorization", "Token " + this.token);
         WebsocketClient client = new WebsocketClient(new URI(url), x);
         client.connect();
         client.addListener(this);
