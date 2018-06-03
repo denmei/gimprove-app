@@ -74,14 +74,8 @@ public class LiveFeedback extends Activity implements SocketListener {
         );
 
         // Initialize ProgressCircle
-        progressCircle = (CircleProgressView) findViewById(R.id.circleView);
-        this.progressCircle.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(float value) {
-                System.out.println(value);
-            }
-        });
-        progressCircle.setValue(0);
+        this.progressCircle = (CircleProgressView) findViewById(R.id.circleView);
+        this.progressCircle.setValue(0);
         this.progressCircle.setUnit(null);
         this.progressCircle.setUnitVisible(false);
         this.progressCircle.setTextMode(TextMode.VALUE);
@@ -120,6 +114,20 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.exerciseName.setText(exerciseName);
     }
 
+    /**
+     *
+     */
+    private void resetProgress() {
+        System.out.println("RESET");
+        this.progressCircle.setValue(10);
+        this.progressCircle.setText("");
+        this.progressCircle.setUnitVisible(true);
+        this.progressCircle.setTextMode(TextMode.TEXT);
+        this.active = false;
+        this.weightText.setText("");
+        this.exerciseName.setText("");
+    }
+
     /* *** Websocket *** */
 
     private WebsocketClient getWebsocket(String url) throws URISyntaxException {
@@ -147,7 +155,10 @@ public class LiveFeedback extends Activity implements SocketListener {
             @Override
             public void run() {
                 try {
-                    if(!active) {
+                    Boolean end = jsonMessage.getBoolean("end");
+                    if (end) {
+                        resetProgress();
+                    } else if(!active) {
                         String name = jsonMessage.getString("exercise_name");
                         Double weight = jsonMessage.getDouble("weight");
                         initExercise(100, 0, weight, name);

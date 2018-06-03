@@ -32,7 +32,6 @@ public class SystemCheck extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString("Token", "").apply();
     }
 
     protected void onStart() {
