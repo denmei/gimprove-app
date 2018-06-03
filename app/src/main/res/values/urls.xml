@@ -2,4 +2,5 @@
 <resources>
     <item name="AuthToken" type="string">http://gimprove-test.herokuapp.com/get_auth_token/</item>
     <item name="UserProfile" type="string">https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rest/</item>
+    <item name="Websocket" type="string">ws://gimprove-test.herokuapp.com/ws/tracker/</item>
 </resources>

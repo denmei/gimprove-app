@@ -49,6 +49,7 @@ public class LiveFeedback extends Activity implements SocketListener {
 
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
+        serverLink = getResources().getString(R.string.Websocket);
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
@@ -86,6 +87,11 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.progressCircle.setTextMode(TextMode.VALUE);
         this.progressCircle.setSeekModeEnabled(false);
         this.progressCircle.setAutoTextSize(true);
+    }
+
+    protected void onStart() {
+        super.onStart();
+        this.token = sharedPreferences.getString("Token", "");
 
         // Open websocket
         try {
@@ -93,13 +99,6 @@ public class LiveFeedback extends Activity implements SocketListener {
         } catch (Exception e) {
             System.out.println("Exception");
         }
-
-    }
-
-    protected void onStart() {
-        super.onStart();
-        this.token = sharedPreferences.getString("Token", "");
-        System.out.println("Feedbacktocken: " + this.token);
     }
 
     /* *** Initializers *** */
@@ -124,9 +123,9 @@ public class LiveFeedback extends Activity implements SocketListener {
     /* *** Websocket *** */
 
     private WebsocketClient getWebsocket(String url) throws URISyntaxException {
-        Map<String, String> x = new HashMap<String, String>();
-        x.put("authorization", "Token " + this.token);
-        WebsocketClient client = new WebsocketClient(new URI(url), x);
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("authorization", "Token " + this.token);
+        WebsocketClient client = new WebsocketClient(new URI(url), header);
         client.connect();
         client.addListener(this);
         return client;

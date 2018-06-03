@@ -7,9 +7,12 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import org.json.JSONObject;
+
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Scanner;
 
 /**
  * Checks configuration when app is started.
@@ -38,7 +41,7 @@ public class SystemCheck extends AppCompatActivity {
         Boolean hasToken = false;
 
         String token = sharedPreferences.getString("Token", "");
-        tokenChecker = new TokenChecker(token);
+        tokenChecker = new TokenChecker(token, sharedPreferences);
 
         // check token
 
@@ -67,9 +70,11 @@ public class SystemCheck extends AppCompatActivity {
     public class TokenChecker extends AsyncTask<Void, Void, Boolean> {
 
         private final String token;
+        private final SharedPreferences sharedPreferences;
 
-        TokenChecker(String inToken) {
+        TokenChecker(String inToken, SharedPreferences sharedPrefs) {
             token = inToken;
+            sharedPreferences = sharedPrefs;
         }
 
         @Override
@@ -80,18 +85,26 @@ public class SystemCheck extends AppCompatActivity {
             } else {
 
                 try {
-                    // Check whether token is still valid by making a http-Request.
+                    // Check whether token is (still) valid by making a http-Request.
                     HttpURLConnection connection = (HttpURLConnection) new
                             URL(getResources().getString(R.string.UserProfile)).openConnection();
                     String authString = "Token " + token;
                     connection.setRequestProperty ("Authorization", authString);
+                    Scanner scanner = new Scanner(connection.getInputStream());
+                    JSONObject resp = new JSONObject(scanner.useDelimiter("\\A").next());
                     int responseCode = connection.getResponseCode();
                     if(responseCode == 200 || responseCode == 201) {
+                        // Update sharedPreferences
+                        sharedPreferences.edit().putString("user", resp.getString("user")).apply();
+                        sharedPreferences.edit().putString("rfid_tag", resp.getString("rfid_tag")).apply();
+                        sharedPreferences.edit().putString("date_of_birth", resp.getString("date_of_birth")).apply();
+                        sharedPreferences.edit().putInt("gym", resp.getInt("gym")).apply();
                         return true;
                     } else {
                         return false;
                     }
                 } catch (Exception e) {
+                    // TODO: Logging
                     System.out.println(e.toString());
                     return false;
                 }
