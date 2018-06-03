@@ -1,8 +1,12 @@
 package com.example.dennismeisner.gimprove;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -11,12 +15,11 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.HashMap;
+import java.util.Map;
 
-import at.grabner.circleprogress.AnimationState;
-import at.grabner.circleprogress.AnimationStateChangedListener;
 import at.grabner.circleprogress.CircleProgressView;
 import at.grabner.circleprogress.TextMode;
-import at.grabner.circleprogress.UnitPosition;
 
 
 public class LiveFeedback extends Activity implements SocketListener {
@@ -28,6 +31,8 @@ public class LiveFeedback extends Activity implements SocketListener {
     private boolean active;
     private Button connectButton;
     private String serverLink;
+    private SharedPreferences sharedPreferences;
+    private String token;
 
     @Override
     /**
@@ -35,9 +40,16 @@ public class LiveFeedback extends Activity implements SocketListener {
      */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Fullscreen:
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.live_feedback);
-        // ws://10.0.2.2:8000/ws/tracker/
-        serverLink = "ws://gimprove-test.herokuapp.com/ws/tracker/";
+
+        sharedPreferences = this.getSharedPreferences(
+                "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
+        serverLink = getResources().getString(R.string.Websocket);
 
         active = false;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
@@ -62,19 +74,18 @@ public class LiveFeedback extends Activity implements SocketListener {
         );
 
         // Initialize ProgressCircle
-        progressCircle = (CircleProgressView) findViewById(R.id.circleView);
-        this.progressCircle.setOnProgressChangedListener(new CircleProgressView.OnProgressChangedListener() {
-            @Override
-            public void onProgressChanged(float value) {
-                System.out.println(value);
-            }
-        });
-        progressCircle.setValue(0);
+        this.progressCircle = (CircleProgressView) findViewById(R.id.circleView);
+        this.progressCircle.setValue(0);
         this.progressCircle.setUnit(null);
         this.progressCircle.setUnitVisible(false);
         this.progressCircle.setTextMode(TextMode.VALUE);
         this.progressCircle.setSeekModeEnabled(false);
         this.progressCircle.setAutoTextSize(true);
+    }
+
+    protected void onStart() {
+        super.onStart();
+        this.token = sharedPreferences.getString("Token", "");
 
         // Open websocket
         try {
@@ -82,7 +93,6 @@ public class LiveFeedback extends Activity implements SocketListener {
         } catch (Exception e) {
             System.out.println("Exception");
         }
-
     }
 
     /* *** Initializers *** */
@@ -104,10 +114,26 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.exerciseName.setText(exerciseName);
     }
 
+    /**
+     *
+     */
+    private void resetProgress() {
+        System.out.println("RESET");
+        this.progressCircle.setValue(10);
+        this.progressCircle.setText("");
+        this.progressCircle.setUnitVisible(true);
+        this.progressCircle.setTextMode(TextMode.TEXT);
+        this.active = false;
+        this.weightText.setText("");
+        this.exerciseName.setText("");
+    }
+
     /* *** Websocket *** */
 
     private WebsocketClient getWebsocket(String url) throws URISyntaxException {
-        WebsocketClient client = new WebsocketClient(new URI(url));
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("authorization", "Token " + this.token);
+        WebsocketClient client = new WebsocketClient(new URI(url), header);
         client.connect();
         client.addListener(this);
         return client;
@@ -129,7 +155,10 @@ public class LiveFeedback extends Activity implements SocketListener {
             @Override
             public void run() {
                 try {
-                    if(!active) {
+                    Boolean end = jsonMessage.getBoolean("end");
+                    if (end) {
+                        resetProgress();
+                    } else if(!active) {
                         String name = jsonMessage.getString("exercise_name");
                         Double weight = jsonMessage.getDouble("weight");
                         initExercise(100, 0, weight, name);
