@@ -44,8 +44,6 @@ public class SystemCheck extends AppCompatActivity {
         tokenChecker = new TokenChecker(token, sharedPreferences);
 
         // check token
-
-        System.out.println("START: has token = " + hasToken.toString());
         tokenChecker.execute();
     }
 
@@ -79,7 +77,6 @@ public class SystemCheck extends AppCompatActivity {
 
         @Override
         protected Boolean doInBackground(Void... voids) {
-            System.out.println("Check token: " + token);
             if(token.equals("")) {
                 return false;
             } else {
@@ -98,7 +95,7 @@ public class SystemCheck extends AppCompatActivity {
                         sharedPreferences.edit().putString("user", resp.getString("user")).apply();
                         sharedPreferences.edit().putString("rfid_tag", resp.getString("rfid_tag")).apply();
                         sharedPreferences.edit().putString("date_of_birth", resp.getString("date_of_birth")).apply();
-                        sharedPreferences.edit().putInt("gym", resp.getInt("gym")).apply();
+                        sharedPreferences.edit().putString("gym", resp.getString("gym")).apply();
                         return true;
                     } else {
                         return false;

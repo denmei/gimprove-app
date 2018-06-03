@@ -338,7 +338,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         @Override
         protected Boolean doInBackground(Void... params) {
             Boolean success = false;
-            System.out.println("DO BACKGROUND");
             try {
                 // http://gimprove-test.herokuapp.com/get_auth_token/
                 // http://127.0.0.1:8000/get_auth_token/
@@ -365,17 +364,14 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     }
                     rd.close();
                     success = true;
-                    System.out.println("Response: " + response);
                     this.token = new JSONObject(response).getString("token");
-                    System.out.println("New Token: " + this.token);
                     preferences.edit().putString("Token", this.token).apply();
                 // TODO: Replace print-statement by logger
                 } else {
                     System.out.println("Invalid: " + connection.getResponseMessage());
                 }
             } catch (Exception e) {
-                System.out.println("ERROR:");
-                System.out.println(e.toString());
+                System.out.println("Exception: " + e.toString());
                 return false;
             }
 
