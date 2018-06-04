@@ -33,6 +33,7 @@ public class LiveFeedback extends Activity implements SocketListener {
     private String serverLink;
     private SharedPreferences sharedPreferences;
     private String token;
+    private int lastRep;
 
     @Override
     /**
@@ -52,6 +53,7 @@ public class LiveFeedback extends Activity implements SocketListener {
         serverLink = getResources().getString(R.string.Websocket);
 
         active = false;
+        lastRep = 0;
         exerciseName = (TextView) findViewById(R.id.exerciseName);
         weightText = (TextView) findViewById(R.id.weightText);
 
@@ -109,6 +111,7 @@ public class LiveFeedback extends Activity implements SocketListener {
         this.progressCircle.setUnitVisible(true);
         this.progressCircle.setTextMode(TextMode.TEXT);
 
+        this.lastRep = 0;
         this.active = true;
         this.weightText.setText(Double.toString(weight) + "kg");
         this.exerciseName.setText(exerciseName);
@@ -118,14 +121,15 @@ public class LiveFeedback extends Activity implements SocketListener {
      *
      */
     private void resetProgress() {
+        progressCircle.setValue(0);
+        progressCircle.setText("0");
+        progressCircle.setUnitVisible(true);
+        progressCircle.setTextMode(TextMode.TEXT);
+        active = false;
+        lastRep = 0;
+        weightText.setText("");
+        exerciseName.setText("");
         System.out.println("RESET");
-        this.progressCircle.setValue(10);
-        this.progressCircle.setText("");
-        this.progressCircle.setUnitVisible(true);
-        this.progressCircle.setTextMode(TextMode.TEXT);
-        this.active = false;
-        this.weightText.setText("");
-        this.exerciseName.setText("");
     }
 
     /* *** Websocket *** */
@@ -156,18 +160,24 @@ public class LiveFeedback extends Activity implements SocketListener {
             public void run() {
                 try {
                     Boolean end = jsonMessage.getBoolean("end");
-                    if (end) {
+                    if(end) {
                         resetProgress();
-                    } else if(!active) {
-                        String name = jsonMessage.getString("exercise_name");
-                        Double weight = jsonMessage.getDouble("weight");
-                        initExercise(100, 0, weight, name);
-                    } else if(jsonMessage.getInt("repetitions") == 1) {
-                        weightText.setText(Double.toString(jsonMessage.getDouble("weight")) + "kg");
+                    } else {
+                        if(!active) {
+                            String name = jsonMessage.getString("exercise_name");
+                            Double weight = jsonMessage.getDouble("weight");
+                            initExercise(100, 0, weight, name);
+                        } else if(jsonMessage.getInt("repetitions") == 1) {
+                            weightText.setText(Double.toString(jsonMessage.getDouble("weight")) + "kg");
+                        }
+                        int value = jsonMessage.getInt("repetitions");
+                        if (value > lastRep) {
+                            lastRep = value;
+                            progressCircle.setValueAnimated(value * 10);
+                            progressCircle.setText(Integer.toString(value));
+
+                        }
                     }
-                    int value = jsonMessage.getInt("repetitions");
-                    progressCircle.setValueAnimated(value * 10);
-                    progressCircle.setText(Integer.toString(value));
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
