@@ -26,6 +26,8 @@ local.properties
 .idea/scopes/scope_settings.xml
 .idea/vcs.xml
 .idea/caches
+.idea
+.idea/
 *.iml
 
 # OS-specific files
