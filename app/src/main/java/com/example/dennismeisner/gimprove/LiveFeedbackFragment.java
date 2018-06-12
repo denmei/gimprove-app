@@ -1,12 +1,13 @@
 package com.example.dennismeisner.gimprove;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -22,56 +23,74 @@ import at.grabner.circleprogress.CircleProgressView;
 import at.grabner.circleprogress.TextMode;
 
 
-public class LiveFeedback extends NavigationActivity implements SocketListener {
+public class LiveFeedbackFragment extends Fragment implements SocketListener {
 
     private WebsocketClientGimprove client;
-    CircleProgressView progressCircle;
+    private CircleProgressView progressCircle;
     private TextView exerciseName;
     private TextView weightText;
     private boolean active;
     private Button connectButton;
     private String serverLink;
-    private SharedPreferences sharedPreferences;
     private String token;
     private int lastRep;
     private TokenManager tokenManager;
+    private SharedPreferences sharedPreferences;
+
+    public LiveFeedbackFragment() {
+        // Required empty public constructor
+    }
+
+    public static LiveFeedbackFragment newInstance() {
+        LiveFeedbackFragment fragment = new LiveFeedbackFragment();
+        Bundle args = new Bundle();
+        fragment.setArguments(args);
+        return fragment;
+    }
 
     @Override
-    /**
-     * Creates view. Initiates websocket-connection to Gimprove-Server.
-     */
-    protected void onCreate(Bundle savedInstanceState) {
-
-        // Fullscreen:
-        //requestWindowFeature(Window.FEATURE_NO_TITLE);
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.live_feedback);
+    }
 
-        sharedPreferences = this.getSharedPreferences(
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_live_feedback, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        sharedPreferences = getActivity().getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
-        serverLink = getResources().getString(R.string.Websocket);
-
         tokenManager = new TokenManager(sharedPreferences);
+        System.out.println(tokenManager.getToken());
+        Map<String, String> header = new HashMap<String, String>();
+        header.put("authorization", "Token " + this.tokenManager.getToken());
+        try {
+            client = new WebsocketClientGimprove(
+                    header,
+                    tokenManager,
+                    new URI(getResources().getString(R.string.Websocket)));
+            client.addListener(this);
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
 
         active = false;
         lastRep = 0;
-        exerciseName = (TextView) findViewById(R.id.exerciseName);
-        weightText = (TextView) findViewById(R.id.weightText);
+        exerciseName = (TextView) view.findViewById(R.id.exerciseName);
+        weightText = (TextView) view.findViewById(R.id.weightText);
 
         // Initialize Connect-Button
-        connectButton = (Button) findViewById(R.id.connectButton);
+        connectButton = (Button) view.findViewById(R.id.connectButton);
         this.connectButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         if(client.isClosed()) {
-                            /*try {
-                                client = new WebsocketClientGimprove(tokenManager);
-                            } catch (URISyntaxException e) {
-                                e.printStackTrace();
-                            }*/
+                            client.connect();
                             System.out.println("Try connect");
                         }
                     }
@@ -79,7 +98,7 @@ public class LiveFeedback extends NavigationActivity implements SocketListener {
         );
 
         // Initialize ProgressCircle
-        this.progressCircle = (CircleProgressView) findViewById(R.id.circleView);
+        this.progressCircle = (CircleProgressView) view.findViewById(R.id.circleView);
         this.progressCircle.setValue(0);
         this.progressCircle.setUnit(null);
         this.progressCircle.setUnitVisible(false);
@@ -88,16 +107,14 @@ public class LiveFeedback extends NavigationActivity implements SocketListener {
         this.progressCircle.setAutoTextSize(true);
     }
 
-    protected void onStart() {
-        super.onStart();
-        this.token = sharedPreferences.getString("Token", "");
-    /*
-        // Open websocket
-        try {
-            client = WebsocketClientGimprove();
-        } catch (Exception e) {
-            System.out.println("Exception");
-        }*/
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
     }
 
     /* *** Initializers *** */
@@ -135,11 +152,9 @@ public class LiveFeedback extends NavigationActivity implements SocketListener {
         System.out.println("RESET");
     }
 
-
-    @Override
     public void onBackPressed() {
         client.close();
-        finish();
+        getActivity().finish();
     }
 
     @Override
@@ -147,7 +162,7 @@ public class LiveFeedback extends NavigationActivity implements SocketListener {
 
         final JSONObject jsonMessage = message;
 
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
@@ -181,7 +196,7 @@ public class LiveFeedback extends NavigationActivity implements SocketListener {
 
     @Override
     public void onSocketClosed(int code, String reason, boolean remote) {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {
@@ -192,7 +207,7 @@ public class LiveFeedback extends NavigationActivity implements SocketListener {
 
     @Override
     public void onSocketOpen() {
-        runOnUiThread(new Runnable() {
+        getActivity().runOnUiThread(new Runnable() {
 
             @Override
             public void run() {

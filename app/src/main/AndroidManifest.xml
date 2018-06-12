@@ -18,12 +18,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login">
-
-        </activity>
-        <activity android:name=".LiveFeedback">
-
-        </activity>
+            android:label="@string/title_activity_login" />
+        <activity android:name=".LiveFeedback" />
         <activity android:name=".SystemCheck">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,6 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".NavigationActivity" />
+        <activity
+            android:name=".LoggedInActivity"
+            android:label="@string/title_activity_logged_in"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

@@ -52,8 +52,8 @@ public class SystemCheck extends AppCompatActivity {
             Intent loginIntent = new Intent(this, LoginActivity.class);
             startActivity(loginIntent);
         } else {
-            Intent feedbackIntent = new Intent(this, LiveFeedback.class);
-            startActivity(feedbackIntent);
+            Intent loggedInIntent = new Intent(this, LoggedInActivity.class);
+            startActivity(loggedInIntent);
         }
 
     }

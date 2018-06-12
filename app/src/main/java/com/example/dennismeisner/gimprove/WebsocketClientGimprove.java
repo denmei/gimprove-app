@@ -8,28 +8,60 @@ import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.Socket;
 import java.net.URI;
+import java.net.URISyntaxException;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
 import org.json.*;
 
-public class WebsocketClient extends WebSocketClient {
+public class WebsocketClientGimprove extends WebSocketClient {
 
+    // private static WebsocketClientGimprove instance;
+    private TokenManager tokenManager;
+    private Map<String, String> header;
     private LinkedList<SocketListener> socketListeners;
+    private URI websocketURL;
 
-    public WebsocketClient(URI serverUri) {
-        super(serverUri);
+    /*
+    Private constructor for Singleton-pattern
+    private WebsocketClientGimprove() throws URISyntaxException {
+        super(new URI("ws://gimprove-test.herokuapp.com/ws/tracker/"));
+
+        // create header
+        tokenManager = TokenManager.getInstance();
+        header = new HashMap<String, String>();
+        header.put("authorization", "Token " + this.tokenManager.getToken());
+
         socketListeners = new LinkedList<SocketListener>();
+        connect();
     }
 
-    public WebsocketClient(URI serverUri, Map<String,String> headers) {
-        super(serverUri, headers);
+    public static WebsocketClientGimprove getInstance() throws URISyntaxException {
+        if(WebsocketClientGimprove.instance == null) {
+            WebsocketClientGimprove.instance = new WebsocketClientGimprove();
+        }
+        return WebsocketClientGimprove.instance;
+    }
+    */
+
+    public WebsocketClientGimprove(Map<String, String> header, TokenManager tokenManager,
+                                   URI serverURL) {
+        super(serverURL, header);
+
+        this.tokenManager = tokenManager;
+
         socketListeners = new LinkedList<SocketListener>();
+        connect();
+
+        this.header = header;
     }
 
     @Override
     public void onOpen(ServerHandshake handshakedata) {
         System.out.println("connected");
+        System.out.println(handshakedata.getHttpStatus());
+        System.out.println(handshakedata.getHttpStatusMessage());
         for (int i = 0; i < this.socketListeners.size(); i++) {
             socketListeners.get(i).onSocketOpen();
         }
@@ -49,6 +81,7 @@ public class WebsocketClient extends WebSocketClient {
 
     @Override
     public void onClose(int code, String reason, boolean remote) {
+        System.out.println("Connection closed.");
         for (int i = 0; i < this.socketListeners.size(); i++) {
             socketListeners.get(i).onSocketClosed(code, reason, remote);
         }
