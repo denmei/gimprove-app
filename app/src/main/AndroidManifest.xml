@@ -19,7 +19,6 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".LiveFeedback" />
         <activity android:name=".SystemCheck">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
