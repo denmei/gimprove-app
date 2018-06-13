@@ -19,6 +19,8 @@ import android.view.WindowManager;
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
+    private LiveFeedbackFragment liveFeedbackFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,10 +37,12 @@ public class LoggedInActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        liveFeedbackFragment = new LiveFeedbackFragment();
+
         // load start fragment
         // Begin the transaction
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_placeholder, new LiveFeedbackFragment());
+        ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
         ft.commit();
     }
 
@@ -80,17 +84,9 @@ public class LoggedInActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
+        if (id == R.id.tracking) {
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.history) {
 
         }
 
