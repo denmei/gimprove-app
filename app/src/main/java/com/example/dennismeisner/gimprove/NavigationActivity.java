@@ -5,10 +5,14 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.widget.TextView;
+
+import com.example.dennismeisner.gimprove.GimproveModels.User;
 
 public class NavigationActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
+    private TextView userNameText;
 
 
     protected void onCreateDrawer(Bundle savedInstanceState) {
@@ -34,6 +38,5 @@ public class NavigationActivity extends AppCompatActivity {
                         return true;
                     }
                 });
-
     }
 }

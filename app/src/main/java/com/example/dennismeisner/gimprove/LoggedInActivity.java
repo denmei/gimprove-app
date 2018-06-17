@@ -1,5 +1,7 @@
 package com.example.dennismeisner.gimprove;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
@@ -27,6 +30,7 @@ public class LoggedInActivity extends AppCompatActivity
     private LiveFeedbackFragment liveFeedbackFragment;
     private HistoryFragment historyFragment;
     private User user;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +39,11 @@ public class LoggedInActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        sharedPreferences = this.getSharedPreferences(
+                "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
+
         user = User.getInstance();
-        user.setUserAttributes("Test");
+        user.setUserAttributes(sharedPreferences.getString("UserName", "UserName"));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -46,6 +53,10 @@ public class LoggedInActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        View header = navigationView.getHeaderView(0);
+        TextView userNameField = (TextView) header.findViewById(R.id.nav_username);
+        userNameField.setText(sharedPreferences.getString("UserName", ""));
 
         liveFeedbackFragment = new LiveFeedbackFragment();
         historyFragment = new HistoryFragment();

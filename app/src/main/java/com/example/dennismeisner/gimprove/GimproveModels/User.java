@@ -23,6 +23,10 @@ public class User {
         return User.instance;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setUserAttributes(String name) {
         this.name = name;
     }

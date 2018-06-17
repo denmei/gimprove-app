@@ -366,6 +366,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     success = true;
                     this.token = new JSONObject(response).getString("token");
                     preferences.edit().putString("Token", this.token).apply();
+                    preferences.edit().putString("UserName", this.mUserName).apply();
                 // TODO: Replace print-statement by logger
                 } else {
                     System.out.println("Invalid: " + connection.getResponseMessage());
