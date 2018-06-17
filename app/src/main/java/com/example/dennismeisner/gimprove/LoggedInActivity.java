@@ -16,10 +16,17 @@ import android.view.MenuItem;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.dennismeisner.gimprove.GimproveModels.User;
+import com.example.dennismeisner.gimprove.ListContent.ListItem;
+import com.example.dennismeisner.gimprove.dummy.DummyContent;
+
 public class LoggedInActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+        implements NavigationView.OnNavigationItemSelectedListener,
+        HistoryFragment.OnListFragmentInteractionListener {
 
     private LiveFeedbackFragment liveFeedbackFragment;
+    private HistoryFragment historyFragment;
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +34,9 @@ public class LoggedInActivity extends AppCompatActivity
         setContentView(R.layout.activity_logged_in);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        user = User.getInstance();
+        user.setUserAttributes("Test");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -38,6 +48,7 @@ public class LoggedInActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         liveFeedbackFragment = new LiveFeedbackFragment();
+        historyFragment = new HistoryFragment();
 
         // load start fragment
         // Begin the transaction
@@ -85,13 +96,22 @@ public class LoggedInActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.tracking) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
+            ft.commit();
         } else if (id == R.id.history) {
-
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_placeholder, historyFragment);
+            ft.commit();
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    public void onListFragmentInteraction(ListItem listItem) {
+        System.out.println("CLICK: " + listItem.toString());
     }
 }
