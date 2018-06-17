@@ -10,6 +10,9 @@
         <item
             android:id="@+id/history"
             android:title="@string/history_view" />
+        <item
+            android:id="@+id/logout"
+            android:title="@string/logout_view" />
     </group>
 
 </menu>

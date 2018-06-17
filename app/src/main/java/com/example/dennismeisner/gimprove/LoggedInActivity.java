@@ -1,6 +1,7 @@
 package com.example.dennismeisner.gimprove;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -56,7 +57,7 @@ public class LoggedInActivity extends AppCompatActivity
 
         View header = navigationView.getHeaderView(0);
         TextView userNameField = (TextView) header.findViewById(R.id.nav_username);
-        userNameField.setText(sharedPreferences.getString("UserName", ""));
+        userNameField.setText("Hi " + sharedPreferences.getString("UserName", "").toString() + "!");
 
         liveFeedbackFragment = new LiveFeedbackFragment();
         historyFragment = new HistoryFragment();
@@ -114,6 +115,11 @@ public class LoggedInActivity extends AppCompatActivity
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_placeholder, historyFragment);
             ft.commit();
+        } else if (id == R.id.logout) {
+            sharedPreferences.edit().putString("Token", "").apply();
+            sharedPreferences.edit().putString("UserName", "").apply();
+            Intent systemcheckIntent = new Intent(this, SystemCheck.class);
+            startActivity(systemcheckIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
