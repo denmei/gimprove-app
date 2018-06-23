@@ -12,6 +12,8 @@ public class User {
     private String name;
     private int id;
     private List<TrainUnit> trainUnits;
+    private List<ExerciseUnit> exerciseUnits;
+    private List<Set> sets;
     private static User instance;
 
     private User () {
@@ -33,17 +35,25 @@ public class User {
         return this.id;
     }
 
+    public List<TrainUnit> getTrainUnits() {
+        return this.trainUnits;
+    }
+
     public void setUserAttributes(String name, int ID) {
         this.name = name;
         this.id = ID;
     }
 
-    public List<TrainUnit> getTrainUnits() {
-        return this.trainUnits;
-    }
-
     public void setTrainUnits(List<TrainUnit> trainUnits) {
         this.trainUnits = trainUnits;
+    }
+
+    public void setExerciseUnits(List<ExerciseUnit> exerciseUnits) {
+        this.exerciseUnits = exerciseUnits;
+    }
+
+    public void setSets(List<Set> sets) {
+        this.sets = sets;
     }
 
 }

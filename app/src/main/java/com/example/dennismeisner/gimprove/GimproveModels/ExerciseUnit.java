@@ -8,9 +8,12 @@ import java.util.LinkedList;
 public class ExerciseUnit extends ListItem {
 
     private LinkedList<Set> sets;
-
+    private String id;
+    private String time_date;
+    private String train_unit;
+    private String exercise;
     public ExerciseUnit() {
-        sets = new LinkedList<Set>();
+
     }
 
     @Override

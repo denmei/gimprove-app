@@ -60,7 +60,7 @@ public class LoggedInActivity extends AppCompatActivity
 
         userRepository = new UserRepository(requestManager, tokenManager.getToken(), this);
         try {
-            userRepository.updateTrainUnits();
+            userRepository.updateUser();
         } catch (Exception e) {
             e.printStackTrace();
         }

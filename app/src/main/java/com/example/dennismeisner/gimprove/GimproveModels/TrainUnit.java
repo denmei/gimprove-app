@@ -4,10 +4,11 @@ import com.example.dennismeisner.gimprove.ListContent.ListItem;
 
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 public class TrainUnit extends ListItem {
 
-    private LinkedList<ExerciseUnit> exerciseUnits;
+    private List<ExerciseUnit> exerciseUnits;
     private String id;
     private String start_time_date;
     private String end_time_date;
@@ -19,7 +20,7 @@ public class TrainUnit extends ListItem {
 
     @Override
     public String toString() {
-        return date.toString();
+        return start_time_date;
     }
 
     @Override

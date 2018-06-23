@@ -3,6 +3,8 @@ package com.example.dennismeisner.gimprove.Utilities;
 import android.content.Context;
 import android.media.session.MediaSession;
 
+import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
+import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.R;
@@ -48,7 +50,6 @@ public class UserRepository {
         webInterface.loadTrainUnits(this.token).enqueue(new Callback<List<TrainUnit>>() {
             @Override
             public void onResponse(Call<List<TrainUnit>> call, Response<List<TrainUnit>> response) {
-                System.out.println(response.body());
                 User.getInstance().setTrainUnits(response.body());
             }
 
@@ -58,5 +59,42 @@ public class UserRepository {
                 System.out.println(call.request().url());
             }
         });
+    }
+
+    public void updateExerciseUnits() throws IOException, JSONException {
+        webInterface.loadExerciseUnits(this.token).enqueue(new Callback<List<ExerciseUnit>>() {
+            @Override
+            public void onResponse(Call<List<ExerciseUnit>> call, Response<List<ExerciseUnit>> response) {
+                User.getInstance().setExerciseUnits(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<ExerciseUnit>> call, Throwable t) {
+                System.out.println(t.getMessage());
+                System.out.println(call.request().url());
+            }
+        });
+    }
+
+    public void updateSets() throws IOException, JSONException {
+        webInterface.loadSets(this.token).enqueue(new Callback<List<Set>>() {
+            @Override
+            public void onResponse(Call<List<Set>> call, Response<List<Set>> response) {
+                System.out.println(response.body());
+                User.getInstance().setSets(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<List<Set>> call, Throwable t) {
+                System.out.println(t.getMessage());
+                System.out.println(call.request().url());
+            }
+        });
+    }
+
+    public void updateUser() throws IOException, JSONException {
+        this.updateTrainUnits();
+        this.updateExerciseUnits();
+        this.updateSets();
     }
 }

@@ -1,5 +1,7 @@
 package com.example.dennismeisner.gimprove.Utilities;
 
+import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
+import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 
 import java.util.List;
@@ -14,4 +16,10 @@ public interface WebInterface {
 
     @GET("trainunit_list_rest/")
     Call<List<TrainUnit>> loadTrainUnits(@Header("Authorization") String token);
+
+    @GET("exerciseunit_list_rest/")
+    Call<List<ExerciseUnit>> loadExerciseUnits(@Header("Authorization") String token);
+
+    @GET("set_list_rest/")
+    Call<List<Set>> loadSets(@Header("Authorization") String token);
 }
