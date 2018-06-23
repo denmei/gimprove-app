@@ -10,13 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
-import com.example.dennismeisner.gimprove.dummy.DummyContent;
-import com.example.dennismeisner.gimprove.dummy.DummyContent.DummyItem;
-
-import java.util.List;
+import com.example.dennismeisner.gimprove.ListContent.MyHistoryRecyclerViewAdapter;
 
 /**
  * A fragment representing a list of Items.

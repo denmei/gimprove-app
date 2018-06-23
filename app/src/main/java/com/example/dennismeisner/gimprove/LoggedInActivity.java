@@ -22,7 +22,6 @@ import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
-import com.example.dennismeisner.gimprove.dummy.DummyContent;
 
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,

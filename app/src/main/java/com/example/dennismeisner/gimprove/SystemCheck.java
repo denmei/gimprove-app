@@ -85,6 +85,7 @@ public class SystemCheck extends AppCompatActivity {
                     HttpURLConnection connection = (HttpURLConnection) new
                             URL(getResources().getString(R.string.UserProfile)).openConnection();
                     String authString = "Token " + token;
+                    connection.setRequestMethod("GET");
                     connection.setRequestProperty ("Authorization", authString);
                     Scanner scanner = new Scanner(connection.getInputStream());
                     JSONObject resp = new JSONObject(scanner.useDelimiter("\\A").next());
