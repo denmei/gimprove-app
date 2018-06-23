@@ -27,4 +27,9 @@ public class TrainUnit extends ListItem {
     public String getContent() {
         return exerciseUnits.toString();
     }
+
+    @Override
+    public String getId() {
+        return id;
+    }
 }

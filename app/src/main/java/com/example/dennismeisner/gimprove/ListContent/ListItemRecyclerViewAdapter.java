@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
+import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment.OnListFragmentInteractionListener;
 import com.example.dennismeisner.gimprove.R;
 

@@ -9,4 +9,6 @@ public abstract class ListItem {
     public abstract String toString();
 
     public abstract String getContent();
+
+    public abstract String getId();
 }

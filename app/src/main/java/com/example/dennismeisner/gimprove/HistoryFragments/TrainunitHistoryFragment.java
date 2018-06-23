@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
 import com.example.dennismeisner.gimprove.R;
 
@@ -42,4 +43,5 @@ public class TrainunitHistoryFragment extends HistoryFragment {
         }
         return view;
     }
+
 }

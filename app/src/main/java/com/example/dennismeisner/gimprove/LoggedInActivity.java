@@ -17,9 +17,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
+import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.HistoryFragments.ExerciseUnitHistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.SetHistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.TrainunitHistoryFragment;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
@@ -33,6 +36,7 @@ public class LoggedInActivity extends AppCompatActivity
     private LiveFeedbackFragment liveFeedbackFragment;
     private HistoryFragment trainUnitHistoryFragment;
     private ExerciseUnitHistoryFragment exerciseUnitHistoryFragment;
+    private SetHistoryFragment setHistoryFragment;
     private User user;
     private SharedPreferences sharedPreferences;
     private TokenManager tokenManager;
@@ -78,6 +82,7 @@ public class LoggedInActivity extends AppCompatActivity
         liveFeedbackFragment = new LiveFeedbackFragment();
         trainUnitHistoryFragment = new TrainunitHistoryFragment();
         exerciseUnitHistoryFragment = new ExerciseUnitHistoryFragment();
+        setHistoryFragment = new SetHistoryFragment();
 
         // load start fragment
         // Begin the transaction
@@ -126,7 +131,7 @@ public class LoggedInActivity extends AppCompatActivity
 
         if (id == R.id.tracking) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_placeholder, liveFeedbackFragment);
+            ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
             ft.commit();
         } else if (id == R.id.history) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -146,9 +151,21 @@ public class LoggedInActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ListItem listItem) {
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.fragment_placeholder, exerciseUnitHistoryFragment);
-        ft.addToBackStack("TrainUnitFragment");
-        ft.commit();
+        Bundle bundle = new Bundle();
+        if (listItem instanceof TrainUnit) {
+            bundle.putString("TRAIN_UNIT", listItem.getId());
+            exerciseUnitHistoryFragment.setArguments(bundle);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_placeholder, exerciseUnitHistoryFragment);
+            ft.addToBackStack("TrainUnitFragment");
+            ft.commit();
+        } else if (listItem instanceof ExerciseUnit) {
+            bundle.putString("EXERCISE_UNIT", listItem.getId());
+            setHistoryFragment.setArguments(bundle);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_placeholder, setHistoryFragment);
+            ft.addToBackStack("ExerciseUnitFragment");
+            ft.commit();
+        }
     }
 }

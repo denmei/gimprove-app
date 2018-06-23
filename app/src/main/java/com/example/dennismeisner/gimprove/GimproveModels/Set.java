@@ -52,4 +52,13 @@ public class Set extends ListItem{
     public String getContent() {
         return null;
     }
+
+    @Override
+    public String getId() {
+        return id;
+    }
+
+    public String getExerciseUnit() {
+        return this.exercise_unit;
+    }
 }

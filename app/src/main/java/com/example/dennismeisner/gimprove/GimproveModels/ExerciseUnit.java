@@ -17,6 +17,10 @@ public class ExerciseUnit extends ListItem {
 
     }
 
+    public String getTrainUnit() {
+        return this.train_unit;
+    }
+
     @Override
     public String toString() {
         return exercise;
@@ -25,5 +29,10 @@ public class ExerciseUnit extends ListItem {
     @Override
     public String getContent() {
         return sets.toString();
+    }
+
+    @Override
+    public String getId() {
+        return id;
     }
 }

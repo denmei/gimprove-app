@@ -4,17 +4,10 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
-import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
-import com.example.dennismeisner.gimprove.R;
 
 /**
  * A fragment representing a list of Items.
@@ -37,7 +30,6 @@ public abstract class HistoryFragment extends Fragment implements View.OnClickLi
      */
     public HistoryFragment() {
     }
-
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

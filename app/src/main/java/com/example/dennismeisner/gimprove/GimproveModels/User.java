@@ -16,9 +16,7 @@ public class User {
     private List<Set> sets;
     private static User instance;
 
-    private User () {
-        // TODO: delete this:
-    }
+    private User () {}
 
     public static User getInstance() {
         if(User.instance == null) {
@@ -41,6 +39,26 @@ public class User {
 
     public List<ExerciseUnit> getExerciseUnits() {
         return this.exerciseUnits;
+    }
+
+    public List<ExerciseUnit> getExerciseUnitsByTrainUnit(String trainUnitId) {
+        List<ExerciseUnit> relevantUnits = new LinkedList<ExerciseUnit>();
+        for(ExerciseUnit unit:this.exerciseUnits) {
+            if(unit.getTrainUnit().equals(trainUnitId)) {
+                relevantUnits.add(unit);
+            }
+        }
+        return relevantUnits;
+    }
+
+    public List<Set> getSetsByExerciseUnits(String exerciseUnitId) {
+        List<Set> relevantUnits = new LinkedList<>();
+        for(Set set:this.sets) {
+            if(set.getExerciseUnit().equals(exerciseUnitId)) {
+                relevantUnits.add(set);
+            }
+        }
+        return relevantUnits;
     }
 
     public void setUserAttributes(String name, int ID) {
