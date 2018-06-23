@@ -7,12 +7,13 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.dennismeisner.gimprove.Utilities.RequestManager;
+import com.example.dennismeisner.gimprove.Utilities.ResponseObject;
+import com.example.dennismeisner.gimprove.Utilities.TokenManager;
+
 import org.json.JSONObject;
 
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Scanner;
 
 /**
  * Checks configuration when app is started.
@@ -32,6 +33,7 @@ public class SystemCheck extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
+        sharedPreferences.edit().putString("Token", "").apply();
     }
 
     protected void onStart() {
@@ -40,7 +42,7 @@ public class SystemCheck extends AppCompatActivity {
         Boolean hasToken = false;
 
         String token = sharedPreferences.getString("Token", "");
-        tokenChecker = new TokenChecker(token, sharedPreferences);
+        tokenChecker = new TokenChecker(token, sharedPreferences, this);
 
         // check token
         tokenChecker.execute();
@@ -68,10 +70,14 @@ public class SystemCheck extends AppCompatActivity {
 
         private final String token;
         private final SharedPreferences sharedPreferences;
+        private TokenManager tokenManager;
+        private RequestManager requestManager;
 
-        TokenChecker(String inToken, SharedPreferences sharedPrefs) {
+        TokenChecker(String inToken, SharedPreferences sharedPrefs, Context context) {
             token = inToken;
             sharedPreferences = sharedPrefs;
+            tokenManager = new TokenManager(sharedPreferences);
+            requestManager = new RequestManager(context, tokenManager);
         }
 
         @Override
@@ -82,16 +88,11 @@ public class SystemCheck extends AppCompatActivity {
 
                 try {
                     // Check whether token is (still) valid by making a http-Request.
-                    HttpURLConnection connection = (HttpURLConnection) new
-                            URL(getResources().getString(R.string.UserProfile)).openConnection();
-                    String authString = "Token " + token;
-                    connection.setRequestMethod("GET");
-                    connection.setRequestProperty ("Authorization", authString);
-                    Scanner scanner = new Scanner(connection.getInputStream());
-                    JSONObject resp = new JSONObject(scanner.useDelimiter("\\A").next());
-                    int responseCode = connection.getResponseCode();
-                    if(responseCode == 200 || responseCode == 201) {
+                    ResponseObject response = requestManager.getRequest(new
+                            URL(getResources().getString(R.string.UserProfile)));
+                    if(response.getResponseCode() == 200 || response.getResponseCode() == 201) {
                         // Update sharedPreferences
+                        JSONObject resp = response.getResponseContent();
                         sharedPreferences.edit().putString("user", resp.getString("user")).apply();
                         sharedPreferences.edit().putString("rfid_tag", resp.getString("rfid_tag")).apply();
                         sharedPreferences.edit().putString("date_of_birth", resp.getString("date_of_birth")).apply();

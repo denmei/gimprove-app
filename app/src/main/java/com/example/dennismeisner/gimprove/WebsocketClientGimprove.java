@@ -1,15 +1,11 @@
 package com.example.dennismeisner.gimprove;
 
-import org.java_websocket.WebSocketImpl;
+import com.example.dennismeisner.gimprove.Utilities.TokenManager;
+
 import org.java_websocket.client.WebSocketClient;
-import org.java_websocket.drafts.Draft;
-import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.net.Socket;
 import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 

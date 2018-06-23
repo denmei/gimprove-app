@@ -1,11 +1,10 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Utilities;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 
 public class TokenManager {
 
-    private static TokenManager instance;
+    // private static TokenManager instance;
     private String token;
     private SharedPreferences sharedPreferences;
 

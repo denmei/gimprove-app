@@ -4,7 +4,6 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
@@ -25,8 +24,6 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -35,6 +32,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
+import com.example.dennismeisner.gimprove.Utilities.ResponseObject;
+import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 
 import org.json.JSONObject;
 
@@ -47,7 +46,9 @@ import java.net.URL;
 
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static android.Manifest.permission.READ_CONTACTS;
 
@@ -81,6 +82,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
     private View mLoginFormView;
     private SharedPreferences sharedPreferences;
     private RequestManager requestManager;
+    private TokenManager tokenManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,7 +96,9 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
-        requestManager = new RequestManager(this);
+
+        tokenManager = new TokenManager(sharedPreferences);
+        requestManager = new RequestManager(this, tokenManager);
 
         // Set up the login form.
         mUserNameView = findViewById(R.id.username);
@@ -215,7 +219,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
             showProgress(true);
-            mAuthTask = new UserLoginTask(username, password, this.sharedPreferences);
+            mAuthTask = new UserLoginTask(username, password, this.sharedPreferences, this);
             mAuthTask.execute((Void) null);
         }
     }
@@ -328,23 +332,33 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
         private final String mUserName;
         private final String mPassword;
-        private String token;
         private SharedPreferences preferences;
+        private TokenManager tokenManager;
+        private RequestManager requestManager;
 
 
-        UserLoginTask(String username, String password, SharedPreferences prefs) {
+        UserLoginTask(String username, String password, SharedPreferences prefs, Context context) {
             mUserName = username;
             mPassword = password;
             preferences = prefs;
-            token = "";
+            tokenManager = new TokenManager(preferences);
+            requestManager = new RequestManager(context, tokenManager);
         }
 
         @Override
         protected Boolean doInBackground(Void... params) {
             Boolean success = false;
             try {
+                URL requestURL = new URL(getResources().getString(R.string.AuthToken));
+                Map<String, String> requestData = new HashMap<>();
+                requestData.put("username", this.mUserName);
+                requestData.put("password", this.mPassword);
+                ResponseObject response = requestManager.postRequest(requestData, requestURL);
+                System.out.println(response.getResponseContent());
+                System.out.println(response.getResponseCode());
                 // http://gimprove-test.herokuapp.com/get_auth_token/
                 // http://127.0.0.1:8000/get_auth_token/
+                /*
                 HttpURLConnection connection = (HttpURLConnection) new
                         URL(getResources().getString(R.string.AuthToken)).openConnection();
                 connection.setDoOutput(true);
@@ -356,25 +370,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 output.write(data);
                 output.flush();
                 output.close();
-
+                */
                 // if request successful, get and save token.
-                if(connection.getResponseCode() == 200 || connection.getResponseCode() == 201) {
-                    BufferedReader rd = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                    String line;
-                    String response = "";
-                    StringBuilder sb = new StringBuilder();
-                    while ((line = rd.readLine()) != null) {
-                        response = sb.append(response).append(line).toString();
-                    }
-                    rd.close();
+                if(response.getResponseCode() == 200 || response.getResponseCode() == 201) {
                     success = true;
-                    this.token = new JSONObject(response).getString("token");
-                    preferences.edit().putString("Token", this.token).apply();
+                    String token = response.getResponseContent().getString("token");
+                    preferences.edit().putString("Token", token).apply();
                     preferences.edit().putString("UserName", this.mUserName).apply();
-                // TODO: Replace print-statement by logger
-                } else {
-                    System.out.println("Invalid: " + connection.getResponseMessage());
+                    // TODO: Replace print-statement by logger
                 }
+
             } catch (Exception e) {
                 System.out.println("Exception: " + e.toString());
                 return false;
