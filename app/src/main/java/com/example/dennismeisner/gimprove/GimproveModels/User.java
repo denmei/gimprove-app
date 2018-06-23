@@ -1,5 +1,8 @@
 package com.example.dennismeisner.gimprove.GimproveModels;
 
+import com.example.dennismeisner.gimprove.Utilities.RequestManager;
+
+import java.net.URL;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -14,7 +17,7 @@ public class User {
         trainUnits = new LinkedList<TrainUnit>();
         TrainUnit testUnit = new TrainUnit(new Date());
         trainUnits.add(testUnit);
-    };
+    }
 
     public static User getInstance() {
         if(User.instance == null) {
@@ -34,4 +37,9 @@ public class User {
     public LinkedList<TrainUnit> getTrainUnits() {
         return this.trainUnits;
     }
+
+    public void setTrainUnits(LinkedList<TrainUnit> trainUnits) {
+        this.trainUnits = trainUnits;
+    }
+
 }

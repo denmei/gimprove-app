@@ -353,7 +353,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Map<String, String> requestData = new HashMap<>();
                 requestData.put("username", this.mUserName);
                 requestData.put("password", this.mPassword);
-                ResponseObject response = requestManager.postRequest(requestData, requestURL);
+                ResponseObject response = requestManager.postRequestNoToken(requestData, requestURL);
                 System.out.println(response.getResponseContent());
                 System.out.println(response.getResponseCode());
                 // http://gimprove-test.herokuapp.com/get_auth_token/

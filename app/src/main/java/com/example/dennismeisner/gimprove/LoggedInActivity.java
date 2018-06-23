@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
+import com.example.dennismeisner.gimprove.Utilities.RequestManager;
+import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -31,6 +33,8 @@ public class LoggedInActivity extends AppCompatActivity
     private HistoryFragment historyFragment;
     private User user;
     private SharedPreferences sharedPreferences;
+    private TokenManager tokenManager;
+    private RequestManager requestManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +45,12 @@ public class LoggedInActivity extends AppCompatActivity
 
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
+        tokenManager = new TokenManager(sharedPreferences);
+        requestManager = new RequestManager(this, tokenManager);
 
         user = User.getInstance();
-        user.setUserAttributes(sharedPreferences.getString("UserName", "UserName"));
+        user.setUserAttributes(sharedPreferences.getString("UserName", "UserName"),
+                requestManager);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
