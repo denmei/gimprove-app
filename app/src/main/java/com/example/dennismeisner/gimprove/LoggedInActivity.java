@@ -1,5 +1,6 @@
 package com.example.dennismeisner.gimprove;
 
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,12 +43,13 @@ public class LoggedInActivity extends AppCompatActivity
     private TokenManager tokenManager;
     private RequestManager requestManager;
     private UserRepository userRepository;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         sharedPreferences = this.getSharedPreferences(
@@ -149,6 +151,10 @@ public class LoggedInActivity extends AppCompatActivity
         return true;
     }
 
+    public void setActionBarTitle(String title) {
+        this.toolbar.setTitle(title);
+    }
+
     @Override
     public void onListFragmentInteraction(ListItem listItem) {
         Bundle bundle = new Bundle();
@@ -161,6 +167,7 @@ public class LoggedInActivity extends AppCompatActivity
             ft.commit();
         } else if (listItem instanceof ExerciseUnit) {
             bundle.putString("EXERCISE_UNIT", listItem.getId());
+            bundle.putString("EXERCISE_UNIT_NAME", listItem.toString());
             setHistoryFragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.fragment_placeholder, setHistoryFragment);

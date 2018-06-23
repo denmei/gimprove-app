@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
+import com.example.dennismeisner.gimprove.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
 
 import java.util.List;
@@ -28,6 +29,15 @@ public class ExerciseUnitHistoryFragment extends HistoryFragment {
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getActivity() instanceof LoggedInActivity) {
+            ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
+                    .getString(R.string.actionbar_history_exerciseunits));
+        }
     }
 
     @Override

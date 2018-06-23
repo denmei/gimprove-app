@@ -13,6 +13,7 @@ import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
+import com.example.dennismeisner.gimprove.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
 
 import java.util.List;
@@ -20,6 +21,7 @@ import java.util.List;
 public class SetHistoryFragment extends HistoryFragment {
 
     private final static String EXERCISE_UNIT="EXERCISE_UNIT";
+    private final static String EXERCISE_UNIT_NAME="EXERCISE_UNIT_NAME";
 
     // TODO: Customize parameter initialization
     @SuppressWarnings("unused")
@@ -29,6 +31,15 @@ public class SetHistoryFragment extends HistoryFragment {
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getActivity() instanceof LoggedInActivity) {
+            String exerciseUnitName = getArguments().getString(EXERCISE_UNIT_NAME, "");
+            ((LoggedInActivity) getActivity()).setActionBarTitle(exerciseUnitName);
+        }
     }
 
     @Override

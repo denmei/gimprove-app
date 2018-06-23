@@ -32,8 +32,6 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     private TextView weightText;
     private boolean active;
     private Button connectButton;
-    private String serverLink;
-    private String token;
     private int lastRep;
     private TokenManager tokenManager;
     private SharedPreferences sharedPreferences;
@@ -111,6 +109,15 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getActivity() instanceof LoggedInActivity) {
+            ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
+                    .getString(R.string.actionbar_live_tracking));
+        }
     }
 
     @Override

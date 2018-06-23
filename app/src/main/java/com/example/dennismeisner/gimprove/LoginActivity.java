@@ -356,21 +356,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 ResponseObject response = requestManager.postRequestNoToken(requestData, requestURL);
                 System.out.println(response.getResponseContent());
                 System.out.println(response.getResponseCode());
-                // http://gimprove-test.herokuapp.com/get_auth_token/
-                // http://127.0.0.1:8000/get_auth_token/
-                /*
-                HttpURLConnection connection = (HttpURLConnection) new
-                        URL(getResources().getString(R.string.AuthToken)).openConnection();
-                connection.setDoOutput(true);
-                OutputStreamWriter output = new OutputStreamWriter(connection.getOutputStream());
-                String data = URLEncoder.encode("username", "UTF-8") + "="
-                        + URLEncoder.encode(this.mUserName, "UTF-8");
-                data += "&" + URLEncoder.encode("password", "UTF-8") + "="
-                        + URLEncoder.encode(this.mPassword, "UTF-8");
-                output.write(data);
-                output.flush();
-                output.close();
-                */
+
                 // if request successful, get and save token.
                 if(response.getResponseCode() == 200 || response.getResponseCode() == 201) {
                     success = true;
