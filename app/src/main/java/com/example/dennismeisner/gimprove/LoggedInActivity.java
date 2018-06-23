@@ -24,6 +24,11 @@ import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
+import com.example.dennismeisner.gimprove.Utilities.UserRepository;
+
+import org.json.JSONException;
+
+import java.io.IOException;
 
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -35,6 +40,7 @@ public class LoggedInActivity extends AppCompatActivity
     private SharedPreferences sharedPreferences;
     private TokenManager tokenManager;
     private RequestManager requestManager;
+    private UserRepository userRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +56,14 @@ public class LoggedInActivity extends AppCompatActivity
 
         user = User.getInstance();
         user.setUserAttributes(sharedPreferences.getString("UserName", "UserName"),
-                requestManager);
+                sharedPreferences.getInt("userid", 0));
+
+        userRepository = new UserRepository(requestManager, tokenManager.getToken(), this);
+        try {
+            userRepository.updateTrainUnits();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(

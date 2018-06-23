@@ -1,7 +1,9 @@
 package com.example.dennismeisner.gimprove;
 
+import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.view.ViewGroup;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.ListContent.MyHistoryRecyclerViewAdapter;
+import com.example.dennismeisner.gimprove.ViewModels.UserViewModel;
 
 /**
  * A fragment representing a list of Items.
@@ -28,6 +31,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private User user;
+    private UserViewModel viewModel;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -47,6 +51,11 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     }
 
     @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -54,6 +63,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         this.user = User.getInstance();
+
     }
 
     @Override

@@ -8,11 +8,13 @@ import java.util.LinkedList;
 public class TrainUnit extends ListItem {
 
     private LinkedList<ExerciseUnit> exerciseUnits;
-    private Date date;
+    private String id;
+    private String start_time_date;
+    private String end_time_date;
+    private int user;
 
-    public TrainUnit(Date date) {
+    public TrainUnit(String id, String start_time_date, String end_time_date, Date date, int user) {
         // TODO: extend
-        this.date = date;
     }
 
     @Override

@@ -8,7 +8,6 @@ import java.util.LinkedList;
 public class ExerciseUnit extends ListItem {
 
     private LinkedList<Set> sets;
-    private Date date;
 
     public ExerciseUnit() {
         sets = new LinkedList<Set>();

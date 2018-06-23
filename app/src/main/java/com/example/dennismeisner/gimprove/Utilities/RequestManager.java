@@ -1,6 +1,7 @@
 package com.example.dennismeisner.gimprove.Utilities;
 
 import android.content.Context;
+import android.os.AsyncTask;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -19,7 +20,7 @@ import org.json.JSONObject;
 /**
  * Helper class that provides possibility to make HTTP-Requests.
  */
-public class RequestManager {
+public class RequestManager extends AsyncTask<Void, Void, Boolean> {
 
     private Context context;
     private TokenManager tokenManager;
@@ -155,6 +156,11 @@ public class RequestManager {
         rd.close();
         JSONObject responseContent = new JSONObject(response);
         return new ResponseObject(responseCode, responseContent);
+    }
+
+    @Override
+    protected Boolean doInBackground(Void... voids) {
+        return null;
     }
 
     /**

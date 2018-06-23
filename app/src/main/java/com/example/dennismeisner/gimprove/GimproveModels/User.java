@@ -5,18 +5,17 @@ import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import java.net.URL;
 import java.util.Date;
 import java.util.LinkedList;
+import java.util.List;
 
 public class User {
 
     private String name;
-    private LinkedList<TrainUnit> trainUnits;
+    private int id;
+    private List<TrainUnit> trainUnits;
     private static User instance;
 
     private User () {
         // TODO: delete this:
-        trainUnits = new LinkedList<TrainUnit>();
-        TrainUnit testUnit = new TrainUnit(new Date());
-        trainUnits.add(testUnit);
     }
 
     public static User getInstance() {
@@ -30,15 +29,20 @@ public class User {
         return name;
     }
 
-    public void setUserAttributes(String name) {
-        this.name = name;
+    public int getId() {
+        return this.id;
     }
 
-    public LinkedList<TrainUnit> getTrainUnits() {
+    public void setUserAttributes(String name, int ID) {
+        this.name = name;
+        this.id = ID;
+    }
+
+    public List<TrainUnit> getTrainUnits() {
         return this.trainUnits;
     }
 
-    public void setTrainUnits(LinkedList<TrainUnit> trainUnits) {
+    public void setTrainUnits(List<TrainUnit> trainUnits) {
         this.trainUnits = trainUnits;
     }
 

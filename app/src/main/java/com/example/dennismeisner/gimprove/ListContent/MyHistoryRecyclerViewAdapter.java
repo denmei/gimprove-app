@@ -10,6 +10,7 @@ import com.example.dennismeisner.gimprove.HistoryFragment.OnListFragmentInteract
 import com.example.dennismeisner.gimprove.R;
 
 import java.util.LinkedList;
+import java.util.List;
 
 /**
  * {@link RecyclerView.Adapter} that can display an item and makes a call to the
@@ -18,10 +19,10 @@ import java.util.LinkedList;
  */
 public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
 
-    private final LinkedList<ListItem> mValues;
+    private final List<ListItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyHistoryRecyclerViewAdapter(LinkedList items, OnListFragmentInteractionListener listener) {
+    public MyHistoryRecyclerViewAdapter(List items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

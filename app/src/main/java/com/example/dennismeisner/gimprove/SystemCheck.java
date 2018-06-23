@@ -33,7 +33,6 @@ public class SystemCheck extends AppCompatActivity {
 
         sharedPreferences = this.getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
-        sharedPreferences.edit().putString("Token", "").apply();
     }
 
     protected void onStart() {
@@ -93,7 +92,7 @@ public class SystemCheck extends AppCompatActivity {
                     if(response.getResponseCode() == 200 || response.getResponseCode() == 201) {
                         // Update sharedPreferences
                         JSONObject resp = response.getResponseContent();
-                        sharedPreferences.edit().putString("user", resp.getString("user")).apply();
+                        sharedPreferences.edit().putInt("userid", resp.getInt("user")).apply();
                         sharedPreferences.edit().putString("rfid_tag", resp.getString("rfid_tag")).apply();
                         sharedPreferences.edit().putString("date_of_birth", resp.getString("date_of_birth")).apply();
                         sharedPreferences.edit().putString("gym", resp.getString("gym")).apply();
