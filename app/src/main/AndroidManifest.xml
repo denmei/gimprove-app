@@ -19,19 +19,26 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".SystemCheck">
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".SystemCheck"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".NavigationActivity" />
+        <activity
+            android:name=".NavigationActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name=".LoggedInActivity"
             android:label="@string/title_activity_logged_in"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
     </application>
 

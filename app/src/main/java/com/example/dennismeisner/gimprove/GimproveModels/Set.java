@@ -42,9 +42,8 @@ public class Set extends ListItem{
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("");
-        builder.append(date_time + " ");
-        builder.append(repetitions+ " ");
-        builder.append(weight);
+        builder.append("Repetitions: " + repetitions + " - ");
+        builder.append("Weight: " + weight);
         return builder.toString();
     }
 

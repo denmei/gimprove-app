@@ -5,8 +5,8 @@
         <item name="windowNoTitle">true</item>
     </style>
 
-    <style name="Text">
-        <item name="android:color">@color/gimproveWhite</item>
+    <style name="HistoryListText">
+        <item name="android:textColor">@color/gimproveWhite</item>
         <item name="android:textSize">18sp</item>
     </style>
 
