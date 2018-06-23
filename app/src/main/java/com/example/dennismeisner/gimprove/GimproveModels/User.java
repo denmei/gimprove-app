@@ -39,6 +39,10 @@ public class User {
         return this.trainUnits;
     }
 
+    public List<ExerciseUnit> getExerciseUnits() {
+        return this.exerciseUnits;
+    }
+
     public void setUserAttributes(String name, int ID) {
         this.name = name;
         this.id = ID;

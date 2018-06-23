@@ -6,10 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.dennismeisner.gimprove.HistoryFragment.OnListFragmentInteractionListener;
+import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment.OnListFragmentInteractionListener;
 import com.example.dennismeisner.gimprove.R;
 
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -17,12 +16,12 @@ import java.util.List;
  * specified {@link OnListFragmentInteractionListener}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyHistoryRecyclerViewAdapter extends RecyclerView.Adapter<MyHistoryRecyclerViewAdapter.ViewHolder> {
+public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRecyclerViewAdapter.ViewHolder> {
 
     private final List<ListItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public MyHistoryRecyclerViewAdapter(List items, OnListFragmentInteractionListener listener) {
+    public ListItemRecyclerViewAdapter(List items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }

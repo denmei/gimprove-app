@@ -1,6 +1,5 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.HistoryFragments;
 
-import android.arch.lifecycle.ViewModelProvider;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -14,8 +13,8 @@ import android.view.ViewGroup;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
-import com.example.dennismeisner.gimprove.ListContent.MyHistoryRecyclerViewAdapter;
-import com.example.dennismeisner.gimprove.ViewModels.UserViewModel;
+import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
+import com.example.dennismeisner.gimprove.R;
 
 /**
  * A fragment representing a list of Items.
@@ -23,15 +22,14 @@ import com.example.dennismeisner.gimprove.ViewModels.UserViewModel;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class HistoryFragment extends Fragment implements View.OnClickListener {
+public abstract class HistoryFragment extends Fragment implements View.OnClickListener {
 
     // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
+    protected static final String ARG_COLUMN_COUNT = "column-count";
     // TODO: Customize parameters
-    private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
-    private User user;
-    private UserViewModel viewModel;
+    protected int mColumnCount = 1;
+    protected OnListFragmentInteractionListener mListener;
+    protected User user;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -40,15 +38,6 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
     public HistoryFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static HistoryFragment newInstance(int columnCount) {
-        HistoryFragment fragment = new HistoryFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -63,28 +52,7 @@ public class HistoryFragment extends Fragment implements View.OnClickListener {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
         this.user = User.getInstance();
-
     }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            recyclerView.setAdapter(new MyHistoryRecyclerViewAdapter(user.getTrainUnits(), mListener));
-        }
-        return view;
-    }
-
 
     @Override
     public void onAttach(Context context) {

@@ -12,13 +12,14 @@ public class ExerciseUnit extends ListItem {
     private String time_date;
     private String train_unit;
     private String exercise;
+
     public ExerciseUnit() {
 
     }
 
     @Override
     public String toString() {
-        return date.toString();
+        return exercise;
     }
 
     @Override

@@ -4,8 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -16,26 +15,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
+import com.example.dennismeisner.gimprove.HistoryFragments.ExerciseUnitHistoryFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.TrainunitHistoryFragment;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 import com.example.dennismeisner.gimprove.Utilities.UserRepository;
-
-import org.json.JSONException;
-
-import java.io.IOException;
 
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HistoryFragment.OnListFragmentInteractionListener {
 
     private LiveFeedbackFragment liveFeedbackFragment;
-    private HistoryFragment historyFragment;
+    private HistoryFragment trainUnitHistoryFragment;
+    private ExerciseUnitHistoryFragment exerciseUnitHistoryFragment;
     private User user;
     private SharedPreferences sharedPreferences;
     private TokenManager tokenManager;
@@ -79,7 +76,8 @@ public class LoggedInActivity extends AppCompatActivity
         userNameField.setText("Hi " + sharedPreferences.getString("UserName", "").toString() + "!");
 
         liveFeedbackFragment = new LiveFeedbackFragment();
-        historyFragment = new HistoryFragment();
+        trainUnitHistoryFragment = new TrainunitHistoryFragment();
+        exerciseUnitHistoryFragment = new ExerciseUnitHistoryFragment();
 
         // load start fragment
         // Begin the transaction
@@ -90,11 +88,11 @@ public class LoggedInActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        if (fragmentManager.getBackStackEntryCount() == 0) {
             finish();
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -128,11 +126,11 @@ public class LoggedInActivity extends AppCompatActivity
 
         if (id == R.id.tracking) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
+            ft.add(R.id.fragment_placeholder, liveFeedbackFragment);
             ft.commit();
         } else if (id == R.id.history) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_placeholder, historyFragment);
+            ft.add(R.id.fragment_placeholder, trainUnitHistoryFragment, "TrainUnitFragment");
             ft.commit();
         } else if (id == R.id.logout) {
             sharedPreferences.edit().putString("Token", "").apply();
@@ -148,6 +146,9 @@ public class LoggedInActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(ListItem listItem) {
-        System.out.println("CLICK: " + listItem.toString());
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_placeholder, exerciseUnitHistoryFragment);
+        ft.addToBackStack("TrainUnitFragment");
+        ft.commit();
     }
 }

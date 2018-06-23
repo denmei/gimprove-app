@@ -8,5 +8,5 @@
     android:layout_height="match_parent"
     android:background="@color/gimproveGray"
     app:layoutManager="LinearLayoutManager"
-    tools:context=".HistoryFragment"
+    tools:context=".HistoryFragments.HistoryFragment"
     tools:listitem="@layout/fragment_history" />
