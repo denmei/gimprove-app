@@ -65,6 +65,7 @@ public class LoggedInActivity extends AppCompatActivity
         user.setUserAttributes(sharedPreferences.getString("UserName", "UserName"),
                 sharedPreferences.getInt("userid", 0));
 
+
         userRepository = new UserRepository(requestManager, tokenManager.getToken(), this);
         try {
             userRepository.updateUser();
@@ -137,7 +138,7 @@ public class LoggedInActivity extends AppCompatActivity
 
         if (id == R.id.tracking) {
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
+            ft.replace(R.id.fragment_placeholder, liveFeedbackFragment, "LiveFeedbackFragment");
             ft.commit();
         } else if (id == R.id.history) {
             // TODO: Remove this update. Update only if user requests.
@@ -148,6 +149,7 @@ public class LoggedInActivity extends AppCompatActivity
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment_placeholder, trainUnitHistoryFragment, "TrainUnitFragment");
+            ft.addToBackStack("LiveFeedbackFragment");
             ft.commit();
         } else if (id == R.id.logout) {
             sharedPreferences.edit().putString("Token", "").apply();

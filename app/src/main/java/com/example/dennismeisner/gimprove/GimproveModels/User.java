@@ -69,15 +69,12 @@ public class User {
      * @return List of Sets that belong to the specified ExerciseUnit.
      */
     public List<Set> getSetsByExerciseUnits(String exerciseUnitId) {
-        System.out.println(exerciseUnitId);
         List<Set> relevantUnits = new LinkedList<>();
         for(Set set:this.sets) {
-            System.out.println(set.getExerciseUnit());
             if(set.getExerciseUnit().equals(exerciseUnitId)) {
                 relevantUnits.add(set);
             }
         }
-        System.out.println(relevantUnits);
         return relevantUnits;
     }
 
@@ -88,15 +85,10 @@ public class User {
      * @throws UserInitializationException: Is thrown if the method is tried to be executed more
      * than once.
      */
-    public void setUserAttributes(String name, int ID) throws UserInitializationException {
-        if (!this.initialized) {
-            this.name = name;
-            this.id = ID;
-            this.initialized = true;
-        } else {
-            throw new UserInitializationException("User has already been initialized! Can only be " +
-                    "initialized once.");
-        }
+    public void setUserAttributes(String name, int ID) {
+        this.name = name;
+        this.id = ID;
+        // this.initialized = true;
     }
 
     public void setTrainUnits(List<TrainUnit> trainUnits) {
