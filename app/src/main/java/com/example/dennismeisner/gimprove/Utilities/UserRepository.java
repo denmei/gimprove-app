@@ -80,7 +80,6 @@ public class UserRepository {
         webInterface.loadSets(this.token).enqueue(new Callback<List<Set>>() {
             @Override
             public void onResponse(Call<List<Set>> call, Response<List<Set>> response) {
-                System.out.println(response.body());
                 User.getInstance().setSets(response.body());
             }
 

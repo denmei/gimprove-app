@@ -30,6 +30,10 @@ import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 import com.example.dennismeisner.gimprove.Utilities.UserRepository;
 
+import org.json.JSONException;
+
+import java.io.IOException;
+
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HistoryFragment.OnListFragmentInteractionListener {
@@ -136,6 +140,12 @@ public class LoggedInActivity extends AppCompatActivity
             ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
             ft.commit();
         } else if (id == R.id.history) {
+            // TODO: Remove this update. Update only if user requests.
+            try {
+                userRepository.updateTrainUnits();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.add(R.id.fragment_placeholder, trainUnitHistoryFragment, "TrainUnitFragment");
             ft.commit();
@@ -159,6 +169,12 @@ public class LoggedInActivity extends AppCompatActivity
     public void onListFragmentInteraction(ListItem listItem) {
         Bundle bundle = new Bundle();
         if (listItem instanceof TrainUnit) {
+            // TODO: Remove this update. Update only if user requests.
+            try {
+                userRepository.updateExerciseUnits();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             bundle.putString("TRAIN_UNIT", listItem.getId());
             exerciseUnitHistoryFragment.setArguments(bundle);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -166,6 +182,12 @@ public class LoggedInActivity extends AppCompatActivity
             ft.addToBackStack("TrainUnitFragment");
             ft.commit();
         } else if (listItem instanceof ExerciseUnit) {
+            // TODO: Remove this update. Update only if user requests.
+            try {
+                userRepository.updateSets();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
             bundle.putString("EXERCISE_UNIT", listItem.getId());
             bundle.putString("EXERCISE_UNIT_NAME", listItem.toString());
             setHistoryFragment.setArguments(bundle);

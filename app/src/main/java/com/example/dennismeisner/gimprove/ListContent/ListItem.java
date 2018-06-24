@@ -1,14 +1,22 @@
 package com.example.dennismeisner.gimprove.ListContent;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public abstract class ListItem {
 
     public Date date;
+    protected SimpleDateFormat timestampFormat = new SimpleDateFormat("yyyy-mm-dd'T'hh:mm:ss.ssssssX");
+    protected SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
 
     public abstract String toString();
 
     public abstract String getContent();
 
     public abstract String getId();
+
+    public Date parseTimestamp(String timeStamp) throws ParseException {
+        return timestampFormat.parse(timeStamp);
+    }
 }
