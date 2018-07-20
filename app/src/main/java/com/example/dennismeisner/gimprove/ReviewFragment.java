@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 
 /**
@@ -24,6 +25,12 @@ public class ReviewFragment extends Fragment {
     private Integer repetitions;
     private Double weight;
     private Button continueButton;
+
+    private Button incrRepsButton;
+    private Button decrRepsButton;
+
+    private TextView weightText;
+    private TextView repsText;
 
     private OnReviewDoneListener mListener;
 
@@ -56,6 +63,17 @@ public class ReviewFragment extends Fragment {
         }
     }
 
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(getActivity() instanceof LoggedInActivity) {
+            exerciseName = getArguments().getString("exerciseName", "");
+            repetitions = getArguments().getInt("repetitions");
+            weight = getArguments().getDouble("weight");
+        }
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -65,13 +83,41 @@ public class ReviewFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        // Initialize Connect-Button
+
+        repsText = (TextView) view.findViewById(R.id.textReps);
+        repsText.setText(String.valueOf(repetitions));
+
+        // Initialize continue-Button
         continueButton = (Button) view.findViewById(R.id.continueButton);
         this.continueButton.setOnClickListener(
                 new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         mListener.onReviewDone();
+                    }
+                }
+        );
+
+        incrRepsButton = (Button) view.findViewById(R.id.buttonIncRep);
+        this.incrRepsButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Integer reps = Integer.parseInt(repsText.getText().toString());
+                        repsText.setText(String.valueOf(reps + 1));
+                    }
+                }
+        );
+
+        decrRepsButton = (Button) view.findViewById(R.id.buttonDecRep);
+        this.decrRepsButton.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Integer reps = Integer.parseInt(repsText.getText().toString());
+                        if (reps > 0) {
+                            repsText.setText(String.valueOf(reps - 1));
+                        }
                     }
                 }
         );
