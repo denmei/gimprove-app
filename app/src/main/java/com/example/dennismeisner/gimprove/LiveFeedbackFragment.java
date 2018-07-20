@@ -26,6 +26,7 @@ import at.grabner.circleprogress.TextMode;
 
 public class LiveFeedbackFragment extends Fragment implements SocketListener {
 
+    OnSetFinishedListener mCallback;
     private WebsocketClientGimprove client;
     private CircleProgressView progressCircle;
     private TextView exerciseName;
@@ -64,7 +65,6 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
         sharedPreferences = getActivity().getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
         tokenManager = new TokenManager(sharedPreferences);
-        System.out.println(tokenManager.getToken());
         Map<String, String> header = new HashMap<String, String>();
         header.put("authorization", "Token " + this.tokenManager.getToken());
         try {
@@ -109,6 +109,13 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+
+        if (context instanceof OnSetFinishedListener) {
+            mCallback = (OnSetFinishedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnSetFinishedListener");
+        }
     }
 
     @Override
@@ -178,6 +185,10 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                     Boolean end = jsonMessage.getBoolean("end");
                     if(end) {
                         resetProgress();
+                        String name = jsonMessage.getString("exercise_name");
+                        Double weight = jsonMessage.getDouble("weight");
+                        Integer repetitions = jsonMessage.getInt("repetitions");
+                        mCallback.onSetFinished(name, repetitions, weight);
                     } else {
                         if(!active) {
                             String name = jsonMessage.getString("exercise_name");
@@ -222,5 +233,10 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                 connectButton.setBackgroundColor(getResources().getColor(R.color.gimproveGray));
             }
         });
+    }
+
+    // Container-Activity must implement this interface.
+    public interface OnSetFinishedListener {
+        public void onSetFinished(String exerciseName, Integer repetitions, Double weight);
     }
 }

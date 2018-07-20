@@ -36,12 +36,14 @@ import java.io.IOException;
 
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        HistoryFragment.OnListFragmentInteractionListener {
+        HistoryFragment.OnListFragmentInteractionListener, LiveFeedbackFragment.OnSetFinishedListener,
+        ReviewFragment.OnReviewDoneListener {
 
     private LiveFeedbackFragment liveFeedbackFragment;
     private HistoryFragment trainUnitHistoryFragment;
     private ExerciseUnitHistoryFragment exerciseUnitHistoryFragment;
     private SetHistoryFragment setHistoryFragment;
+    private ReviewFragment reviewFragment;
     private User user;
     private SharedPreferences sharedPreferences;
     private TokenManager tokenManager;
@@ -90,6 +92,7 @@ public class LoggedInActivity extends AppCompatActivity
         trainUnitHistoryFragment = new TrainunitHistoryFragment();
         exerciseUnitHistoryFragment = new ExerciseUnitHistoryFragment();
         setHistoryFragment = new SetHistoryFragment();
+        reviewFragment = new ReviewFragment();
 
         // load start fragment
         // Begin the transaction
@@ -165,6 +168,24 @@ public class LoggedInActivity extends AppCompatActivity
 
     public void setActionBarTitle(String title) {
         this.toolbar.setTitle(title);
+    }
+
+    public void onSetFinished(String exerciseName, Integer repetitions, Double weight) {
+        Bundle bundle = new Bundle();
+        bundle.putString("exeriseName", exerciseName);
+        bundle.putInt("repetitions", repetitions);
+        bundle.putDouble("weight", weight);
+        reviewFragment.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_placeholder, reviewFragment);
+        ft.addToBackStack("LiveFeedbackFragment");
+        ft.commit();
+    }
+
+    public void onReviewDone() {
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
+        ft.commit();
     }
 
     @Override
