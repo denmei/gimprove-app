@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 
 import org.json.JSONException;
@@ -17,6 +18,7 @@ import org.json.JSONObject;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -186,9 +188,9 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                     if(end) {
                         resetProgress();
                         String name = jsonMessage.getString("exercise_name");
-                        Double weight = jsonMessage.getDouble("weight");
-                        Integer repetitions = jsonMessage.getInt("repetitions");
-                        mCallback.onSetFinished(name, repetitions, weight);
+                        System.out.println(jsonMessage.toString());
+                        Set newSet = new Set(jsonMessage);
+                        mCallback.onSetFinished(name, newSet);
                     } else {
                         if(!active) {
                             String name = jsonMessage.getString("exercise_name");
@@ -206,6 +208,8 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                         }
                     }
                 } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
                     e.printStackTrace();
                 }
 
@@ -237,6 +241,6 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
 
     // Container-Activity must implement this interface.
     public interface OnSetFinishedListener {
-        public void onSetFinished(String exerciseName, Integer repetitions, Double weight);
+        public void onSetFinished(String exerciseName, Set newSet);
     }
 }

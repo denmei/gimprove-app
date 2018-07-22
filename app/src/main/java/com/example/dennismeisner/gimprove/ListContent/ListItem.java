@@ -17,6 +17,7 @@ public abstract class ListItem {
     public abstract String getId();
 
     public Date parseTimestamp(String timeStamp) throws ParseException {
-        return timestampFormat.parse(timeStamp);
+        String timeStampWithT = timeStamp.replace(" ", "T");
+        return timestampFormat.parse(timeStampWithT);
     }
 }

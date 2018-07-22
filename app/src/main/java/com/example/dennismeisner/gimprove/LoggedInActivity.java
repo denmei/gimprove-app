@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
+import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.HistoryFragments.ExerciseUnitHistoryFragment;
@@ -170,11 +171,10 @@ public class LoggedInActivity extends AppCompatActivity
         this.toolbar.setTitle(title);
     }
 
-    public void onSetFinished(String exerciseName, Integer repetitions, Double weight) {
+    public void onSetFinished(String exerciseName, Set newSet) {
         Bundle bundle = new Bundle();
         bundle.putString("exeriseName", exerciseName);
-        bundle.putInt("repetitions", repetitions);
-        bundle.putDouble("weight", weight);
+        bundle.putSerializable("newSet", newSet);
         reviewFragment.setArguments(bundle);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_placeholder, reviewFragment);
@@ -186,6 +186,11 @@ public class LoggedInActivity extends AppCompatActivity
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.fragment_placeholder, liveFeedbackFragment);
         ft.commit();
+    }
+
+    @Override
+    public UserRepository getUserRepo() {
+        return userRepository;
     }
 
     @Override

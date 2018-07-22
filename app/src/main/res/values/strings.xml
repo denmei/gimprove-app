@@ -28,6 +28,10 @@
     <string name="actionbar_history_trainunits">Trainingseinheiten</string>
     <string name="actionbar_history_exerciseunits">Übungen</string>
 
+    <!--ReviewFragment ContinueButton-->
+    <string name="continueButton_no_changes">Weiter</string>
+    <string name="continueButton_with_changes">Ändern</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

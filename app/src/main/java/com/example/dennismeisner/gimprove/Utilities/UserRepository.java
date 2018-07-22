@@ -61,6 +61,10 @@ public class UserRepository {
         });
     }
 
+    public void sendUpdateSet(Set newSet) {
+
+    }
+
     public void updateExerciseUnits() throws IOException, JSONException {
         webInterface.loadExerciseUnits(this.token).enqueue(new Callback<List<ExerciseUnit>>() {
             @Override
