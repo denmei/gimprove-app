@@ -16,12 +16,9 @@ import com.example.dennismeisner.gimprove.Utilities.UserRepository;
 
 
 /**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link ReviewFragment.OnReviewDoneListener} interface
- * to handle interaction events.
- * Use the {@link ReviewFragment#newInstance} factory method to
- * create an instance of this fragment.
+ * Fragmennt to review the results of one set.
+ * Provides possibility to change the key figures: repetitions and weight. Changes will be
+ * communicated to the server.
  */
 public class ReviewFragment extends Fragment {
 
@@ -76,7 +73,6 @@ public class ReviewFragment extends Fragment {
             newWeight = newSet.getWeight();
         }
     }
-
 
     @Override
     public void onResume() {
@@ -230,6 +226,7 @@ public class ReviewFragment extends Fragment {
             }
             newSet.setRepetitions(newRepetitions);
             newSet.setWeight(newWeight);
+            System.out.println("New set: " + newSet.toString());
             userRepository.sendUpdateSet(newSet);
         }
     }

@@ -11,6 +11,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -25,8 +26,7 @@ public interface WebInterface {
     @GET("set_list_rest/")
     Call<List<Set>> loadSets(@Header("Authorization") String token);
 
-    @POST("set_detail_rest/{setId}")
-    // TODO: Pass parameters
+    @PUT("set_detail_rest/{setId}")
     Call<List<Set>> updateSet(@Path("setId") String setId,
                               @Header("Authorization") String token,
                               @Body Set set);

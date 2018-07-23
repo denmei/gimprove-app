@@ -7,6 +7,7 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.Date;
 
 public class Set extends ListItem implements Serializable {
@@ -126,6 +127,9 @@ public class Set extends ListItem implements Serializable {
         StringBuilder builder = new StringBuilder("");
         builder.append("Repetitions: " + repetitions + " - ");
         builder.append("Weight: " + weight);
+        builder.append("Durations: " + Arrays.toString(durations));
+        builder.append("Date:" + date_time.toString());
+        builder.append("Exercise Unit: " + exercise_unit);
         return builder.toString();
     }
 

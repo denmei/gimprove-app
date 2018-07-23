@@ -62,7 +62,10 @@ public class UserRepository {
     }
 
     public void sendUpdateSet(Set newSet) {
+        System.out.println("Send update after changes: ");
+        System.out.println(newSet.toString());
 
+        webInterface.updateSet(newSet.getId(), this.token, newSet);
     }
 
     public void updateExerciseUnits() throws IOException, JSONException {
