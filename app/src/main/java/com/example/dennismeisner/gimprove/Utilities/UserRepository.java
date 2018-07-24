@@ -8,13 +8,19 @@ import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.R;
+import com.google.gson.Gson;
 
 import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -24,19 +30,28 @@ import retrofit2.converter.scalars.ScalarsConverterFactory;
 
 public class UserRepository {
 
-    private RequestManager requestManager;
     private String token;
     private User user;
     private Context context;
     private WebInterface webInterface;
 
-    public UserRepository(RequestManager requestManager, String token, Context context) {
-        this.requestManager = requestManager;
+    public UserRepository(String token, Context context) {
         this.user = User.getInstance();
         this.context = context;
         this.setTokenString(token);
         Retrofit adapter = new Retrofit.Builder()
                 .baseUrl("https://gimprove-test.herokuapp.com/tracker/")
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+        webInterface = adapter.create(WebInterface.class);
+    }
+
+    public UserRepository(String token, Context context, String URL) {
+        this.user = User.getInstance();
+        this.context = context;
+        this.setTokenString(token);
+        Retrofit adapter = new Retrofit.Builder()
+                .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webInterface = adapter.create(WebInterface.class);
@@ -62,10 +77,50 @@ public class UserRepository {
     }
 
     public void sendUpdateSet(Set newSet) {
-        System.out.println("Send update after changes: ");
-        System.out.println(newSet.toString());
 
-        webInterface.updateSet(newSet.getId(), this.token, newSet);
+        webInterface.updateSet(newSet.getId(), this.token, newSet.getHashMap()).enqueue(
+                new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        System.out.println(response.toString());
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println(t.getMessage());
+                        System.out.println(call.request().url());
+                    }
+                });
+
+    }
+
+    public JSONObject updateUserData() {
+        user = User.getInstance();
+        webInterface.getUserProfile(this.token)
+                .enqueue(new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        try {
+                            if(response.body() != null) {
+                                //
+                                String body = response.body().string();
+                                System.out.println(body);
+                                JSONObject jsonResponse = new JSONObject(body);
+                                user.setRfid((String) jsonResponse.get("rfid_tag"));
+                                //System.out.println(jsonResponse.toString());
+                            }
+                        } catch (JSONException | IOException e) {
+                            e.printStackTrace();
+                            this.onFailure(call, e);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println(t.getMessage());
+                        System.out.println(call.request().url());
+                    }
+                });
     }
 
     public void updateExerciseUnits() throws IOException, JSONException {
@@ -102,5 +157,6 @@ public class UserRepository {
         this.updateTrainUnits();
         this.updateExerciseUnits();
         this.updateSets();
+        this.updateUserData();
     }
 }

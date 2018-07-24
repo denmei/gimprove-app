@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashMap;
 
 public class Set extends ListItem implements Serializable {
 
@@ -146,4 +147,19 @@ public class Set extends ListItem implements Serializable {
     public String getExerciseUnit() {
         return this.exercise_unit;
     }
+
+    public HashMap<String, Object> getHashMap() {
+        HashMap<String, Object> retHash = new HashMap<>();
+        retHash.put("repetitions", repetitions);
+        retHash.put("set_id", id);
+        retHash.put("weight", weight);
+        retHash.put("rfid", User.getInstance().getRfid());
+        // retHash.put("date_time", ); // TODO Format: %Y-%m-%dT%H:%M:%SZ
+        // retHash.put("equipment_id", ); // TODO
+        retHash.put("active", ""); // TODO
+        retHash.put("exercise_name", ""); // TODO
+        retHash.put("durations", Arrays.toString(durations));
+        return retHash;
+    }
+
 }

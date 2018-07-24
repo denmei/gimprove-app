@@ -34,6 +34,8 @@ import android.widget.TextView;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.ResponseObject;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
+import com.example.dennismeisner.gimprove.Utilities.UserRepository;
+import com.example.dennismeisner.gimprove.Utilities.WebInterface;
 
 import org.json.JSONObject;
 
@@ -335,6 +337,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         private SharedPreferences preferences;
         private TokenManager tokenManager;
         private RequestManager requestManager;
+        private Context contextLogin;
 
 
         UserLoginTask(String username, String password, SharedPreferences prefs, Context context) {
@@ -343,6 +346,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
             preferences = prefs;
             tokenManager = new TokenManager(preferences);
             requestManager = new RequestManager(context, tokenManager);
+            contextLogin = context;
         }
 
         @Override
@@ -363,7 +367,6 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                     String token = response.getResponseContent().getString("token");
                     preferences.edit().putString("Token", token).apply();
                     preferences.edit().putString("UserName", this.mUserName).apply();
-                    // TODO: Replace print-statement by logger
                 }
 
             } catch (Exception e) {

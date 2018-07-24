@@ -66,10 +66,11 @@ public class LoggedInActivity extends AppCompatActivity
 
         user = User.getInstance();
         user.setUserAttributes(sharedPreferences.getString("UserName", "UserName"),
-                sharedPreferences.getInt("userid", 0));
+                sharedPreferences.getInt("userid", 0),
+                sharedPreferences.getInt("rfid", 0));
 
 
-        userRepository = new UserRepository(requestManager, tokenManager.getToken(), this);
+        userRepository = new UserRepository(tokenManager.getToken(), this);
         try {
             userRepository.updateUser();
         } catch (Exception e) {

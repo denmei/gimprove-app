@@ -16,6 +16,7 @@ public class User {
 
     private String name;
     private int id;
+    private String rfid;
     private List<TrainUnit> trainUnits;
     private List<ExerciseUnit> exerciseUnits;
     private List<Set> sets;
@@ -38,6 +39,14 @@ public class User {
 
     public int getId() {
         return this.id;
+    }
+
+    public String getRfid() {
+        return this.rfid;
+    }
+
+    public void setRfid(String rfid) {
+        this.rfid = rfid;
     }
 
     public List<TrainUnit> getTrainUnits() {
@@ -85,10 +94,11 @@ public class User {
      * @throws UserInitializationException: Is thrown if the method is tried to be executed more
      * than once.
      */
-    public void setUserAttributes(String name, int ID) {
+    public void setUserAttributes(String name, int ID, String rfid) {
         this.name = name;
         this.id = ID;
-        // this.initialized = true;
+        this.rfid = rfid;
+        this.initialized = true;
     }
 
     public void setTrainUnits(List<TrainUnit> trainUnits) {

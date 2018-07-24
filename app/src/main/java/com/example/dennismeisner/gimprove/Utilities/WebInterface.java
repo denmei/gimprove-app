@@ -4,9 +4,12 @@ import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 
+import java.util.HashMap;
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
@@ -26,8 +29,11 @@ public interface WebInterface {
     @GET("set_list_rest/")
     Call<List<Set>> loadSets(@Header("Authorization") String token);
 
-    @PUT("set_detail_rest/{setId}")
-    Call<List<Set>> updateSet(@Path("setId") String setId,
-                              @Header("Authorization") String token,
-                              @Body Set set);
+    @PUT("set_detail_rest/{setId}/")
+    Call<ResponseBody> updateSet(@Path("setId") String setId,
+                                 @Header("Authorization") String token,
+                                 @Body HashMap<String, Object> body);
+
+    @GET("userprofile_detail_rest/")
+    Call<ResponseBody> getUserProfile(@Header("Authorization") String token);
 }
