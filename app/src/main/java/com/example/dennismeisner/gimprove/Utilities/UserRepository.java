@@ -1,6 +1,7 @@
 package com.example.dennismeisner.gimprove.Utilities;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.session.MediaSession;
 
 import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
@@ -34,10 +35,12 @@ public class UserRepository {
     private User user;
     private Context context;
     private WebInterface webInterface;
+    private SharedPreferences preferences;
 
-    public UserRepository(String token, Context context) {
+    public UserRepository(String token, Context context, SharedPreferences preferences) {
         this.user = User.getInstance();
         this.context = context;
+        this.preferences = preferences;
         this.setTokenString(token);
         Retrofit adapter = new Retrofit.Builder()
                 .baseUrl("https://gimprove-test.herokuapp.com/tracker/")
@@ -94,7 +97,7 @@ public class UserRepository {
 
     }
 
-    public JSONObject updateUserData() {
+    public void updateUserData(final String name, final int id) {
         user = User.getInstance();
         webInterface.getUserProfile(this.token)
                 .enqueue(new Callback<ResponseBody>() {
@@ -106,7 +109,9 @@ public class UserRepository {
                                 String body = response.body().string();
                                 System.out.println(body);
                                 JSONObject jsonResponse = new JSONObject(body);
-                                user.setRfid((String) jsonResponse.get("rfid_tag"));
+                                String rfid = (String) jsonResponse.get("rfid_tag");
+                                user.setUserAttributes(name, id, rfid);
+                                preferences.edit().putString("rfid_tag", rfid).apply();
                                 //System.out.println(jsonResponse.toString());
                             }
                         } catch (JSONException | IOException e) {
@@ -153,10 +158,10 @@ public class UserRepository {
         });
     }
 
-    public void updateUser() throws IOException, JSONException {
+    public void updateUser(String name, int id) throws IOException, JSONException {
         this.updateTrainUnits();
         this.updateExerciseUnits();
         this.updateSets();
-        this.updateUserData();
+        this.updateUserData(name, id);
     }
 }

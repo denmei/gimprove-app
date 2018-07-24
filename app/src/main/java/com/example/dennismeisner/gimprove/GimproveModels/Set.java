@@ -41,7 +41,7 @@ public class Set extends ListItem implements Serializable {
     }
 
     /**
-     * Create new Set from Json-Msg by websocket.
+     * Create new Set with Json-Msg from websocket.
      * @param jsonMsg with these keys: set_id, date_time, exercise_unit, repetitions, weight,
      *                durations, auto_tracking, last_update
      */
@@ -97,13 +97,15 @@ public class Set extends ListItem implements Serializable {
      * @param repetitions
      */
     public void setRepetitions(int repetitions) {
-        this.repetitions = repetitions;
-        double[] newDurations = new double[this.repetitions];
-        for(int i=0; i < newDurations.length; i++) {
-            newDurations[i] = 0.0;
+        if (repetitions >= 0) {
+            this.repetitions = repetitions;
+            double[] newDurations = new double[this.repetitions];
+            for(int i=0; i < newDurations.length; i++) {
+                newDurations[i] = 0.0;
+            }
+            this.durations = newDurations;
+            this.auto_tracking = false;
         }
-        this.durations = newDurations;
-        this.auto_tracking = false;
     }
 
     /**
@@ -116,11 +118,13 @@ public class Set extends ListItem implements Serializable {
 
     /**
      * Sets the weight of the set. Auto_tracking will be set to false.
-     * @param weight
+     * @param weight new weight, must be >= 0.
      */
     public void setWeight(double weight) {
-        this.weight = weight;
-        this.auto_tracking = false;
+        if (weight >= 0) {
+            this.weight = weight;
+            this.auto_tracking = false;
+        }
     }
 
     @Override
