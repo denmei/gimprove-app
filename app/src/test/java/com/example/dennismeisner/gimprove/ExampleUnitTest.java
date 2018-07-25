@@ -18,12 +18,6 @@ public class ExampleUnitTest {
 
     private Set set;
 
-    @Before
-    public void createSet() {
-        this.set = new Set(1, 2, new Date());
-        System.out.println(this.set.toString());
-    }
-
     @Test
     public void addition_isCorrect() {
         assertEquals(4, 2 + 2);

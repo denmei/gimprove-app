@@ -186,6 +186,7 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                 try {
                     Boolean end = jsonMessage.getBoolean("end");
                     if(end) {
+                        // set finished
                         resetProgress();
                         String name = jsonMessage.getString("exercise_name");
                         System.out.println(jsonMessage.toString());

@@ -7,37 +7,40 @@ import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * Represents a single set.
+ */
 public class Set extends ListItem implements Serializable {
 
     private String id;
     private String exercise_unit;
-    private Date date_time;
+    private Date dateTime;
     private int repetitions;
     private double weight;
     private double[] durations;
-    private Boolean auto_tracking;
-    private Date last_update;
-
-    public Set(int repetitions, double weight, Date date) {
-        this.id = "NONE";
-        this.repetitions = repetitions;
-        this.weight = weight;
-        this.date_time = date;
-    }
+    private Boolean autoTracking;
+    private Boolean active;
+    private Date lastUpdate;
+    private String exerciseName;
+    private String equipmentId;
 
     public Set(String id, Date date_time, int repetitions, double weight,
-               double[] durations, Boolean auto_tracking, Date last_update) {
+               double[] durations, Boolean auto_tracking, Boolean active, String exercise_name,
+               String equipmentId) {
         this.id = id;
-        this.date_time = date_time;
+        this.dateTime = date_time;
         this.repetitions = repetitions;
         this.weight = weight;
         this.durations = durations;
-        this.auto_tracking = auto_tracking;
-        this.last_update = new Date();
+        this.autoTracking = auto_tracking;
+        this.active = active;
+        this.exerciseName = exercise_name;
+        this.equipmentId = equipmentId;
     }
 
     /**
@@ -47,13 +50,16 @@ public class Set extends ListItem implements Serializable {
      */
     public Set(JSONObject jsonMsg) throws JSONException, ParseException {
         this.id = jsonMsg.getString("set_id");
-        this.date_time = parseTimestamp(jsonMsg.getString("date_time"));
+        this.dateTime = parseTimestamp(jsonMsg.getString("date_time"));
         this.exercise_unit = "replace";
+        this.exerciseName = jsonMsg.getString("exercise_name");
+        this.active = jsonMsg.getBoolean("active");
         this.repetitions = jsonMsg.getInt("repetitions");
         this.weight = jsonMsg.getDouble("weight");
         this.durations = parseStringToDoubleArray(jsonMsg.getString("durations"));
-        this.auto_tracking = true;
-        this.last_update = new Date();
+        this.autoTracking = true;
+        this.equipmentId = jsonMsg.getString("equipment_id");
+        this.lastUpdate = new Date();
     }
 
     /**
@@ -104,7 +110,7 @@ public class Set extends ListItem implements Serializable {
                 newDurations[i] = 0.0;
             }
             this.durations = newDurations;
-            this.auto_tracking = false;
+            this.autoTracking = false;
         }
     }
 
@@ -123,7 +129,7 @@ public class Set extends ListItem implements Serializable {
     public void setWeight(double weight) {
         if (weight >= 0) {
             this.weight = weight;
-            this.auto_tracking = false;
+            this.autoTracking = false;
         }
     }
 
@@ -133,7 +139,7 @@ public class Set extends ListItem implements Serializable {
         builder.append("Repetitions: " + repetitions + " - ");
         builder.append("Weight: " + weight);
         builder.append("Durations: " + Arrays.toString(durations));
-        builder.append("Date:" + date_time.toString());
+        builder.append("Date:" + dateTime.toString());
         builder.append("Exercise Unit: " + exercise_unit);
         return builder.toString();
     }
@@ -152,17 +158,21 @@ public class Set extends ListItem implements Serializable {
         return this.exercise_unit;
     }
 
-    public HashMap<String, Object> getHashMap() {
+    public HashMap<String, Object> getJsonString() {
+
         HashMap<String, Object> retHash = new HashMap<>();
         retHash.put("repetitions", repetitions);
-        retHash.put("set_id", id);
         retHash.put("weight", weight);
         retHash.put("rfid", User.getInstance().getRfid());
-        // retHash.put("date_time", ); // TODO Format: %Y-%m-%dT%H:%M:%SZ
-        // retHash.put("equipment_id", ); // TODO
-        retHash.put("active", ""); // TODO
-        retHash.put("exercise_name", ""); // TODO
+        retHash.put("equipment_id", this.equipmentId);
+        if(active) {
+            retHash.put("active", "True");
+        } else {
+            retHash.put("active", "False");
+        }
+        retHash.put("exercise_name", this.exerciseName);
         retHash.put("durations", Arrays.toString(durations));
+        retHash.put("equipment_id", this.equipmentId);
         return retHash;
     }
 

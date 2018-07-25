@@ -54,6 +54,7 @@ public class LoggedInActivity extends AppCompatActivity
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        System.out.println("LOGGEDIN");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logged_in);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -66,7 +67,8 @@ public class LoggedInActivity extends AppCompatActivity
 
         user = User.getInstance();
 
-        userRepository = new UserRepository(tokenManager.getToken(), this, sharedPreferences);
+        userRepository = new UserRepository(tokenManager.getToken(), this, sharedPreferences,
+                getResources().getString(R.string.baseUrl));
         try {
             userRepository.updateUser(
                     sharedPreferences.getString("UserName", "UserName"),

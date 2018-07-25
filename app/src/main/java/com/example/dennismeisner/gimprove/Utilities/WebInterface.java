@@ -4,6 +4,8 @@ import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 import java.util.List;
 
@@ -29,7 +31,7 @@ public interface WebInterface {
     @GET("set_list_rest/")
     Call<List<Set>> loadSets(@Header("Authorization") String token);
 
-    @PUT("set_detail_rest/{setId}/")
+    @PUT("set_detail_rest/{setId}")
     Call<ResponseBody> updateSet(@Path("setId") String setId,
                                  @Header("Authorization") String token,
                                  @Body HashMap<String, Object> body);

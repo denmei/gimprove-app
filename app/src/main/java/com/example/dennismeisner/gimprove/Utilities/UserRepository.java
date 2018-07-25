@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,13 +38,14 @@ public class UserRepository {
     private WebInterface webInterface;
     private SharedPreferences preferences;
 
-    public UserRepository(String token, Context context, SharedPreferences preferences) {
+    public UserRepository(String token, Context context, SharedPreferences preferences, String baseUrl) {
         this.user = User.getInstance();
         this.context = context;
         this.preferences = preferences;
         this.setTokenString(token);
         Retrofit adapter = new Retrofit.Builder()
-                .baseUrl("https://gimprove-test.herokuapp.com/tracker/")
+                // "https://gimprove-test.herokuapp.com/tracker/"
+                .baseUrl(baseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         webInterface = adapter.create(WebInterface.class);
@@ -79,21 +81,25 @@ public class UserRepository {
         });
     }
 
-    public void sendUpdateSet(Set newSet) {
+    public void sendUpdateSet(final Set newSet) {
 
-        webInterface.updateSet(newSet.getId(), this.token, newSet.getHashMap()).enqueue(
-                new Callback<ResponseBody>() {
-                    @Override
-                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                        System.out.println(response.toString());
-                    }
+        try {
+            webInterface.updateSet(newSet.getId(), this.token, newSet.getJsonString()).enqueue(
+                    new Callback<ResponseBody>() {
+                        @Override
+                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                    @Override
-                    public void onFailure(Call<ResponseBody> call, Throwable t) {
-                        System.out.println(t.getMessage());
-                        System.out.println(call.request().url());
-                    }
-                });
+                        }
+
+                        @Override
+                        public void onFailure(Call<ResponseBody> call, Throwable t) {
+                            System.out.println(t.getMessage());
+                            System.out.println(call.request().url());
+                        }
+                    });
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
