@@ -172,7 +172,6 @@ public class Set extends ListItem implements Serializable {
         }
         retHash.put("exercise_name", this.exerciseName);
         retHash.put("durations", Arrays.toString(durations));
-        retHash.put("equipment_id", this.equipmentId);
         return retHash;
     }
 
