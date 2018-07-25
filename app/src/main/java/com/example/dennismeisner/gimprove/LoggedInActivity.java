@@ -199,7 +199,6 @@ public class LoggedInActivity extends AppCompatActivity
     public void onListFragmentInteraction(ListItem listItem) {
         Bundle bundle = new Bundle();
         if (listItem instanceof TrainUnit) {
-            // TODO: Remove this update. Update only if user requests.
             try {
                 userRepository.updateExerciseUnits();
             } catch (Exception e) {

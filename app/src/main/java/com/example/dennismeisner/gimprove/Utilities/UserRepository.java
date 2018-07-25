@@ -82,7 +82,7 @@ public class UserRepository {
     }
 
     public void sendUpdateSet(final Set newSet) {
-        webInterface.updateSet(newSet.getId(), this.token, newSet.getJsonString()).enqueue(
+        webInterface.updateSet(newSet.getId(), this.token, newSet.getHashMap()).enqueue(
                 new Callback<ResponseBody>() {
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

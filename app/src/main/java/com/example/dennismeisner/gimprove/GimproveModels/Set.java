@@ -158,7 +158,7 @@ public class Set extends ListItem implements Serializable {
         return this.exercise_unit;
     }
 
-    public HashMap<String, Object> getJsonString() {
+    public HashMap<String, Object> getHashMap() {
 
         HashMap<String, Object> retHash = new HashMap<>();
         retHash.put("repetitions", repetitions);
