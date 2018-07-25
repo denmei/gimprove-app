@@ -23,7 +23,11 @@ public class User {
     private static User instance;
     private boolean initialized;
 
-    private User () {}
+    private User () {
+        this.sets = new LinkedList<Set>();
+        this.exerciseUnits = new LinkedList<ExerciseUnit>();
+        this.trainUnits = new LinkedList<TrainUnit>();
+    }
 
     public static User getInstance() {
         if(User.instance == null) {

@@ -212,7 +212,6 @@ public class LoggedInActivity extends AppCompatActivity
             ft.addToBackStack("TrainUnitFragment");
             ft.commit();
         } else if (listItem instanceof ExerciseUnit) {
-            // TODO: Remove this update. Update only if user requests.
             try {
                 userRepository.updateSets();
             } catch (Exception e) {

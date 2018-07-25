@@ -82,25 +82,19 @@ public class UserRepository {
     }
 
     public void sendUpdateSet(final Set newSet) {
+        webInterface.updateSet(newSet.getId(), this.token, newSet.getJsonString()).enqueue(
+                new Callback<ResponseBody>() {
+                    @Override
+                    public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-        try {
-            webInterface.updateSet(newSet.getId(), this.token, newSet.getJsonString()).enqueue(
-                    new Callback<ResponseBody>() {
-                        @Override
-                        public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    }
 
-                        }
-
-                        @Override
-                        public void onFailure(Call<ResponseBody> call, Throwable t) {
-                            System.out.println(t.getMessage());
-                            System.out.println(call.request().url());
-                        }
-                    });
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
+                    @Override
+                    public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println(t.getMessage());
+                        System.out.println(call.request().url());
+                    }
+                });
     }
 
     public void updateUserData(final String name, final int id) {
