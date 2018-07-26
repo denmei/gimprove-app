@@ -1,12 +1,8 @@
 package com.example.dennismeisner.gimprove.Utilities;
 
-import android.content.Context;
-
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
-import com.example.dennismeisner.gimprove.SystemCheck;
 
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +14,6 @@ import java.net.HttpURLConnection;
 import java.util.Date;
 
 import okhttp3.HttpUrl;
-import okhttp3.mockwebserver.Dispatcher;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 import okhttp3.mockwebserver.RecordedRequest;

@@ -1,4 +1,4 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Utilities;
 
 import org.json.JSONObject;
 

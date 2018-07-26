@@ -1,5 +1,6 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Utilities;
 
+import com.example.dennismeisner.gimprove.Utilities.SocketListener;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 
 import org.java_websocket.client.WebSocketClient;

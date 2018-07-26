@@ -1,6 +1,5 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Activities;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,13 +26,12 @@ import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.SetHistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.TrainunitHistoryFragment;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
+import com.example.dennismeisner.gimprove.LoggedInFragments.LiveFeedbackFragment;
+import com.example.dennismeisner.gimprove.R;
+import com.example.dennismeisner.gimprove.LoggedInFragments.ReviewFragment;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 import com.example.dennismeisner.gimprove.Utilities.UserRepository;
-
-import org.json.JSONException;
-
-import java.io.IOException;
 
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,

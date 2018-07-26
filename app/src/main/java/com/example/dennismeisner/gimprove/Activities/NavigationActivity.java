@@ -1,4 +1,4 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Activities;
 
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.GimproveModels.User;
+import com.example.dennismeisner.gimprove.R;
 
 public class NavigationActivity extends AppCompatActivity {
 

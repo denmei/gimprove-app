@@ -29,7 +29,7 @@ public interface WebInterface {
     Call<List<ExerciseUnit>> loadExerciseUnits(@Header("Authorization") String token);
 
     @GET("set_list_rest/")
-    Call<List<Set>> loadSets(@Header("Authorization") String token);
+    Call<ResponseBody> loadSets(@Header("Authorization") String token);
 
     @PUT("set_detail_rest/{setId}")
     Call<ResponseBody> updateSet(@Path("setId") String setId,

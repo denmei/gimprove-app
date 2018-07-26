@@ -11,12 +11,14 @@ import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.R;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.text.ParseException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -144,17 +146,35 @@ public class UserRepository {
     }
 
     public void updateSets() throws IOException, JSONException {
-        webInterface.loadSets(this.token).enqueue(new Callback<List<Set>>() {
+        webInterface.loadSets(this.token).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<List<Set>> call, Response<List<Set>> response) {
-                User.getInstance().setSets(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
+                    String body = response.body().string();
+                    JSONArray jsonSets = new JSONArray(body);
+                    LinkedList<Set> downloadedSets = new LinkedList<Set>();
+                    for(int i = 0; i < jsonSets.length(); i++) {
+                        Set newSet = new Set((JSONObject) jsonSets.get(i));
+                        downloadedSets.add(newSet);
+                    }
+                    User.getInstance().setSets(downloadedSets);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                // User.getInstance().setSets(response.body());
             }
 
             @Override
-            public void onFailure(Call<List<Set>> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("SETS UPDATE failed");
                 System.out.println(t.getMessage());
                 System.out.println(call.request().url());
             }
+
         });
     }
 

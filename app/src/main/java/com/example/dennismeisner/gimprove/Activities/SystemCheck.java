@@ -1,4 +1,4 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -7,6 +7,9 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
+import com.example.dennismeisner.gimprove.Activities.LoginActivity;
+import com.example.dennismeisner.gimprove.R;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.ResponseObject;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;

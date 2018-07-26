@@ -18,11 +18,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".LoginActivity"
+            android:name=".Activities.LoginActivity"
             android:label="@string/title_activity_login"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".SystemCheck"
+            android:name=".Activities.SystemCheck"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,11 +31,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".NavigationActivity"
+            android:name=".Activities.NavigationActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".LoggedInActivity"
+            android:name=".Activities.LoggedInActivity"
             android:label="@string/title_activity_logged_in"
             android:theme="@style/AppTheme.NoActionBar"
             android:screenOrientation="portrait">

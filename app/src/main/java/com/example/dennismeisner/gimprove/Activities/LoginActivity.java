@@ -1,4 +1,4 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.Activities;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -31,22 +31,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.dennismeisner.gimprove.R;
 import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.ResponseObject;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
-import com.example.dennismeisner.gimprove.Utilities.UserRepository;
-import com.example.dennismeisner.gimprove.Utilities.WebInterface;
 
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-
-import java.io.OutputStreamWriter;
-import java.net.HttpURLConnection;
 import java.net.URL;
 
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

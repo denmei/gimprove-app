@@ -1,7 +1,6 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.LoggedInFragments;
 
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -10,8 +9,9 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
-import com.example.dennismeisner.gimprove.Utilities.WebInterface;
+import com.example.dennismeisner.gimprove.R;
 import com.example.dennismeisner.gimprove.Utilities.UserRepository;
 
 

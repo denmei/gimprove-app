@@ -1,4 +1,4 @@
-package com.example.dennismeisner.gimprove;
+package com.example.dennismeisner.gimprove.LoggedInFragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -10,8 +10,12 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
+import com.example.dennismeisner.gimprove.R;
+import com.example.dennismeisner.gimprove.Utilities.SocketListener;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
+import com.example.dennismeisner.gimprove.Utilities.WebsocketClientGimprove;
 
 import org.json.JSONException;
 import org.json.JSONObject;
