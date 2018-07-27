@@ -22,8 +22,6 @@ public class SetHistoryFragment extends HistoryFragment {
     private final static String EXERCISE_UNIT="EXERCISE_UNIT";
     private final static String EXERCISE_UNIT_NAME="EXERCISE_UNIT_NAME";
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
     public static SetHistoryFragment newInstance(int columnCount, String trainUnit) {
         SetHistoryFragment fragment = new SetHistoryFragment();
         Bundle args = new Bundle();

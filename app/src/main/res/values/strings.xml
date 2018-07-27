@@ -27,6 +27,7 @@
     <string name="actionbar_live_tracking">Tracking</string>
     <string name="actionbar_history_trainunits">Trainingseinheiten</string>
     <string name="actionbar_history_exerciseunits">Übungen</string>
+    <string name="actionbar_history_setdetails">Satz</string>
 
     <!--ReviewFragment ContinueButton-->
     <string name="continueButton_no_changes">Weiter</string>

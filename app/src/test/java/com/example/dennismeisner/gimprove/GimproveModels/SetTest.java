@@ -12,6 +12,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.robolectric.RobolectricTestRunner;
+
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -24,12 +26,23 @@ public class SetTest {
         double [] durations = new double[2];
         durations[0] = 0.5;
         durations[1] = 0.9;
-        this.set = new Set("test_id", new Date(), 2, 20.0, durations, false, false, "test_exercise", "test_equipment");
+        // this.set = new Set("test_id", new Date(), 2, 20.0, durations, false, false, "test_exercise", "test_equipment");
     }
 
     @Test
-    public void test_creation_from_json() {
+    public void test_creation_from_json() throws JSONException, ParseException {
+        JSONObject msg = new JSONObject();
+        msg.put("id", "2838cbf4-ff49-4a9a-a3c1-e230829856d6");
+        msg.put("date_time", "2018-05-28T19:19:57.115408+02:00");
+        msg.put("durations", "[17, 1, 19, 9, 11]");
+        msg.put("exercise_unit","aec47ebb-6fd2-45d2-a8b2-d0767a455d88");
+        msg.put("repetitions", 5);
+        msg.put("weight", 5);
+        msg.put("rfid", "0006921147");
+        msg.put("equipment_id", "null");
+        msg.put("exercise_name", "Lat Pulldown");
 
+        Set testSet = new Set(msg);
     }
 
     @Test

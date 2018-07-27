@@ -3,6 +3,7 @@ package com.example.dennismeisner.gimprove.Activities;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -23,6 +24,7 @@ import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.HistoryFragments.ExerciseUnitHistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.SetDetailFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.SetHistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.TrainunitHistoryFragment;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
@@ -36,12 +38,13 @@ import com.example.dennismeisner.gimprove.Utilities.UserRepository;
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HistoryFragment.OnListFragmentInteractionListener, LiveFeedbackFragment.OnSetFinishedListener,
-        ReviewFragment.OnReviewDoneListener {
+        ReviewFragment.OnReviewDoneListener, SetDetailFragment.OnSetDetailListener {
 
     private LiveFeedbackFragment liveFeedbackFragment;
     private HistoryFragment trainUnitHistoryFragment;
     private ExerciseUnitHistoryFragment exerciseUnitHistoryFragment;
     private SetHistoryFragment setHistoryFragment;
+    private SetDetailFragment setDetailFragment;
     private ReviewFragment reviewFragment;
     private User user;
     private SharedPreferences sharedPreferences;
@@ -93,6 +96,7 @@ public class LoggedInActivity extends AppCompatActivity
         trainUnitHistoryFragment = new TrainunitHistoryFragment();
         exerciseUnitHistoryFragment = new ExerciseUnitHistoryFragment();
         setHistoryFragment = new SetHistoryFragment();
+        setDetailFragment = new SetDetailFragment();
         reviewFragment = new ReviewFragment();
 
         // load start fragment
@@ -221,6 +225,18 @@ public class LoggedInActivity extends AppCompatActivity
             ft.replace(R.id.fragment_placeholder, setHistoryFragment);
             ft.addToBackStack("ExerciseUnitFragment");
             ft.commit();
+        } else if (listItem instanceof Set) {
+            bundle.putString("SETID", listItem.getId());
+            setDetailFragment.setArguments(bundle);
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.fragment_placeholder, setDetailFragment);
+            ft.addToBackStack("SetDetailFragment");
+            ft.commit();
         }
+    }
+
+    @Override
+    public void onSetDetail(Uri uri) {
+
     }
 }

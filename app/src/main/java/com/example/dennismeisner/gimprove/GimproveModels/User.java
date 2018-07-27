@@ -53,6 +53,15 @@ public class User {
         this.rfid = rfid;
     }
 
+    public Set getSetById(String id) {
+        for(Set set:this.sets) {
+            if(set.getId().equals(id)) {
+                return set;
+            }
+        }
+        return null;
+    }
+
     public List<TrainUnit> getTrainUnits() {
         return this.trainUnits;
     }

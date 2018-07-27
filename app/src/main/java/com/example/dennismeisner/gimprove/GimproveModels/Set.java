@@ -47,9 +47,10 @@ public class Set extends ListItem implements Serializable {
      *                durations, auto_tracking, last_update
      */
     public Set(JSONObject jsonMsg) throws JSONException, ParseException {
+        System.out.println(jsonMsg.toString());
         this.id = jsonMsg.getString("id");
         this.dateTime = parseTimestamp(jsonMsg.getString("date_time"));
-        this.exercise_unit = jsonMsg.getString("exercise_unit ");;
+        this.exercise_unit = jsonMsg.getString("exercise_unit");
         this.exerciseName = jsonMsg.getString("exercise_name");
         // this.active = jsonMsg.getBoolean("active");
         this.repetitions = jsonMsg.getInt("repetitions");
@@ -135,14 +136,21 @@ public class Set extends ListItem implements Serializable {
         }
     }
 
-    @Override
-    public String toString() {
+    public String toExtString() {
         StringBuilder builder = new StringBuilder("");
         builder.append("Repetitions: " + repetitions + " - ");
         builder.append("Weight: " + weight);
         builder.append("Durations: " + Arrays.toString(durations));
         builder.append("Date:" + dateTime.toString());
         builder.append("Exercise Unit: " + exercise_unit);
+        return builder.toString();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("");
+        builder.append(repetitions + " Reps" + " - ");
+        builder.append(weight + "kg");
         return builder.toString();
     }
 
