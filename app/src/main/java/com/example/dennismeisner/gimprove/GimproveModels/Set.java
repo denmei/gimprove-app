@@ -24,13 +24,12 @@ public class Set extends ListItem implements Serializable {
     private double weight;
     private double[] durations;
     private Boolean autoTracking;
-    private Boolean active;
     private Date lastUpdate;
     private String exerciseName;
     private String equipmentId;
 
     public Set(String id, Date date_time, int repetitions, double weight,
-               double[] durations, Boolean auto_tracking, Boolean active, String exercise_name,
+               double[] durations, Boolean auto_tracking, String exercise_name,
                String equipmentId) {
         this.id = id;
         this.dateTime = date_time;
@@ -38,25 +37,24 @@ public class Set extends ListItem implements Serializable {
         this.weight = weight;
         this.durations = durations;
         this.autoTracking = auto_tracking;
-        this.active = active;
         this.exerciseName = exercise_name;
         this.equipmentId = equipmentId;
     }
 
     /**
      * Create new Set with Json-Msg from websocket.
-     * @param jsonMsg with these keys: set_id, date_time, exercise_unit, repetitions, weight,
+     * @param jsonMsg with these keys: id, date_time, exercise_unit, repetitions, weight,
      *                durations, auto_tracking, last_update
      */
     public Set(JSONObject jsonMsg) throws JSONException, ParseException {
-        this.id = jsonMsg.getString("set_id");
+        this.id = jsonMsg.getString("id");
         this.dateTime = parseTimestamp(jsonMsg.getString("date_time"));
-        this.exercise_unit = "replace";
+        this.exercise_unit = jsonMsg.getString("exercise_unit ");;
         this.exerciseName = jsonMsg.getString("exercise_name");
-        this.active = jsonMsg.getBoolean("active");
+        // this.active = jsonMsg.getBoolean("active");
         this.repetitions = jsonMsg.getInt("repetitions");
         this.weight = jsonMsg.getDouble("weight");
-        this.durations = parseStringToDoubleArray(jsonMsg.getString("durations"));
+        this.durations = parseStringToDoubleArray(jsonMsg.getString("durations"), repetitions);
         this.autoTracking = true;
         this.equipmentId = jsonMsg.getString("equipment_id");
         this.lastUpdate = new Date();
@@ -67,18 +65,22 @@ public class Set extends ListItem implements Serializable {
      * @param arrayAsString String with doubles in this format: "[0.0, 0.1]"
      * @return array of doubles that contains the values of the input string
      */
-    private double[] parseStringToDoubleArray(String arrayAsString) {
-        System.out.println(arrayAsString);
-        String[] splitArray = arrayAsString
-                .replaceAll("\\[", "")
-                .replaceAll("\\]", "")
-                .replaceAll("\\s", "")
-                .split(",");
-        double[] durations = new double[splitArray.length];
-        for(int i = 0; i < splitArray.length; i++) {
-            durations[i] = Double.parseDouble(splitArray[i]);
+    private double[] parseStringToDoubleArray(String arrayAsString, int repetitions) {
+        if (repetitions == 0) {
+            double[] emptyDurations = new double[0];
+            return emptyDurations;
+        } else {
+            String[] splitArray = arrayAsString
+                    .replaceAll("\\[", "")
+                    .replaceAll("\\]", "")
+                    .replaceAll("\\s", "")
+                    .split(",");
+            double[] durations = new double[splitArray.length];
+            for (int i = 0; i < splitArray.length; i++) {
+                durations[i] = Double.parseDouble(splitArray[i]);
+            }
+            return durations;
         }
-        return durations;
     }
 
     /**
@@ -165,11 +167,11 @@ public class Set extends ListItem implements Serializable {
         retHash.put("weight", weight);
         retHash.put("rfid", User.getInstance().getRfid());
         retHash.put("equipment_id", this.equipmentId);
-        if(active) {
+        /* if(active) {
             retHash.put("active", "True");
         } else {
             retHash.put("active", "False");
-        }
+        }*/
         retHash.put("exercise_name", this.exerciseName);
         retHash.put("durations", Arrays.toString(durations));
         return retHash;

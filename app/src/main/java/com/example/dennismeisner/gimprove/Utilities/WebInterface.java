@@ -31,6 +31,10 @@ public interface WebInterface {
     @GET("set_list_rest/")
     Call<ResponseBody> loadSets(@Header("Authorization") String token);
 
+    @GET("set_detail_rest/{setId}")
+    Call<ResponseBody> loadSetDetails(@Path("setId") String setId,
+                             @Header("Authorization") String token);
+
     @PUT("set_detail_rest/{setId}")
     Call<ResponseBody> updateSet(@Path("setId") String setId,
                                  @Header("Authorization") String token,
