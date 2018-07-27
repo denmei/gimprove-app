@@ -1,10 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.RecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/list"
-    android:name="com.example.dennismeisner.gimprove.HistoryFragment"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".Activities.LoggedInActivity"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gimproveGray"
-    tools:context=".HistoryFragments.HistoryFragment"
-    tools:listitem="@layout/fragment_history" />
+    android:padding="10dp"
+    android:background="@color/gimproveGray">
+
+    <com.applandeo.materialcalendarview.CalendarView
+        android:id="@+id/trainUnitCalendar"
+        android:layout_width="match_parent"
+        android:layout_height="370dp"
+        app:datePicker="true"
+        app:headerColor="@color/gimproveGray"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:selectionColor="@color/gimproveWhite"
+        app:todayLabelColor="@color/gimproveGray" />
+
+</LinearLayout>

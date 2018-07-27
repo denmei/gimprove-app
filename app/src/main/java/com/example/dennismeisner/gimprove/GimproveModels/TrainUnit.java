@@ -22,6 +22,10 @@ public class TrainUnit extends ListItem {
 
     }
 
+    public Date getDate() {
+        return this.end_time_date;
+    }
+
     @Override
     public String toString() {
         try {
