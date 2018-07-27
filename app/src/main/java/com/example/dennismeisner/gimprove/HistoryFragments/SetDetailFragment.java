@@ -14,15 +14,26 @@ import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.HashMap;
+
 
 public class SetDetailFragment extends Fragment {
 
     private static final String SETID = "SETID";
     private Set set;
+    private HashMap<String, Object> setHashMap;
     private String setId;
 
-    private TextView repsText;
+    private TextView weightVal;
     private TextView repsVal;
+    private TextView durationsVal;
+    private TextView dateVal;
+    private TextView timeVal;
+
+    private SimpleDateFormat dateFormatter;
+    private SimpleDateFormat timeFormatter;
 
     private OnSetDetailListener mListener;
 
@@ -41,9 +52,12 @@ public class SetDetailFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        timeFormatter = new SimpleDateFormat("hh:mm");
         if (getArguments() != null) {
             setId = getArguments().getString(SETID);
             set = User.getInstance().getSetById(setId);
+            setHashMap = set.getHashMap();
         }
     }
 
@@ -65,10 +79,20 @@ public class SetDetailFragment extends Fragment {
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
-        repsText = view.findViewById(R.id.repsText);
-        repsText.setText("Repetitions");
         repsVal = view.findViewById(R.id.repsVal);
         repsVal.setText(Integer.toString(set.getRepetitions()));
+
+        weightVal = view.findViewById(R.id.weightVal);
+        weightVal.setText(Double.toString(set.getWeight()));
+
+        dateVal = view.findViewById(R.id.dateVal);
+        dateVal.setText(dateFormatter.format(set.getDateTime()));
+
+        timeVal = view.findViewById(R.id.timeVal);
+        timeVal.setText(timeFormatter.format(set.getDateTime()));
+
+        durationsVal = view.findViewById(R.id.durationsVal);
+        durationsVal.setText(Arrays.toString(set.getDurations()));
     }
 
     @Override

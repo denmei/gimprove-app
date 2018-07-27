@@ -159,6 +159,10 @@ public class Set extends ListItem implements Serializable {
         return null;
     }
 
+    public Date getDateTime() {
+        return this.dateTime;
+    }
+
     @Override
     public String getId() {
         return id;
