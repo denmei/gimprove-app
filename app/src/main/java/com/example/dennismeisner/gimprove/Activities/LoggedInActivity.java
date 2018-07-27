@@ -22,11 +22,11 @@ import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
-import com.example.dennismeisner.gimprove.HistoryFragments.ExerciseUnitHistoryFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.TrainUnitDetailFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment;
 import com.example.dennismeisner.gimprove.HistoryFragments.SetDetailFragment;
-import com.example.dennismeisner.gimprove.HistoryFragments.SetHistoryFragment;
-import com.example.dennismeisner.gimprove.HistoryFragments.TrainunitHistoryFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.ExerciseUnitDetailFragment;
+import com.example.dennismeisner.gimprove.HistoryFragments.TrainUnitOverviewFragment;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.LoggedInFragments.LiveFeedbackFragment;
 import com.example.dennismeisner.gimprove.R;
@@ -42,8 +42,8 @@ public class LoggedInActivity extends AppCompatActivity
 
     private LiveFeedbackFragment liveFeedbackFragment;
     private HistoryFragment trainUnitHistoryFragment;
-    private ExerciseUnitHistoryFragment exerciseUnitHistoryFragment;
-    private SetHistoryFragment setHistoryFragment;
+    private TrainUnitDetailFragment exerciseUnitHistoryFragment;
+    private ExerciseUnitDetailFragment setHistoryFragment;
     private SetDetailFragment setDetailFragment;
     private ReviewFragment reviewFragment;
     private User user;
@@ -93,9 +93,9 @@ public class LoggedInActivity extends AppCompatActivity
         userNameField.setText("Hi " + sharedPreferences.getString("UserName", "").toString() + "!");
 
         liveFeedbackFragment = new LiveFeedbackFragment();
-        trainUnitHistoryFragment = new TrainunitHistoryFragment();
-        exerciseUnitHistoryFragment = new ExerciseUnitHistoryFragment();
-        setHistoryFragment = new SetHistoryFragment();
+        trainUnitHistoryFragment = new TrainUnitOverviewFragment();
+        exerciseUnitHistoryFragment = new TrainUnitDetailFragment();
+        setHistoryFragment = new ExerciseUnitDetailFragment();
         setDetailFragment = new SetDetailFragment();
         reviewFragment = new ReviewFragment();
 

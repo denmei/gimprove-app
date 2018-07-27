@@ -13,14 +13,11 @@ import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapte
 import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
 
-public class TrainunitHistoryFragment extends HistoryFragment {
+public class TrainUnitOverviewFragment extends HistoryFragment {
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static TrainunitHistoryFragment newInstance(int columnCount) {
-        TrainunitHistoryFragment fragment = new TrainunitHistoryFragment();
+    public static TrainUnitOverviewFragment newInstance() {
+        TrainUnitOverviewFragment fragment = new TrainUnitOverviewFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,11 +40,7 @@ public class TrainunitHistoryFragment extends HistoryFragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
             recyclerView.setAdapter(new ListItemRecyclerViewAdapter(this.user.getTrainUnits(), mListener));
         }
         return view;

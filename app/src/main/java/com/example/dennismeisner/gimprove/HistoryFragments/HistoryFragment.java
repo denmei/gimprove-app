@@ -9,18 +9,9 @@ import android.view.View;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public abstract class HistoryFragment extends Fragment implements View.OnClickListener {
 
-    // TODO: Customize parameter argument names
-    protected static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
-    protected int mColumnCount = 1;
     protected OnListFragmentInteractionListener mListener;
     protected User user;
 
@@ -40,9 +31,6 @@ public abstract class HistoryFragment extends Fragment implements View.OnClickLi
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
         this.user = User.getInstance();
     }
 

@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.dennismeisner.gimprove.GimproveModels.Set;
+import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
 import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
@@ -17,15 +17,14 @@ import com.example.dennismeisner.gimprove.R;
 
 import java.util.List;
 
-public class SetHistoryFragment extends HistoryFragment {
+public class TrainUnitDetailFragment extends HistoryFragment {
 
-    private final static String EXERCISE_UNIT="EXERCISE_UNIT";
-    private final static String EXERCISE_UNIT_NAME="EXERCISE_UNIT_NAME";
+    private final static String TRAIN_UNIT="TRAIN_UNIT";
 
-    public static SetHistoryFragment newInstance(int columnCount, String trainUnit) {
-        SetHistoryFragment fragment = new SetHistoryFragment();
+    public static TrainUnitDetailFragment newInstance(String trainUnitId) {
+        TrainUnitDetailFragment fragment = new TrainUnitDetailFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
+        args.putString(TRAIN_UNIT, trainUnitId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -34,8 +33,8 @@ public class SetHistoryFragment extends HistoryFragment {
     public void onResume() {
         super.onResume();
         if(getActivity() instanceof LoggedInActivity) {
-            String exerciseUnitName = getArguments().getString(EXERCISE_UNIT_NAME, "");
-            ((LoggedInActivity) getActivity()).setActionBarTitle(exerciseUnitName);
+            ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
+                    .getString(R.string.actionbar_history_exerciseunits));
         }
     }
 
@@ -48,13 +47,9 @@ public class SetHistoryFragment extends HistoryFragment {
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
             RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            String exerciseUnit = getArguments().getString(EXERCISE_UNIT, "");
-            List<Set> exercises = User.getInstance().getSetsByExerciseUnits(exerciseUnit);
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+            String trainUnit = getArguments().getString(TRAIN_UNIT, "");
+            List<ExerciseUnit> exercises = User.getInstance().getExerciseUnitsByTrainUnit(trainUnit);
             recyclerView.setAdapter(new ListItemRecyclerViewAdapter(exercises, mListener));
         }
         return view;
