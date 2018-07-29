@@ -88,7 +88,7 @@
             android:orientation="horizontal"
             android:gravity="center">
 
-            <TextView
+            <EditText
                 android:id="@+id/textWeight"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -96,7 +96,8 @@
                 android:layout_margin="30dp"
                 android:layout_gravity="center"
                 android:textColor="@color/grimproveOrange"
-                android:textSize="100dp" />
+                android:textSize="100dp"
+                android:inputType="numberDecimal"/>
 
         </LinearLayout>
 

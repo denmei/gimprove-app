@@ -93,25 +93,33 @@ public class UserRepository {
 
                     @Override
                     public void onFailure(Call<ResponseBody> call, Throwable t) {
+                        System.out.println("Sendupdate Failure");
                         System.out.println(t.getMessage());
                         System.out.println(call.request().url());
                     }
                 });
     }
 
+    /**
+     *
+     * @param name Name of the user
+     * @param id User id
+     */
     public void updateUserData(final String name, final int id) {
         user = User.getInstance();
         webInterface.getUserProfile(this.token)
                 .enqueue(new Callback<ResponseBody>() {
+
                     @Override
                     public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                        System.out.println("UPDAEUSERDATA");
                         try {
                             if(response.body() != null) {
-                                //
                                 String body = response.body().string();
                                 System.out.println(body);
                                 JSONObject jsonResponse = new JSONObject(body);
                                 String rfid = (String) jsonResponse.get("rfid_tag");
+                                System.out.println("RFID: " + rfid);
                                 user.setUserAttributes(name, id, rfid);
                                 preferences.edit().putString("rfid_tag", rfid).apply();
                                 //System.out.println(jsonResponse.toString());

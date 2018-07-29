@@ -3,10 +3,13 @@ package com.example.dennismeisner.gimprove.LoggedInFragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
@@ -33,7 +36,7 @@ public class ReviewFragment extends Fragment {
     private Button incrRepsButton;
     private Button decrRepsButton;
 
-    private TextView weightText;
+    private EditText weightText;
     private TextView repsText;
     private TextView exerciseNameText;
 
@@ -107,8 +110,25 @@ public class ReviewFragment extends Fragment {
         repsText.setText(String.valueOf(originalRepetitions));
 
         // Initialize textfield for weight
-        weightText = (TextView) view.findViewById(R.id.textWeight);
+        weightText = (EditText) view.findViewById(R.id.textWeight);
         weightText.setText(String.valueOf(originalWeight));
+        // TODO: Check whether valid weight and change if so
+        weightText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         // Initialize continue-Button
         continueButton = (Button) view.findViewById(R.id.continueButton);

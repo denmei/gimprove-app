@@ -14,6 +14,7 @@ import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
+import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
 import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
@@ -31,6 +32,7 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
     private List<EventDay> trainUnitDays;
     static private SimpleDateFormat dateFormat;
     private Button selectedDateButton;
+    private OnTrainUnitDaySelectedListener trainUnitListener;
 
     public static TrainUnitOverviewFragment newInstance() {
         TrainUnitOverviewFragment fragment = new TrainUnitOverviewFragment();
@@ -79,11 +81,37 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         calendarView.setOnDayClickListener(new OnDayClickListener() {
             @Override
             public void onDayClick(EventDay eventDay) {
-                System.out.println(eventDay.getCalendar().toString());
+                // Check whether picked date has a train unit
+                TrainUnit selectedUnit = null;
+                for(TrainUnit trainUnit:User.getInstance().getTrainUnits()) {
+                    if (trainUnit.getDate() == eventDay.getCalendar().getTime()) {
+                        selectedUnit = trainUnit;
+                        break;
+                    }
+                }
+                // if trainunit available, open detailview
+                if (selectedUnit != null) {
+                    trainUnitListener.onTrainUnitDaySelected(selectedUnit.getId());
+                }
             }
         });
 
         System.out.println("CreateD");
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnTrainUnitDaySelectedListener) {
+            trainUnitListener = (OnTrainUnitDaySelectedListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
+    }
+
+    public interface OnTrainUnitDaySelectedListener {
+        void onTrainUnitDaySelected(String trainUnitId);
     }
 
 }

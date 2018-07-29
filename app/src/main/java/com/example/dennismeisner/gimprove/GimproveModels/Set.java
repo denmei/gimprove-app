@@ -47,7 +47,6 @@ public class Set extends ListItem implements Serializable {
      *                durations, auto_tracking, last_update
      */
     public Set(JSONObject jsonMsg) throws JSONException, ParseException {
-        System.out.println(jsonMsg.toString());
         this.id = jsonMsg.getString("id");
         this.dateTime = parseTimestamp(jsonMsg.getString("date_time"));
         this.exercise_unit = jsonMsg.getString("exercise_unit");

@@ -38,10 +38,11 @@ import com.example.dennismeisner.gimprove.Utilities.UserRepository;
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HistoryFragment.OnListFragmentInteractionListener, LiveFeedbackFragment.OnSetFinishedListener,
-        ReviewFragment.OnReviewDoneListener, SetDetailFragment.OnSetDetailListener {
+        ReviewFragment.OnReviewDoneListener, SetDetailFragment.OnSetDetailListener,
+        TrainUnitOverviewFragment.OnTrainUnitDaySelectedListener {
 
     private LiveFeedbackFragment liveFeedbackFragment;
-    private HistoryFragment trainUnitHistoryFragment;
+    private TrainUnitOverviewFragment trainUnitOverviewFragment;
     private TrainUnitDetailFragment exerciseUnitHistoryFragment;
     private ExerciseUnitDetailFragment setHistoryFragment;
     private SetDetailFragment setDetailFragment;
@@ -93,7 +94,7 @@ public class LoggedInActivity extends AppCompatActivity
         userNameField.setText("Hi " + sharedPreferences.getString("UserName", "").toString() + "!");
 
         liveFeedbackFragment = new LiveFeedbackFragment();
-        trainUnitHistoryFragment = new TrainUnitOverviewFragment();
+        trainUnitOverviewFragment = new TrainUnitOverviewFragment();
         exerciseUnitHistoryFragment = new TrainUnitDetailFragment();
         setHistoryFragment = new ExerciseUnitDetailFragment();
         setDetailFragment = new SetDetailFragment();
@@ -156,7 +157,7 @@ public class LoggedInActivity extends AppCompatActivity
                 e.printStackTrace();
             }
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.add(R.id.fragment_placeholder, trainUnitHistoryFragment, "TrainUnitFragment");
+            ft.add(R.id.fragment_placeholder, trainUnitOverviewFragment, "TrainUnitFragment");
             ft.addToBackStack("LiveFeedbackFragment");
             ft.commit();
         } else if (id == R.id.logout) {
@@ -200,19 +201,7 @@ public class LoggedInActivity extends AppCompatActivity
     @Override
     public void onListFragmentInteraction(ListItem listItem) {
         Bundle bundle = new Bundle();
-        if (listItem instanceof TrainUnit) {
-            try {
-                userRepository.updateExerciseUnits();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            bundle.putString("TRAIN_UNIT", listItem.getId());
-            exerciseUnitHistoryFragment.setArguments(bundle);
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragment_placeholder, exerciseUnitHistoryFragment);
-            ft.addToBackStack("TrainUnitFragment");
-            ft.commit();
-        } else if (listItem instanceof ExerciseUnit) {
+        if (listItem instanceof ExerciseUnit) {
             try {
                 userRepository.updateSets();
             } catch (Exception e) {
@@ -238,5 +227,21 @@ public class LoggedInActivity extends AppCompatActivity
     @Override
     public void onSetDetail(Uri uri) {
 
+    }
+
+    @Override
+    public void onTrainUnitDaySelected(String trainUnitId) {
+        Bundle bundle = new Bundle();
+        try {
+            userRepository.updateExerciseUnits();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bundle.putString("TRAIN_UNIT", trainUnitId);
+        exerciseUnitHistoryFragment.setArguments(bundle);
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.fragment_placeholder, exerciseUnitHistoryFragment);
+        ft.addToBackStack("TrainUnitFragment");
+        ft.commit();
     }
 }
