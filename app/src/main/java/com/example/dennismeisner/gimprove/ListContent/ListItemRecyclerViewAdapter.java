@@ -6,8 +6,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.example.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
-import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.HistoryFragments.HistoryFragment.OnListFragmentInteractionListener;
 import com.example.dennismeisner.gimprove.R;
 
@@ -31,7 +29,7 @@ public class ListItemRecyclerViewAdapter extends RecyclerView.Adapter<ListItemRe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_history, parent, false);
+                .inflate(R.layout.fragment_trainunitdetail, parent, false);
         return new ViewHolder(view);
     }
 

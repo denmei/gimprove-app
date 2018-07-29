@@ -32,6 +32,7 @@ public class TrainUnitDetailFragment extends HistoryFragment {
     @Override
     public void onResume() {
         super.onResume();
+        System.out.println("Resume trainunitdetail");
         if(getActivity() instanceof LoggedInActivity) {
             ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
                     .getString(R.string.actionbar_history_exerciseunits));
@@ -41,7 +42,7 @@ public class TrainUnitDetailFragment extends HistoryFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_trainunitdetail, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {

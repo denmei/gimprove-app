@@ -54,6 +54,7 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         for(TrainUnit trainUnit: trainUnits) {
             Calendar c = new GregorianCalendar();
             c.setTime(trainUnit.getDate());
+            System.out.println(trainUnit.getDate());
             trainUnitDays.add(new EventDay(c, R.drawable.ic_arrow_left));
         }
         calendarView.setEvents(trainUnitDays);
@@ -83,14 +84,19 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
             public void onDayClick(EventDay eventDay) {
                 // Check whether picked date has a train unit
                 TrainUnit selectedUnit = null;
+                int selectedDate = eventDay.getCalendar().getTime().getDay();
+                System.out.println("Selected: " + Integer.toString(selectedDate));
                 for(TrainUnit trainUnit:User.getInstance().getTrainUnits()) {
-                    if (trainUnit.getDate() == eventDay.getCalendar().getTime()) {
+                    System.out.println(trainUnit.getDate().getDay());
+                    if (trainUnit.getDate().getDay() == selectedDate) {
                         selectedUnit = trainUnit;
                         break;
                     }
                 }
                 // if trainunit available, open detailview
                 if (selectedUnit != null) {
+                    System.out.println("valid selection");
+                    System.out.println(selectedUnit.toString());
                     trainUnitListener.onTrainUnitDaySelected(selectedUnit.getId());
                 }
             }
