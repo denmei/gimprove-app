@@ -80,15 +80,17 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         calendarView = view.findViewById(R.id.trainUnitCalendar);
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {
+            SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
+
             @Override
             public void onDayClick(EventDay eventDay) {
                 // Check whether picked date has a train unit
                 TrainUnit selectedUnit = null;
-                int selectedDate = eventDay.getCalendar().getTime().getDay();
-                System.out.println("Selected: " + Integer.toString(selectedDate));
+                String selectedDate = dateF.format(eventDay.getCalendar().getTime());
+                System.out.println("Selected: " + selectedDate);
                 for(TrainUnit trainUnit:User.getInstance().getTrainUnits()) {
                     System.out.println(trainUnit.getDate().getDay());
-                    if (trainUnit.getDate().getDay() == selectedDate) {
+                    if (dateF.format(trainUnit.getDate()).equals(selectedDate)) {
                         selectedUnit = trainUnit;
                         break;
                     }
@@ -98,6 +100,8 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
                     System.out.println("valid selection");
                     System.out.println(selectedUnit.toString());
                     trainUnitListener.onTrainUnitDaySelected(selectedUnit.getId());
+                } else {
+                    System.out.println("not valid selection");
                 }
             }
         });
