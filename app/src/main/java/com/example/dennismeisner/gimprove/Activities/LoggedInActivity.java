@@ -234,6 +234,7 @@ public class LoggedInActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         try {
             userRepository.updateExerciseUnits();
+            System.out.println(User.getInstance().getExerciseUnits().toString());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -20,6 +20,7 @@ import java.util.List;
 public class TrainUnitDetailFragment extends HistoryFragment {
 
     private final static String TRAIN_UNIT="TRAIN_UNIT";
+    private RecyclerView recyclerView;
 
     public static TrainUnitDetailFragment newInstance(String trainUnitId) {
         TrainUnitDetailFragment fragment = new TrainUnitDetailFragment();
@@ -32,7 +33,7 @@ public class TrainUnitDetailFragment extends HistoryFragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("Resume trainunitdetail");
+        System.out.println("TRAINUNITDETAILFRAGMENT");
         if(getActivity() instanceof LoggedInActivity) {
             ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
                     .getString(R.string.actionbar_history_exerciseunits));
@@ -47,10 +48,12 @@ public class TrainUnitDetailFragment extends HistoryFragment {
         // Set the adapter
         if (view instanceof RecyclerView) {
             Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
+            recyclerView = (RecyclerView) view;
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             String trainUnit = getArguments().getString(TRAIN_UNIT, "");
             List<ExerciseUnit> exercises = User.getInstance().getExerciseUnitsByTrainUnit(trainUnit);
+            System.out.println("USER EXERCISEUNITS:");
+            System.out.println(exercises.toString());
             recyclerView.setAdapter(new ListItemRecyclerViewAdapter(exercises, mListener));
         }
         return view;

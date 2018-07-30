@@ -87,9 +87,7 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
                 // Check whether picked date has a train unit
                 TrainUnit selectedUnit = null;
                 String selectedDate = dateF.format(eventDay.getCalendar().getTime());
-                System.out.println("Selected: " + selectedDate);
                 for(TrainUnit trainUnit:User.getInstance().getTrainUnits()) {
-                    System.out.println(trainUnit.getDate().getDay());
                     if (dateF.format(trainUnit.getDate()).equals(selectedDate)) {
                         selectedUnit = trainUnit;
                         break;
@@ -98,7 +96,7 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
                 // if trainunit available, open detailview
                 if (selectedUnit != null) {
                     System.out.println("valid selection");
-                    System.out.println(selectedUnit.toString());
+                    System.out.println(selectedUnit.getId());
                     trainUnitListener.onTrainUnitDaySelected(selectedUnit.getId());
                 } else {
                     System.out.println("not valid selection");
