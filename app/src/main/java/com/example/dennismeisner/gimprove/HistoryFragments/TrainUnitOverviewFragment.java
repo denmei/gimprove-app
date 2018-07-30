@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
+import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
@@ -55,9 +56,15 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
             Calendar c = new GregorianCalendar();
             c.setTime(trainUnit.getDate());
             System.out.println(trainUnit.getDate());
-            trainUnitDays.add(new EventDay(c, R.drawable.ic_arrow_left));
+            trainUnitDays.add(new EventDay(c, R.drawable.g5707));
         }
         calendarView.setEvents(trainUnitDays);
+        Calendar cal = Calendar.getInstance();
+        try {
+            calendarView.setDate(cal);
+        } catch (OutOfDateRangeException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override

@@ -194,6 +194,8 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                         resetProgress();
                         String name = jsonMessage.getString("exercise_name");
                         System.out.println(jsonMessage.toString());
+                        //TODO replace by real exercise unit
+                        jsonMessage.put("exercise_unit", "");
                         Set newSet = new Set(jsonMessage);
                         mCallback.onSetFinished(name, newSet);
                     } else {
