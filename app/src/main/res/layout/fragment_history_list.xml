@@ -20,6 +20,9 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:selectionColor="@color/grimproveOrange"
-        app:todayLabelColor="@color/gimproveGray" />
+        app:todayLabelColor="@color/gimproveGray"
+        app:pagesColor="@color/gimproveGray"
+        app:daysLabelsColor="@color/gimproveWhite"
+        app:anotherMonthsDaysLabelsColor="@color/gimproveGray"/>
 
 </LinearLayout>
