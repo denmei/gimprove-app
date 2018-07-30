@@ -202,6 +202,7 @@ public class LoggedInActivity extends AppCompatActivity
     public void onListFragmentInteraction(ListItem listItem) {
         Bundle bundle = new Bundle();
         if (listItem instanceof ExerciseUnit) {
+            System.out.println("Exerciseunit: " + listItem.toString());
             try {
                 userRepository.updateSets();
             } catch (Exception e) {

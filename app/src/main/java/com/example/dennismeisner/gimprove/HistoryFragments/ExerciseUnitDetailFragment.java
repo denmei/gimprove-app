@@ -43,7 +43,7 @@ public class ExerciseUnitDetailFragment extends HistoryFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_history_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_trainunitdetail, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
