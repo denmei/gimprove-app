@@ -52,10 +52,7 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         for(TrainUnit trainUnit: trainUnits) {
             Calendar c = Calendar.getInstance();
             c.setTime(trainUnit.getDate());
-            System.out.println(trainUnit.getDate());
-            EventDay e = new EventDay(c, R.drawable.g5707_small);
-            System.out.println(e.toString());
-            trainUnitDays.add(new EventDay(c, R.drawable.g5707_small));
+            trainUnitDays.add(new EventDay(c, R.drawable.gimprove_logo));
         }
         calendarView.setEvents(trainUnitDays);
         Calendar cal = Calendar.getInstance();
