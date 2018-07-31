@@ -35,6 +35,8 @@ import com.example.dennismeisner.gimprove.Utilities.RequestManager;
 import com.example.dennismeisner.gimprove.Utilities.TokenManager;
 import com.example.dennismeisner.gimprove.Utilities.UserRepository;
 
+import java.text.SimpleDateFormat;
+
 public class LoggedInActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         HistoryFragment.OnListFragmentInteractionListener, LiveFeedbackFragment.OnSetFinishedListener,
@@ -235,9 +237,15 @@ public class LoggedInActivity extends AppCompatActivity
         Bundle bundle = new Bundle();
         try {
             userRepository.updateExerciseUnits();
-            System.out.println(User.getInstance().getExerciseUnits().toString());
         } catch (Exception e) {
             e.printStackTrace();
+        }
+        TrainUnit detailUnit = User.getInstance().getTrainUnitById(trainUnitId);
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("dd/MM/yyyy");
+        if(detailUnit != null) {
+            bundle.putString("TRAIN_UNIT_DATE", dateFormatter.format(detailUnit.getDate()));
+        } else {
+            bundle.putString("TRAIN_UNIT_DATE", "");
         }
         bundle.putString("TRAIN_UNIT", trainUnitId);
         exerciseUnitHistoryFragment.setArguments(bundle);

@@ -20,12 +20,12 @@ import java.util.List;
 public class TrainUnitDetailFragment extends HistoryFragment {
 
     private final static String TRAIN_UNIT="TRAIN_UNIT";
+    private String trainUnitDate;
     private RecyclerView recyclerView;
 
-    public static TrainUnitDetailFragment newInstance(String trainUnitId) {
+    public static TrainUnitDetailFragment newInstance(String trainUnitId, String trainUnitDate) {
         TrainUnitDetailFragment fragment = new TrainUnitDetailFragment();
         Bundle args = new Bundle();
-        args.putString(TRAIN_UNIT, trainUnitId);
         fragment.setArguments(args);
         return fragment;
     }
@@ -33,10 +33,13 @@ public class TrainUnitDetailFragment extends HistoryFragment {
     @Override
     public void onResume() {
         super.onResume();
-        System.out.println("TRAINUNITDETAILFRAGMENT");
+        trainUnitDate = getArguments().getString("TRAIN_UNIT_DATE");
+        if(trainUnitDate == null) {
+            trainUnitDate = "";
+        }
         if(getActivity() instanceof LoggedInActivity) {
             ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
-                    .getString(R.string.actionbar_history_exerciseunits));
+                    .getString(R.string.actionbar_history_exerciseunits) + " - " + trainUnitDate);
         }
     }
 
@@ -56,6 +59,7 @@ public class TrainUnitDetailFragment extends HistoryFragment {
             System.out.println(exercises.toString());
             recyclerView.setAdapter(new ListItemRecyclerViewAdapter(exercises, mListener));
         }
+
         return view;
     }
 

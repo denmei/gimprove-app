@@ -126,6 +126,15 @@ public class User {
         this.exerciseUnits = exerciseUnits;
     }
 
+    public TrainUnit getTrainUnitById(String id) {
+        for(TrainUnit trainUnit:this.trainUnits) {
+            if(trainUnit.getId().equals(id)) {
+                return trainUnit;
+            }
+        }
+        return null;
+    }
+
     public void setSets(List<Set> sets) {
         this.sets = sets;
     }
