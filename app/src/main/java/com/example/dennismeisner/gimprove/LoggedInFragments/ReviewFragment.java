@@ -89,6 +89,9 @@ public class ReviewFragment extends Fragment {
             newRepetitions = newSet.getRepetitions();
             newWeight = newSet.getWeight();
         }
+        exerciseNameText.setText(exerciseName);
+        repsText.setText(String.valueOf(originalRepetitions));
+        weightText.setText(String.valueOf(originalWeight));
     }
 
     @Override

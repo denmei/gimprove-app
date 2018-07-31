@@ -29,8 +29,6 @@ public class SetDetailFragment extends Fragment {
     private TextView weightVal;
     private TextView repsVal;
     private TextView durationsVal;
-    private TextView dateVal;
-    private TextView timeVal;
 
     private SimpleDateFormat dateFormatter;
     private SimpleDateFormat timeFormatter;
@@ -84,12 +82,6 @@ public class SetDetailFragment extends Fragment {
 
         weightVal = view.findViewById(R.id.weightVal);
         weightVal.setText(Double.toString(set.getWeight()));
-
-        dateVal = view.findViewById(R.id.dateVal);
-        dateVal.setText(dateFormatter.format(set.getDateTime()));
-
-        timeVal = view.findViewById(R.id.timeVal);
-        timeVal.setText(timeFormatter.format(set.getDateTime()));
 
         durationsVal = view.findViewById(R.id.durationsVal);
         durationsVal.setText(Arrays.toString(set.getDurations()));

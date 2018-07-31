@@ -96,7 +96,6 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                     public void onClick(View v) {
                         if(client.isClosed()) {
                             client.connect();
-                            System.out.println("Try connect");
                         }
                     }
                 }

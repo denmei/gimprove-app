@@ -84,6 +84,7 @@ public class UserRepository {
     }
 
     public void sendUpdateSet(final Set newSet) {
+        System.out.println("New set sendupdateset: " + newSet.toExtString());
         webInterface.updateSet(newSet.getId(), this.token, newSet.getHashMap()).enqueue(
                 new Callback<ResponseBody>() {
                     @Override
