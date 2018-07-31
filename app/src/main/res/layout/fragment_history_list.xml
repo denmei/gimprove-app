@@ -13,16 +13,15 @@
     <com.applandeo.materialcalendarview.CalendarView
         android:id="@+id/trainUnitCalendar"
         android:layout_width="match_parent"
-        android:layout_height="370dp"
-        app:datePicker="true"
+        android:layout_height="wrap_content"
         app:headerColor="@color/gimproveGray"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:selectionColor="@color/grimproveOrange"
-        app:todayLabelColor="@color/gimproveGray"
+        app:todayLabelColor="@color/grimproveOrange"
         app:pagesColor="@color/gimproveGray"
         app:daysLabelsColor="@color/gimproveWhite"
-        app:anotherMonthsDaysLabelsColor="@color/gimproveGray"/>
+        app:anotherMonthsDaysLabelsColor="@color/gimproveGray" />
 
 </LinearLayout>

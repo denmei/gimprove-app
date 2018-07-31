@@ -15,7 +15,6 @@ import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
 import com.example.dennismeisner.gimprove.GimproveModels.TrainUnit;
 import com.example.dennismeisner.gimprove.GimproveModels.User;
-import com.example.dennismeisner.gimprove.ListContent.ListItem;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
 import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
@@ -23,8 +22,6 @@ import com.example.dennismeisner.gimprove.R;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class TrainUnitOverviewFragment extends HistoryFragment {
@@ -53,10 +50,12 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         List<TrainUnit> trainUnits = User.getInstance().getTrainUnits();
         trainUnitDays = new ArrayList<>();
         for(TrainUnit trainUnit: trainUnits) {
-            Calendar c = new GregorianCalendar();
+            Calendar c = Calendar.getInstance();
             c.setTime(trainUnit.getDate());
             System.out.println(trainUnit.getDate());
-            trainUnitDays.add(new EventDay(c, R.drawable.g5707));
+            EventDay e = new EventDay(c, R.drawable.g5707_small);
+            System.out.println(e.toString());
+            trainUnitDays.add(new EventDay(c, R.drawable.g5707_small));
         }
         calendarView.setEvents(trainUnitDays);
         Calendar cal = Calendar.getInstance();

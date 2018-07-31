@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
     <item name="AuthToken" type="string">http://10.0.2.2:8000/get_auth_token/</item>
     <item name="UserProfile" type="string">http://10.0.2.2:8000/tracker/userprofile_detail_rest/</item>
     <item name="Websocket" type="string">ws://10.0.2.2:8000/ws/tracker/</item>
     <item name="TrainUnits" type="string">http://10.0.2.2:8000/tracker/trainunit_list_rest/</item>
     <item name="baseUrl" type="string">http://10.0.2.2:8000/tracker/</item>
+    -->
 
-    <!--
     <item name="AuthToken" type="string">http://gimprove-test.herokuapp.com/get_auth_token/</item>
     <item name="UserProfile" type="string">https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rest/</item>
     <item name="Websocket" type="string">ws://gimprove-test.herokuapp.com/ws/tracker/</item>
     <item name="TrainUnits" type="string">https://gimprove-test.herokuapp.com/tracker/trainunit_list_rest/</item>
-    <item name="baseUrl" type="string">https://gimprove-test.herokuapp.com/tracker/</item>-->
+    <item name="baseUrl" type="string">https://gimprove-test.herokuapp.com/tracker/</item>
 </resources>
