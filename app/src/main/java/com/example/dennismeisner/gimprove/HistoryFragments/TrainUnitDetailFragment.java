@@ -55,8 +55,6 @@ public class TrainUnitDetailFragment extends HistoryFragment {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
             String trainUnit = getArguments().getString(TRAIN_UNIT, "");
             List<ExerciseUnit> exercises = User.getInstance().getExerciseUnitsByTrainUnit(trainUnit);
-            System.out.println("USER EXERCISEUNITS:");
-            System.out.println(exercises.toString());
             recyclerView.setAdapter(new ListItemRecyclerViewAdapter(exercises, mListener));
         }
 

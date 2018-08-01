@@ -165,7 +165,10 @@ public class UserRepository {
                     for(int i = 0; i < jsonSets.length(); i++) {
                         JSONObject msg = (JSONObject) jsonSets.get(i);
                         Set newSet = new Set(msg);
-                        User.getInstance().addSet(newSet);
+                        User user = User.getInstance();
+                        if (user.getSetById(newSet.getId()) == null) {
+                           user.addSet(newSet);
+                        }
                     }
                     // User.getInstance().setSets(downloadedSets);
                 } catch (IOException e) {
@@ -188,32 +191,6 @@ public class UserRepository {
         });
     }
 
-    private void updateSetDetails(String id) {
-        webInterface.loadSetDetails(id, this.token).enqueue(new Callback<ResponseBody>() {
-
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-                    String body = response.body().string();
-                    System.out.println(body);
-                    Set newSet = new Set(new JSONObject(body));
-                    User.getInstance().addSet(newSet);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.println("FAILURE UPDATE SET DETAILS");
-                System.out.println(t.getMessage());
-            }
-        });
-    }
 
     public void updateUser(String name, int id) throws IOException, JSONException {
         this.updateTrainUnits();
