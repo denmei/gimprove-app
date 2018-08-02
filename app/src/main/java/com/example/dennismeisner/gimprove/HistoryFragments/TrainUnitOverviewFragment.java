@@ -18,6 +18,7 @@ import com.example.dennismeisner.gimprove.GimproveModels.User;
 import com.example.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
 import com.example.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
+import com.example.dennismeisner.gimprove.Utilities.DateFormater;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -28,7 +29,6 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
 
     private CalendarView calendarView;
     private List<EventDay> trainUnitDays;
-    static private SimpleDateFormat dateFormat;
     private Button selectedDateButton;
     private OnTrainUnitDaySelectedListener trainUnitListener;
 
@@ -36,7 +36,6 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         TrainUnitOverviewFragment fragment = new TrainUnitOverviewFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
-        dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         return fragment;
     }
 
@@ -52,7 +51,8 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         for(TrainUnit trainUnit: trainUnits) {
             Calendar c = Calendar.getInstance();
             c.setTime(trainUnit.getDate());
-            System.out.println(trainUnit.getDate());
+            System.out.println("C: " + c.getTime().toString());
+            System.out.println("T: " + trainUnit.getDate());
             trainUnitDays.add(new EventDay(c, R.drawable.gimprove_logo));
         }
         calendarView.setEvents(trainUnitDays);
@@ -84,15 +84,14 @@ public class TrainUnitOverviewFragment extends HistoryFragment {
         calendarView = view.findViewById(R.id.trainUnitCalendar);
 
         calendarView.setOnDayClickListener(new OnDayClickListener() {
-            SimpleDateFormat dateF = new SimpleDateFormat("dd-MM-yyyy");
 
             @Override
             public void onDayClick(EventDay eventDay) {
                 // Check whether picked date has a train unit
                 TrainUnit selectedUnit = null;
-                String selectedDate = dateF.format(eventDay.getCalendar().getTime());
+                String selectedDate = DateFormater.getDateString(eventDay.getCalendar().getTime());
                 for(TrainUnit trainUnit:User.getInstance().getTrainUnits()) {
-                    if (dateF.format(trainUnit.getDate()).equals(selectedDate)) {
+                    if (DateFormater.getDateString(trainUnit.getDate()).equals(selectedDate)) {
                         selectedUnit = trainUnit;
                         break;
                     }

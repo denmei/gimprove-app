@@ -1,6 +1,7 @@
 package com.example.dennismeisner.gimprove.GimproveModels;
 
 import com.example.dennismeisner.gimprove.ListContent.ListItem;
+import com.example.dennismeisner.gimprove.Utilities.DateFormater;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -48,7 +49,7 @@ public class Set extends ListItem implements Serializable {
      */
     public Set(JSONObject jsonMsg) throws JSONException, ParseException {
         this.id = jsonMsg.getString("id");
-        this.dateTime = parseTimestamp(jsonMsg.getString("date_time"));
+        this.dateTime = DateFormater.parseTimestamp(jsonMsg.getString("date_time"));
         this.exercise_unit = jsonMsg.getString("exercise_unit");
         this.exerciseName = jsonMsg.getString("exercise_name");
         // this.active = jsonMsg.getBoolean("active");

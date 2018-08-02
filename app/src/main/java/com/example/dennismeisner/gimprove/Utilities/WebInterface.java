@@ -23,7 +23,7 @@ import retrofit2.http.Query;
 public interface WebInterface {
 
     @GET("trainunit_list_rest/")
-    Call<List<TrainUnit>> loadTrainUnits(@Header("Authorization") String token);
+    Call<ResponseBody> loadTrainUnits(@Header("Authorization") String token);
 
     @GET("exerciseunit_list_rest/")
     Call<List<ExerciseUnit>> loadExerciseUnits(@Header("Authorization") String token);

@@ -74,6 +74,10 @@ public class User {
         this.sets.add(newSet);
     }
 
+    public void addTrainUnit(TrainUnit newUnit) {
+        this.trainUnits.add(newUnit);
+    }
+
     /**
      * Returns a list of the ExerciseUnits that belong to the defined Trainunit.
      * @param trainUnitId Trainunit to be filtered for.

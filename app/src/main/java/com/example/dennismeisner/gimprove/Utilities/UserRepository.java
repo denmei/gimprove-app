@@ -69,14 +69,35 @@ public class UserRepository {
     }
 
     public void updateTrainUnits() throws IOException, JSONException {
-        webInterface.loadTrainUnits(this.token).enqueue(new Callback<List<TrainUnit>>() {
+        webInterface.loadTrainUnits(this.token).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<List<TrainUnit>> call, Response<List<TrainUnit>> response) {
-                User.getInstance().setTrainUnits(response.body());
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                String body = null;
+                try {
+                    body = response.body().string();
+                    System.out.println(body);
+                    JSONArray jsonSets = new JSONArray(body);
+                    List<TrainUnit> downloadedUnits = new LinkedList<TrainUnit>();
+                    for(int i = 0; i < jsonSets.length(); i++) {
+                        JSONObject msg = (JSONObject) jsonSets.get(i);
+                        TrainUnit newUnit = new TrainUnit(msg);
+                        System.out.println(newUnit.toExtString());
+                        User user = User.getInstance();
+                        if (user.getTrainUnitById(newUnit.getId()) == null) {
+                            user.addTrainUnit(newUnit);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
 
             @Override
-            public void onFailure(Call<List<TrainUnit>> call, Throwable t) {
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
                 System.out.println(t.getMessage());
                 System.out.println(call.request().url());
             }
