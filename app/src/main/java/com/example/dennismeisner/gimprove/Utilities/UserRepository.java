@@ -68,20 +68,21 @@ public class UserRepository {
         this.token = "Token " + token;
     }
 
+    /**
+     * Updates user's set of train units with those from the server.
+     * @throws IOException
+     * @throws JSONException
+     */
     public void updateTrainUnits() throws IOException, JSONException {
         webInterface.loadTrainUnits(this.token).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                String body = null;
                 try {
-                    body = response.body().string();
-                    System.out.println(body);
+                    String body = response.body().string();
                     JSONArray jsonSets = new JSONArray(body);
-                    List<TrainUnit> downloadedUnits = new LinkedList<TrainUnit>();
                     for(int i = 0; i < jsonSets.length(); i++) {
                         JSONObject msg = (JSONObject) jsonSets.get(i);
                         TrainUnit newUnit = new TrainUnit(msg);
-                        System.out.println(newUnit.toExtString());
                         User user = User.getInstance();
                         if (user.getTrainUnitById(newUnit.getId()) == null) {
                             user.addTrainUnit(newUnit);

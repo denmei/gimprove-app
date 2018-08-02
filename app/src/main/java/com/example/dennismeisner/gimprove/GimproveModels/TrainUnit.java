@@ -36,7 +36,7 @@ public class TrainUnit extends ListItem {
     }
 
     public Date getDate() {
-        return this.end_time_date;
+        return this.start_time_date;
     }
 
     @Override
@@ -47,8 +47,8 @@ public class TrainUnit extends ListItem {
     public String toExtString() {
         StringBuilder builder = new StringBuilder();
         builder.append(this.id + " ");
-        builder.append(this.start_time_date + " ");
-        builder.append(this.end_time_date);
+        builder.append(this.start_time_date.toString() + " ");
+        builder.append(this.end_time_date.toString());
         return builder.toString();
     }
 

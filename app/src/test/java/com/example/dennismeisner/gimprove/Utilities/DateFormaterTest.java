@@ -29,6 +29,18 @@ public class DateFormaterTest {
         String testString = "2018-08-01T08:01:18.397888+02:00";
         Date parsedString = DateFormater.parseTimestamp(testString);
         Assert.assertEquals("1533103278397", Long.toString(parsedString.getTime()));
+
+        String testString2 = "2018-08-01 08:01:18.397888+02:00";
+        Date parsedString2 = DateFormater.parseTimestamp(testString2);
+        Assert.assertEquals("1533103278397", Long.toString(parsedString2.getTime()));
+
+        String testString3 = "2018-08-01 08:01:18.397+02:00";
+        Date parsedString3 = DateFormater.parseTimestamp(testString3);
+        Assert.assertEquals("1533103278397", Long.toString(parsedString3.getTime()));
+
+        String testString4 = "2018-07-05T08:27:22.390460+02:00";
+        Date parsedString4 = DateFormater.parseTimestamp(testString4);
+        Assert.assertEquals("Thu Jul 05 08:27:22 CEST 2018", parsedString4.toString());
     }
 }
 

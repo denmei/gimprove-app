@@ -3,6 +3,7 @@ package com.example.dennismeisner.gimprove.Utilities;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 public final class DateFormater {
 
@@ -28,6 +29,8 @@ public final class DateFormater {
     }
 
     public static Date parseTimestamp(String timeStamp) throws ParseException {
+        SimpleDateFormat ts = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSXXX");
+        ts.setTimeZone(TimeZone.getDefault());
         // remove T
         String timeStampWithT = timeStamp.replace("T", " ");
         // remove last 3 digits of seconds
@@ -35,6 +38,6 @@ public final class DateFormater {
         String[] subfragments = fragments[1].split("\\+");
         subfragments[0] = subfragments[0].substring(0,3);
         String completeTimeStamp = fragments[0] + "." + subfragments[0] + "+" + subfragments[1];
-        return timestampFormat.parse(completeTimeStamp);
+        return ts.parse(completeTimeStamp);
     }
 }
