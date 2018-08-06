@@ -42,6 +42,7 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     private Button connectButton;
     private int lastRep;
     private TokenManager tokenManager;
+    private Map<String, String> header;
     private SharedPreferences sharedPreferences;
 
     public LiveFeedbackFragment() {
@@ -72,17 +73,9 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
         sharedPreferences = getActivity().getSharedPreferences(
                 "com.example.dennismeisner.gimprove.app", Context.MODE_PRIVATE);
         tokenManager = new TokenManager(sharedPreferences);
-        Map<String, String> header = new HashMap<String, String>();
+        header = new HashMap<String, String>();
         header.put("authorization", "Token " + this.tokenManager.getToken());
-        try {
-            client = new WebsocketClientGimprove(
-                    header,
-                    tokenManager,
-                    new URI(getResources().getString(R.string.Websocket)));
-            client.addListener(this);
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
+        this.createNewWebsocketClient(header);
 
         active = false;
         lastRep = 0;
@@ -96,7 +89,7 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
                     @Override
                     public void onClick(View v) {
                         if(client.isClosed()) {
-                            client.connect();
+                            createNewWebsocketClient(header);
                         }
                     }
                 }
@@ -110,6 +103,18 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
         this.progressCircle.setTextMode(TextMode.VALUE);
         this.progressCircle.setSeekModeEnabled(false);
         this.progressCircle.setAutoTextSize(true);
+    }
+
+    private void createNewWebsocketClient(Map<String, String> header) {
+        try {
+            client = new WebsocketClientGimprove(
+                    header,
+                    tokenManager,
+                    new URI(getResources().getString(R.string.Websocket)));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        client.addListener(this);
     }
 
     @Override
