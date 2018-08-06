@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -126,10 +127,17 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if(getActivity() instanceof LoggedInActivity) {
             ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
                     .getString(R.string.actionbar_live_tracking));
         }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
     @Override
