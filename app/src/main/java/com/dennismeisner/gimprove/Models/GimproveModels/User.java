@@ -81,9 +81,11 @@ public class User {
      */
     public List<ExerciseUnit> getExerciseUnitsByTrainUnit(String trainUnitId) {
         List<ExerciseUnit> relevantUnits = new LinkedList<ExerciseUnit>();
-        for(ExerciseUnit unit:this.exerciseUnits) {
-            if(unit.getTrainUnit().equals(trainUnitId)) {
-                relevantUnits.add(unit);
+        if(this.exerciseUnits != null) {
+            for(ExerciseUnit unit:this.exerciseUnits) {
+                if(unit.getTrainUnit().equals(trainUnitId)) {
+                    relevantUnits.add(unit);
+                }
             }
         }
         return relevantUnits;
@@ -96,9 +98,11 @@ public class User {
      */
     public List<Set> getSetsByExerciseUnits(String exerciseUnitId) {
         List<Set> relevantUnits = new LinkedList<>();
-        for(Set set:this.sets) {
-            if(set.getExerciseUnit().equals(exerciseUnitId)) {
-                relevantUnits.add(set);
+        if(this.sets != null) {
+            for(Set set:this.sets) {
+                if(set.getExerciseUnit().equals(exerciseUnitId)) {
+                    relevantUnits.add(set);
+                }
             }
         }
         return relevantUnits;
@@ -127,12 +131,26 @@ public class User {
     }
 
     public TrainUnit getTrainUnitById(String id) {
-        for(TrainUnit trainUnit:this.trainUnits) {
-            if(trainUnit.getId().equals(id)) {
-                return trainUnit;
+        if(this.trainUnits == null) {
+            return null;
+        } else {
+            for(TrainUnit trainUnit:this.trainUnits) {
+                if(trainUnit.getId().equals(id)) {
+                    return trainUnit;
+                }
             }
+            return null;
         }
-        return null;
+    }
+
+    public void resetUser() {
+        this.name = "";
+        this.id = -1;
+        this.rfid = "";
+        this.sets = new LinkedList<Set>();
+        this.exerciseUnits = new LinkedList<ExerciseUnit>();
+        this.trainUnits = new LinkedList<TrainUnit>();
+        this.initialized = false;
     }
 
     public void setSets(List<Set> sets) {

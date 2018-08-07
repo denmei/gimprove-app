@@ -166,6 +166,7 @@ public class LoggedInActivity extends AppCompatActivity
             sharedPreferences.edit().putString("Token", "").apply();
             sharedPreferences.edit().putString("UserName", "").apply();
             Intent systemcheckIntent = new Intent(this, SystemCheck.class);
+            User.getInstance().resetUser();
             startActivity(systemcheckIntent);
         }
 
