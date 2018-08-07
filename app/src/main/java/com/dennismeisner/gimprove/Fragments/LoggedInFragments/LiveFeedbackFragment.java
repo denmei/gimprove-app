@@ -30,7 +30,12 @@ import java.util.Map;
 import at.grabner.circleprogress.CircleProgressView;
 import at.grabner.circleprogress.TextMode;
 
-
+/**
+ * Fragment for the LiveFeedback-Mode:
+ * Websocket-Connection to server is established. All incoming messages are parsed and the views
+ * (progresscircle, weight-textfield, exercisename-textfield) are adapted to the message's content.
+ * Connection can be reestablished with a connect-button.
+ */
 public class LiveFeedbackFragment extends Fragment implements SocketListener {
 
     OnSetFinishedListener mCallback;
@@ -132,6 +137,7 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     @Override
     public void onResume() {
         super.onResume();
+        resetProgress();
         getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         if(getActivity() instanceof LoggedInActivity) {
             ((LoggedInActivity) getActivity()).setActionBarTitle(getResources()
@@ -149,8 +155,6 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
     public void onDetach() {
         super.onDetach();
     }
-
-    /* *** Initializers *** */
 
     /**
      * Initializer for ProgressCircle.
@@ -238,6 +242,7 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
 
     @Override
     public void onSocketClosed(int code, String reason, boolean remote) {
+        resetProgress();
         getActivity().runOnUiThread(new Runnable() {
 
             @Override
@@ -249,6 +254,7 @@ public class LiveFeedbackFragment extends Fragment implements SocketListener {
 
     @Override
     public void onSocketOpen() {
+        resetProgress();
         getActivity().runOnUiThread(new Runnable() {
 
             @Override
