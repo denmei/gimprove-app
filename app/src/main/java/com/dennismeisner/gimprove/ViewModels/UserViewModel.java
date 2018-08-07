@@ -2,7 +2,7 @@ package com.dennismeisner.gimprove.ViewModels;
 
 import android.arch.lifecycle.LiveData;
 
-import com.dennismeisner.gimprove.GimproveModels.User;
+import com.dennismeisner.gimprove.Models.GimproveModels.User;
 
 public class UserViewModel {
 

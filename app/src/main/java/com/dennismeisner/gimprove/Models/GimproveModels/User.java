@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.GimproveModels;
+package com.dennismeisner.gimprove.Models.GimproveModels;
 
 import java.util.LinkedList;
 import java.util.List;

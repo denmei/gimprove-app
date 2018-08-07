@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.HistoryFragments;
+package com.dennismeisner.gimprove.Fragments.HistoryFragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -10,8 +10,8 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dennismeisner.gimprove.Activities.LoggedInActivity;
-import com.dennismeisner.gimprove.GimproveModels.Set;
-import com.dennismeisner.gimprove.GimproveModels.User;
+import com.dennismeisner.gimprove.Models.GimproveModels.Set;
+import com.dennismeisner.gimprove.Models.GimproveModels.User;
 import com.example.dennismeisner.gimprove.R;
 
 import java.text.SimpleDateFormat;

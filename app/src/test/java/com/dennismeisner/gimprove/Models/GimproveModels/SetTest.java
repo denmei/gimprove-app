@@ -1,8 +1,6 @@
-package com.dennismeisner.gimprove.GimproveModels;
+package com.dennismeisner.gimprove.Models.GimproveModels;
 
 // Static imports for assertion methods
-
-import com.dennismeisner.gimprove.GimproveModels.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.HistoryFragments;
+package com.dennismeisner.gimprove.Fragments.HistoryFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -6,8 +6,8 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.View;
 
-import com.dennismeisner.gimprove.GimproveModels.User;
-import com.dennismeisner.gimprove.ListContent.ListItem;
+import com.dennismeisner.gimprove.Models.GimproveModels.User;
+import com.dennismeisner.gimprove.Models.ListContent.ListItem;
 
 
 public abstract class HistoryFragment extends Fragment implements View.OnClickListener {

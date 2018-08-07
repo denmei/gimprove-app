@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.HistoryFragments;
+package com.dennismeisner.gimprove.Fragments.HistoryFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,9 +13,9 @@ import com.applandeo.materialcalendarview.CalendarView;
 import com.applandeo.materialcalendarview.EventDay;
 import com.applandeo.materialcalendarview.exceptions.OutOfDateRangeException;
 import com.applandeo.materialcalendarview.listeners.OnDayClickListener;
-import com.dennismeisner.gimprove.GimproveModels.TrainUnit;
-import com.dennismeisner.gimprove.GimproveModels.User;
-import com.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
+import com.dennismeisner.gimprove.Models.GimproveModels.TrainUnit;
+import com.dennismeisner.gimprove.Models.GimproveModels.User;
+import com.dennismeisner.gimprove.Models.ListContent.ListItemRecyclerViewAdapter;
 import com.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
 import com.dennismeisner.gimprove.Utilities.DateFormater;

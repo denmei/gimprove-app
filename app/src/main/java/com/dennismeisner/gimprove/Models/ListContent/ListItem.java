@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.ListContent;
+package com.dennismeisner.gimprove.Models.ListContent;
 
 import java.util.Date;
 

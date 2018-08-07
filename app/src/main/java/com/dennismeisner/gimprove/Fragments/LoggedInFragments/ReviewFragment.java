@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.LoggedInFragments;
+package com.dennismeisner.gimprove.Fragments.LoggedInFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -14,7 +14,7 @@ import android.widget.TextView;
 
 import com.dennismeisner.gimprove.Utilities.UserRepository;
 import com.dennismeisner.gimprove.Activities.LoggedInActivity;
-import com.dennismeisner.gimprove.GimproveModels.Set;
+import com.dennismeisner.gimprove.Models.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.R;
 
 

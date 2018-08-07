@@ -1,6 +1,6 @@
 package com.dennismeisner.gimprove;
 
-import com.dennismeisner.gimprove.GimproveModels.Set;
+import com.dennismeisner.gimprove.Models.GimproveModels.Set;
 
 import org.junit.Test;
 

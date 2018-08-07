@@ -1,6 +1,4 @@
-package com.dennismeisner.gimprove.GimproveModels;
-
-import com.dennismeisner.gimprove.GimproveModels.TrainUnit;
+package com.dennismeisner.gimprove.Models.GimproveModels;
 
 import junit.framework.Assert;
 

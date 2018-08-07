@@ -3,10 +3,10 @@ package com.dennismeisner.gimprove.Utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
-import com.dennismeisner.gimprove.GimproveModels.Set;
-import com.dennismeisner.gimprove.GimproveModels.TrainUnit;
-import com.dennismeisner.gimprove.GimproveModels.User;
+import com.dennismeisner.gimprove.Models.GimproveModels.ExerciseUnit;
+import com.dennismeisner.gimprove.Models.GimproveModels.Set;
+import com.dennismeisner.gimprove.Models.GimproveModels.TrainUnit;
+import com.dennismeisner.gimprove.Models.GimproveModels.User;
 
 import org.json.JSONArray;
 import org.json.JSONException;

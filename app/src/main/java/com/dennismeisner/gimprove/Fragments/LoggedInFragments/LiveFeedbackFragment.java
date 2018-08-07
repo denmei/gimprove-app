@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.LoggedInFragments;
+package com.dennismeisner.gimprove.Fragments.LoggedInFragments;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -15,7 +15,7 @@ import com.dennismeisner.gimprove.Utilities.SocketListener;
 import com.dennismeisner.gimprove.Utilities.TokenManager;
 import com.dennismeisner.gimprove.Utilities.WebsocketClientGimprove;
 import com.dennismeisner.gimprove.Activities.LoggedInActivity;
-import com.dennismeisner.gimprove.GimproveModels.Set;
+import com.dennismeisner.gimprove.Models.GimproveModels.Set;
 import com.example.dennismeisner.gimprove.R;
 
 import org.json.JSONException;

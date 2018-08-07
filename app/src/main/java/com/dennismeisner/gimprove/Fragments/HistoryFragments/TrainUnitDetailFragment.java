@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.HistoryFragments;
+package com.dennismeisner.gimprove.Fragments.HistoryFragments;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -8,9 +8,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
-import com.dennismeisner.gimprove.GimproveModels.User;
-import com.dennismeisner.gimprove.ListContent.ListItemRecyclerViewAdapter;
+import com.dennismeisner.gimprove.Models.GimproveModels.ExerciseUnit;
+import com.dennismeisner.gimprove.Models.GimproveModels.User;
+import com.dennismeisner.gimprove.Models.ListContent.ListItemRecyclerViewAdapter;
 import com.dennismeisner.gimprove.Activities.LoggedInActivity;
 import com.example.dennismeisner.gimprove.R;
 

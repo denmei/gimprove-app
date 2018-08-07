@@ -1,4 +1,4 @@
-package com.dennismeisner.gimprove.ListContent;
+package com.dennismeisner.gimprove.Models.ListContent;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.dennismeisner.gimprove.HistoryFragments.HistoryFragment;
+import com.dennismeisner.gimprove.Fragments.HistoryFragments.HistoryFragment;
 import com.example.dennismeisner.gimprove.R;
 
 import java.util.List;

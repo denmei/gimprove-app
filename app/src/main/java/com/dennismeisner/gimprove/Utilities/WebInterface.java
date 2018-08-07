@@ -1,6 +1,6 @@
 package com.dennismeisner.gimprove.Utilities;
 
-import com.dennismeisner.gimprove.GimproveModels.ExerciseUnit;
+import com.dennismeisner.gimprove.Models.GimproveModels.ExerciseUnit;
 
 import java.util.HashMap;
 import java.util.List;

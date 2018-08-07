@@ -3,8 +3,7 @@ package com.dennismeisner.gimprove.Utilities;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.dennismeisner.gimprove.GimproveModels.Set;
-import com.dennismeisner.gimprove.Utilities.UserRepository;
+import com.dennismeisner.gimprove.Models.GimproveModels.Set;
 
 import org.json.JSONException;
 import org.json.JSONObject;
