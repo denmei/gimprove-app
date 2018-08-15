@@ -9,8 +9,8 @@
     -->
 
     <item name="AuthToken" type="string">http://gimprove-test.herokuapp.com/get_auth_token/</item>
-    <item name="UserProfile" type="string">https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rest/</item>
+    <item name="UserProfile" type="string">https://gimprove-test.herokuapp.com/tracker/v0/userprofile_detail_rest/</item>
     <item name="Websocket" type="string">ws://gimprove-test.herokuapp.com/ws/tracker/</item>
-    <item name="TrainUnits" type="string">https://gimprove-test.herokuapp.com/tracker/trainunit_list_rest/</item>
-    <item name="baseUrl" type="string">https://gimprove-test.herokuapp.com/tracker/</item>
+    <item name="TrainUnits" type="string">https://gimprove-test.herokuapp.com/tracker/v0/trainunit_list_rest/</item>
+    <item name="baseUrl" type="string">https://gimprove-test.herokuapp.com/tracker/v0/</item>
 </resources>
