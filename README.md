@@ -28,13 +28,11 @@ Gimprove-Backend as a broker, forwarding incoming messages from the gimprove upg
 Users can explore their historical activities and their progress in the app, too.
 
 ### Build With
-The Gimprove-backend is based on the Django-Framework. To realize the required services, 3rd party packages were used:
-
-* [Django-Rest-Framework](http://www.django-rest-framework.org/) for the API used by our App and the clients
-
-* [Django-Channels](https://github.com/django/channels) Websocket-Communication for live tracking between the client
-and the App to achieve real-time communication.
-
+* [Retrofit](https://github.com/square/retrofit) for Client-Server communication
+* [Appleando Calendar](https://github.com/Applandeo/Material-Calendar-View) for historical overview 
+of training activities
+* [Circle Progress View](https://github.com/jakob-grabner/Circle-Progress-View) for live-tracking
+functionality
 
 ### Contributing
 **Denni Meisner:** meisnerdennis@web.de
