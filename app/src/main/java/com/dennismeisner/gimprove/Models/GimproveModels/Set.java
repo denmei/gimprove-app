@@ -29,7 +29,7 @@ public class Set extends ListItem implements Serializable {
     private String equipmentId;
 
     public Set(String id, Date date_time, int repetitions, double weight,
-               double[] durations, Boolean auto_tracking, String exercise_name,
+               double[] durations, Boolean auto_tracking, String exercise,
                String equipmentId) {
         this.id = id;
         this.dateTime = date_time;
@@ -37,7 +37,7 @@ public class Set extends ListItem implements Serializable {
         this.weight = weight;
         this.durations = durations;
         this.autoTracking = auto_tracking;
-        this.exerciseName = exercise_name;
+        this.exerciseName = exercise;
         this.equipmentId = equipmentId;
     }
 
@@ -48,15 +48,16 @@ public class Set extends ListItem implements Serializable {
      */
     public Set(JSONObject jsonMsg) throws JSONException, ParseException {
         this.id = jsonMsg.getString("id");
+        System.out.println("Set date:" + jsonMsg.toString());
         this.dateTime = DateFormater.parseTimestamp(jsonMsg.getString("date_time"));
         this.exercise_unit = jsonMsg.getString("exercise_unit");
-        this.exerciseName = jsonMsg.getString("exercise_name");
+        this.exerciseName = jsonMsg.getString("exercise");
         // this.active = jsonMsg.getBoolean("active");
         this.repetitions = jsonMsg.getInt("repetitions");
         this.weight = jsonMsg.getDouble("weight");
         this.durations = parseStringToDoubleArray(jsonMsg.getString("durations"), repetitions);
         this.autoTracking = true;
-        this.equipmentId = jsonMsg.getString("equipment_id");
+        this.equipmentId = jsonMsg.getString("equipment");
         this.lastUpdate = new Date();
     }
 
@@ -177,13 +178,13 @@ public class Set extends ListItem implements Serializable {
         retHash.put("repetitions", repetitions);
         retHash.put("weight", weight);
         retHash.put("rfid", User.getInstance().getRfid());
-        retHash.put("equipment_id", this.equipmentId);
+        retHash.put("equipment", this.equipmentId);
         /* if(active) {
             retHash.put("active", "True");
         } else {
             retHash.put("active", "False");
         }*/
-        retHash.put("exercise_name", this.exerciseName);
+        retHash.put("exercise", this.exerciseName);
         retHash.put("durations", Arrays.toString(durations));
         return retHash;
     }

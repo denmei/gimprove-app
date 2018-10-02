@@ -35,8 +35,8 @@ public class SetTest {
         msg.put("repetitions", 5);
         msg.put("weight", 5);
         msg.put("rfid", "0006921147");
-        msg.put("equipment_id", "null");
-        msg.put("exercise_name", "Lat Pulldown");
+        msg.put("equipment", "null");
+        msg.put("exercise", "Lat Pulldown");
 
         Set testSet = new Set(msg);
     }
@@ -50,8 +50,8 @@ public class SetTest {
         Assert.assertEquals(2, setMap.get("repetitions"));
         Assert.assertEquals(20.0, setMap.get("weight"));
         Assert.assertEquals("False", setMap.get("active"));
-        Assert.assertEquals("test_exercise", setMap.get("exercise_name"));
-        Assert.assertEquals("test_equipment", setMap.get("equipment_id"));
+        Assert.assertEquals("test_exercise", setMap.get("exercise"));
+        Assert.assertEquals("test_equipment", setMap.get("equipment"));
         System.out.println(setMap.toString());
         Assert.assertEquals(7, setMap.size());
     }

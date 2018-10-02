@@ -15,24 +15,24 @@ import retrofit2.http.Path;
 
 public interface WebInterface {
 
-    @GET("trainunit_list_rest/")
+    @GET("api_v0_tracker/trainunit_list_rest/")
     Call<ResponseBody> loadTrainUnits(@Header("Authorization") String token);
 
-    @GET("exerciseunit_list_rest/")
+    @GET("api_v0_tracker/exerciseunit_list_rest/")
     Call<List<ExerciseUnit>> loadExerciseUnits(@Header("Authorization") String token);
 
-    @GET("set_list_rest/")
+    @GET("api_v0_tracker/set_list_rest/")
     Call<ResponseBody> loadSets(@Header("Authorization") String token);
 
-    @GET("set_detail_rest/{setId}")
+    @GET("api_v0_tracker/set_detail_rest/{setId}")
     Call<ResponseBody> loadSetDetails(@Path("setId") String setId,
                              @Header("Authorization") String token);
 
-    @PUT("set_detail_rest/{setId}")
+    @PUT("api_v0_tracker/set_detail_rest/{setId}")
     Call<ResponseBody> updateSet(@Path("setId") String setId,
                                  @Header("Authorization") String token,
                                  @Body HashMap<String, Object> body);
 
-    @GET("userprofile_detail_rest/")
+    @GET("api_v0_main/userprofile_detail_rest/")
     Call<ResponseBody> getUserProfile(@Header("Authorization") String token);
 }

@@ -28,16 +28,21 @@ public final class DateFormater {
         return timestampFormat.format(date);
     }
 
+    public static Date stringToDate(String dateString) throws  ParseException {
+        SimpleDateFormat ds = new SimpleDateFormat("yyyy-MM-dd");
+        return ds.parse(dateString);
+    }
+
     public static Date parseTimestamp(String timeStamp) throws ParseException {
-        SimpleDateFormat ts = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSSXXX");
+        SimpleDateFormat ts = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ts.setTimeZone(TimeZone.getDefault());
         // remove T
         String timeStampWithT = timeStamp.replace("T", " ");
         // remove last 3 digits of seconds
-        String[] fragments = timeStampWithT.split("\\.");
-        String[] subfragments = fragments[1].split("\\+");
-        subfragments[0] = subfragments[0].substring(0,3);
-        String completeTimeStamp = fragments[0] + "." + subfragments[0] + "+" + subfragments[1];
-        return ts.parse(completeTimeStamp);
+        // String[] fragments = timeStampWithT.split("\\.");
+        String[] subfragments = timeStampWithT.split("\\+");
+        // subfragments[0] = subfragments[0].substring(0,3);
+        //String completeTimeStamp = fragments[0] + "." + subfragments[0] + "+" + subfragments[1];
+        return ts.parse(subfragments[0]);
     }
 }

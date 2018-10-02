@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">GImprove</string>
 
-    <string name="exercise_name">Exercise Name</string>
+    <string name="exercise">Exercise Name</string>
     <string name="title_activity_login">Sign in</string>
 
     <!-- Strings related to login -->

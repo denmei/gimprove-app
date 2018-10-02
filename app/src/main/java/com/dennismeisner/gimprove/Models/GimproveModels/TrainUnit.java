@@ -26,8 +26,8 @@ public class TrainUnit extends ListItem {
 
     public TrainUnit(JSONObject jsonMsg) throws JSONException, ParseException {
         this.id = jsonMsg.getString("id");
-        this.start_time_date = DateFormater.parseTimestamp(jsonMsg.getString("start_time_date"));
-        this.end_time_date = DateFormater.parseTimestamp(jsonMsg.getString("end_time_date"));
+        this.start_time_date = DateFormater.stringToDate(jsonMsg.getString("start_time_date"));
+        this.end_time_date = DateFormater.stringToDate(jsonMsg.getString("end_time_date"));
         this.user = jsonMsg.getInt("user");
     }
 

@@ -55,8 +55,8 @@ public class UserRepositoryTest {
         msg.put("repetitions", 5);
         msg.put("weight", 5.0);
         msg.put("rfid", "0006921147");
-        msg.put("equipment_id", "test_equipment");
-        msg.put("exercise_name", "Lat Pulldown");
+        msg.put("equipment", "test_equipment");
+        msg.put("exercise", "Lat Pulldown");
         Set sendSet = new Set(msg);
 
         userRepository.sendUpdateSet(sendSet);
@@ -67,8 +67,8 @@ public class UserRepositoryTest {
 
         Assert.assertEquals(5.0, requestJsonBody.get("weight"));
         Assert.assertEquals(5, requestJsonBody.get("repetitions"));
-        Assert.assertEquals("Lat Pulldown", requestJsonBody.get("exercise_name"));
-        Assert.assertEquals("test_equipment", requestJsonBody.get("equipment_id"));
+        Assert.assertEquals("Lat Pulldown", requestJsonBody.get("exercise"));
+        Assert.assertEquals("test_equipment", requestJsonBody.get("equipment"));
         Assert.assertEquals("[17.0, 1.0, 19.0, 9.0, 11.0]", requestJsonBody.get("durations"));
 
         Assert.assertEquals("Token TOKEN", request.getHeader("Authorization"));

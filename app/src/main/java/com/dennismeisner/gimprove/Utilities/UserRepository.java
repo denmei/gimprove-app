@@ -74,7 +74,10 @@ public class UserRepository {
                     JSONArray jsonSets = new JSONArray(body);
                     for(int i = 0; i < jsonSets.length(); i++) {
                         JSONObject msg = (JSONObject) jsonSets.get(i);
+                        System.out.println(msg.toString());
                         TrainUnit newUnit = new TrainUnit(msg);
+                        System.out.println("new Trainunit: " + newUnit.toExtString());
+                        System.out.println("******");
                         User user = User.getInstance();
                         if (user.getTrainUnitById(newUnit.getId()) == null) {
                             user.addTrainUnit(newUnit);
