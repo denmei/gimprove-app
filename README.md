@@ -21,12 +21,13 @@ Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
 3) [Gimprove-Client](https://github.com/denmei/gimprove-client): Client that is attached on the machines.
 
 ## Repository Overview
-This repository contains the code for the Gimprove-App. After successful authentication, the app
-gives users the possibility to track their fitness activities in real-time. This is done by using the
-Gimprove-Backend as a broker, forwarding incoming messages from the gimprove upgrade components
-(client) to the right user via websockets.
+This repository contains the code for the Gimprove-App we used to test our system together with our partners.
+After successful authentication, the app gives users the possibility to track their
+fitness activities in real-time. This is done by using the Gimprove-Backend as a broker,
+forwarding incoming messages from the gimprove upgrade components (client) to the right user via websockets.
 Users can explore their historical activities and their progress in the app, too.
-![App-Overview](/readme/ezgif.com-add-text.gif)
+
+![App-Overview](/readme/app.gif)
 
 
 ### Build With
