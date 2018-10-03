@@ -23,19 +23,21 @@ Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
 ## Repository Overview
 This repository contains the code for the Gimprove-App. After successful authentication, the app
 gives users the possibility to track their fitness activities in real-time. This is done by using the
-Gimprove-Backend as a broker, forwarding incoming messages from the gimprove upgrade components 
+Gimprove-Backend as a broker, forwarding incoming messages from the gimprove upgrade components
 (client) to the right user via websockets.
 Users can explore their historical activities and their progress in the app, too.
+![App-Overview](/readme/ezgif.com-add-text.gif)
+
 
 ### Build With
 * [Retrofit](https://github.com/square/retrofit) for Client-Server communication
-* [Appleando Calendar](https://github.com/Applandeo/Material-Calendar-View) for historical overview 
+* [Appleando Calendar](https://github.com/Applandeo/Material-Calendar-View) for historical overview
 of training activities
 * [Circle Progress View](https://github.com/jakob-grabner/Circle-Progress-View) for live-tracking
 functionality
 
 ### Contributing
-**Denni Meisner:** meisnerdennis@web.de
+**Dennis Meisner:** meisnerdennis@web.de
 
 ### Team Members
 * **Lennard Rügauf:** l.ruegauf@gmx.de (Business, Hardware)
