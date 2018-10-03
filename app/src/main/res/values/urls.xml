@@ -12,5 +12,5 @@
     <item name="UserProfile" type="string">https://gimprove-test.herokuapp.com/api_v0_main/userprofile_detail_rest/</item>
     <item name="Websocket" type="string">ws://gimprove-test.herokuapp.com/ws/tracker/</item>
     <item name="TrainUnits" type="string">https://gimprove-test.herokuapp.com/api_v0_tracker/trainunit_list_rest/</item>
-    <item name="baseUrl" type="string">>https://gimprove-test.herokuapp.com/api_v0_tracker/</item>-->
+    <item name="baseUrl" type="string">https://gimprove-test.herokuapp.com/</item> -->
 </resources>
