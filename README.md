@@ -1,7 +1,7 @@
 # Gimprove - App
 A project where my colleagues and I digitized fitness machines. Unfortunately we had to
 stop the project for personal and business reasons. Landing Page is still available here:
-[Gimprove-Website](www.gimprove.com).
+[Gimprove-Website](http://www.gimprove.com).
 
 ## Project Overview
 Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimprove
