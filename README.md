@@ -26,6 +26,7 @@ gives users the possibility to track their fitness activities in real-time. This
 Gimprove-Backend as a broker, forwarding incoming messages from the gimprove upgrade components
 (client) to the right user via websockets.
 Users can explore their historical activities and their progress in the app, too.
+
 ![App-Overview](/readme/ezgif.com-add-text.gif)
 
 
